@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Asistencias</title>
+</head>
+<body>
+  <h1>Listado de asistencias</h1>
+  <ul>
+    <% arrayAsistencia.forEach(function(asistencia) { %>
+      <li><%= asistencia.nombre %> - <%= asistencia.motivo %></li>
+    <% }); %>
+  </ul>
+</body>
+</html>
