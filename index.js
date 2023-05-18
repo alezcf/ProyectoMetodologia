@@ -21,43 +21,6 @@ app.get('/', (req, res) => {
   res.send('Hola, mi servidor en Express');
 });
 
-app.get('/nueva-ruta', (req, res) => {
-  res.send('Estamos generando una ruta alternativa.');
-});
-
-app.get('/nuevo-usuario', (req, res) => {
-  res.json([
-    {
-      nombre: 'Alexander',
-      edad: 21,
-    },
-    {
-      nombre: 'Julian',
-      edad: 25,
-    }
-  ]);
-});
-
-app.get('/users', (req, res) => {
-  const { limit, offset } = req.query;
-  if (limit && offset) {
-    res.json({
-      limit,
-      offset
-    });
-  } else {
-    res.send('No existen parámetros');
-  }
-});
-
-app.get('/nuevo-usuario/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    id,
-    nombre: 'Alexander',
-    edad: 21,
-  });
-});
 
 // Iniciar el servidor
 app.listen(port, () => {
