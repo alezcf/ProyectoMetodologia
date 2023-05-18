@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
 const express = require('express');
+require('dotenv').config();
 const app = express();
 const port = 3000;
 const asistenciasRouter = require('./routes/Asistencias');
 const { URI } = require('./config/default');
-// Conexión a la base de datos
 
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Base de datos conectada'))

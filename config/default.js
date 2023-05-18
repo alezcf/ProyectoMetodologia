@@ -1,9 +1,10 @@
-const username = encodeURIComponent('probandoMongo');
-const password = encodeURIComponent('VqAFtT6QbTkpj4sX');
-const cluster = 'cluster0.kllcv5b.mongodb.net';
-const authSource = 'admin';
-const authMechanism = 'SCRAM-SHA-1';
+require('dotenv').config();
+const username = encodeURIComponent(process.env.USERNAMEBD);
+const password = encodeURIComponent(process.env.PASSWORD);
+const cluster = process.env.CLUSTER;
+const authSource = process.env.AUTH_SOURCE;
+const authMechanism = process.env.AUTH_MECHANISM;
 
-module.exports={
-  URI: `mongodb+srv://${username}:${password}@${cluster}/?authSource=${authSource}&authMechanism=${authMechanism}`
-}
+module.exports = {
+  URI: `mongodb+srv://${username}:${password}@${cluster}/?authSource=${authSource}&authMechanism=${authMechanism}`,
+};
