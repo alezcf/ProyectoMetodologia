@@ -26,6 +26,4 @@ app.get('/', (req, res) => {
 });
 
 // Iniciar el servidor
-app.listen(port, () => {
-  console.log(`El servidor está escuchando en el puerto ${port}`);
-});
+app.listen(port, () => {  });

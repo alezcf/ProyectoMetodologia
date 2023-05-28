@@ -4,9 +4,9 @@ const router = express.Router();
 const AsistenciaRouter = require('./AsistenciaRouter');
 
 //#region Rutas relacionadas al controlador de Asistencia
-router.use('/obtenerAsistencias', AsistenciaRouter);
+router.use('/asistencia', AsistenciaRouter);
 
-router.use('/registrarAsistencia', AsistenciaRouter);
+router.use('/asistencia', AsistenciaRouter);
 //#endregion
 
 module.exports = router;
