@@ -1,14 +1,18 @@
+//#region Complementos necesarios del main
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
 const express = require('express');
-require('dotenv').config();
 const app = express();
 const port = 3000;
-const { URI } = require('./config/default');
+require('dotenv').config();
+//#endregion
 
+//#region Configuración y conexion de la base de datos
+const { URI } = require('./config/default');
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Base de datos conectada'))
   .catch(error => console.error('Error al conectar a la base de datos:', error));
+//#endregion
 
 // Configuración de Express
 app.use(express.json())

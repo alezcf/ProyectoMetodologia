@@ -13,7 +13,6 @@ asistenciaSchema.methods.formatDate = function() {
   const day = this.fecha.getDate();
   const month = this.fecha.getMonth() + 1;
   const year = this.fecha.getFullYear();
-
   return `${day}/${month}/${year}`;
 };
 
