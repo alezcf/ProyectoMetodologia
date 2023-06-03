@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Lista de Usuarios</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Rut</th>
+                <th>Contraseña</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% usuarios.forEach(function(usuario) { %>
+            <tr>
+                <td><%= usuario.rut %></td>
+                <td><%= usuario.contrasena %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>
