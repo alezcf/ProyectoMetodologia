@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trabajadores</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Listado de Trabajadores</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>RUT</th>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Cargo</th>
+                <th>Rol</th>
+                <th>Número</th>
+                <th>Correo Electrónico</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < arrayTrabajador.length; i++) { %>
+                <tr>
+                    <td><%= arrayTrabajador[i].rut %></td>
+                    <td><%= arrayTrabajador[i].nombres %></td>
+                    <td><%= arrayTrabajador[i].apellidoPaterno %></td>
+                    <td><%= arrayTrabajador[i].apellidoMaterno %></td>
+                    <td><%= arrayTrabajador[i].fecha %></td>
+                    <td><%= arrayTrabajador[i].cargo %></td>
+                    <td><%= arrayTrabajador[i].rol %></td>
+                    <td><%= arrayTrabajador[i].numero %></td>
+                    <td><%= arrayTrabajador[i].correoElectronico %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

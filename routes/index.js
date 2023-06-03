@@ -2,11 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const AsistenciaRouter = require('./AsistenciaRouter');
-
-//#region Rutas relacionadas al controlador de Asistencia
+const TrabajadorRouter = require('./TrabajadorRouter');
 router.use('/asistencia', AsistenciaRouter);
-
-router.use('/asistencia', AsistenciaRouter);
-//#endregion
+router.use('/trabajador', TrabajadorRouter);
 
 module.exports = router;
