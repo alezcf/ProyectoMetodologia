@@ -23,6 +23,7 @@ exports.iniciarSesion = async (req, res) => {
         }
 
         // Si los datos son válidos, puedes redirigir o enviar una respuesta de éxito
+        req.session.user = usuarioEncontrado;
         res.redirect(`/trabajador/${rut}`); // Reemplaza '/ruta-de-destino' con la ruta real de destino
 
     } catch (error) {
