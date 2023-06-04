@@ -23,7 +23,7 @@ exports.iniciarSesion = async (req, res) => {
         }
 
         // Si los datos son válidos, puedes redirigir o enviar una respuesta de éxito
-        res.redirect('/trabajador/verTrabajadores'); // Reemplaza '/ruta-de-destino' con la ruta real de destino
+        res.redirect(`/trabajador/${rut}`); // Reemplaza '/ruta-de-destino' con la ruta real de destino
 
     } catch (error) {
         console.log(error);
