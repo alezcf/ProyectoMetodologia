@@ -9,4 +9,5 @@ router.use('/asistencia', AttendanceRouter);
 router.use('/trabajador', EmployeeRouter);
 router.use('/usuario', UserRouter);
 
+
 module.exports = router;

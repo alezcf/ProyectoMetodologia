@@ -70,7 +70,23 @@ strong {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
 }
+
+.mark-attendance-button {
+    position: absolute;
+    top: 61px;  /* Ajusta la posición vertical según tus necesidades */
+    left: 10px;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #4CAF50;  /* Puedes ajustar el color según tus necesidades */
+    color: #fff;  /* Puedes ajustar el color según tus necesidades */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 
 .view-attendance-button:hover {
     background-color: #45a049;
