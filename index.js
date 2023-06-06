@@ -8,6 +8,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
+
+//#endregion
+//
+//#region Configuración y conexion de la base de datos
 const { URI } = require('./config/default');
 
 const app = express();
@@ -42,6 +46,18 @@ app.set('views', path.join(__dirname, 'views'));
 // Rutas
 app.get('/', (req, res) => {
   res.render('login', { mensajeError: '' });
+});
+
+
+// Ruta para cerrar sesión
+app.post('/logIn', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/'); // Redirige a la página de inicio de sesión
+    }
+  });
 });
 
 // Iniciar el servidor

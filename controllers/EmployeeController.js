@@ -1,6 +1,6 @@
 const Trabajador = require('../models/Trabajador');
 
-exports.getAllTrabajadores = async (req, res) => {
+exports.getAllEmployees = async (req, res) => {
     try {
         const arrayTrabajadorDB = await Trabajador.find();
         const formattedArrayTrabajador = arrayTrabajadorDB.map(trabajador => {
@@ -16,7 +16,7 @@ exports.getAllTrabajadores = async (req, res) => {
     }
 };
 
-exports.getTrabajadorByRut = async (req, res) => {
+exports.getEmployeesByRut = async (req, res) => {
     console.log("llegamos a trabajadorcontroller");
     try {
       const { rut } = req.params; // Obtén el Rut desde los parámetros de la solicitud

@@ -1,6 +1,6 @@
 const Asistencia = require('../models/Asistencia');
 //#region obtenerAsistencia
-exports.getAllAsistencias = async (req, res) => {
+exports.getAllAttendance = async (req, res) => {
     try {
         const arrayAsistenciaDB = await Asistencia.find();
         const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
@@ -18,7 +18,7 @@ exports.getAllAsistencias = async (req, res) => {
 //#endregion
 
 //#region crearAsistencia
-exports.createAsistencia = async (req, res) => {
+exports.createAttendance = async (req, res) => {
   const idUser = req.query.idUser; // Obtener el valor de la ID de los parámetros de ruta
     try {
     // Crear una nueva instancia del modelo Asistencia con la ID proporcionada

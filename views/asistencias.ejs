@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Asistencias</title>
-  <link rel="stylesheet" type="text/css" href="/css/asistencias.css">
+    <title>Asistencias</title>
+    <link rel="stylesheet" type="text/css" href="/css/asistencias.css">
 </head>
 <body>
-  <h1>Listado de asistencias</h1>
-  <ul>
-    <% arrayAsistencia.forEach(function(asistencia) { %>
-      <li><%= asistencia.idUser %> - <%= asistencia.fecha %></li>
-    <% }); %>
-  </ul>
+    <h1>Listado de asistencias</h1>
+    <ul>
+        <% arrayAsistencia.forEach(function(asistencia) { %>
+            <li><%= asistencia.idUser %> - <%= asistencia.fecha %></li>
+        <% }); %>
+    </ul>
+
+    <!-- Botón de Volver Atrás -->
+    <a href="javascript:history.back()" class="go-back-button">Volver Atrás</a>
 </body>
 </html>
