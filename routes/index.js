@@ -10,6 +10,4 @@ router.use('/trabajador', TrabajadorRouter);
 router.use('/usuario', UsuarioRouter);
 
 
-
-
 module.exports = router;
