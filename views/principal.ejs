@@ -3,7 +3,7 @@
 <head>
     <title>Información del Usuario</title>
     <link rel="stylesheet" type="text/css" href="/css/principal.css">
-    <link rel="stylesheet" type="text/css" href="/css/visualizar-asistencia.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="header">
@@ -18,12 +18,33 @@
         <p><strong>Rol:</strong> <%= rol %></p>
     </div>
 
-    <!-- Botones -->
     <div class="buttons">
+        <form id="registrarAsistenciaForm" action="/asistencia/create" method="post">
+            <button type="button" class="mark-attendance-button" onclick="enviarSolicitud()">Registrar Asistencia</button>
+        </form>
         <a href="/asistencia/read" class="view-attendance-button">Visualizar Asistencia</a>
         <form action="/logIn" method="post">
             <input class="logout-button" type="submit" value="Cerrar Sesión">
         </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function enviarSolicitud() {
+            $.ajax({
+                url: '/asistencia/create',
+                type: 'POST',
+                success: function(response) {
+                    alert('Asistencia registrada con éxito');
+                },
+                error: function(error) {
+                    alert('Ya registraste la asistencia diaria');
+                }
+            });
+        }
+    </script>
+
+    
 </body>
 </html>

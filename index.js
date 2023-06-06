@@ -4,28 +4,33 @@ const mongoose = require('mongoose');
 const express = require('express');
 const session = require('express-session');
 const morgan = require("morgan");
-const app = express();
-const port = 3000;
+const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
+
 
 //#endregion
 //
 //#region Configuración y conexion de la base de datos
 const { URI } = require('./config/default');
+
+const app = express();
+const port = 3000;
+
+//#endregion
+
+//#region Configuración y conexion de la base de datos
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Base de datos conectada'))
   .catch(error => console.error('Error al conectar a la base de datos:', error));
 //#endregion
 
-const bodyParser = require('body-parser');
+// Middleware
+app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
-
-//middleware
-app.use(morgan("dev"));
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 app.use(session({
   secret: "SesionSecreta",
   resave: false,
@@ -43,6 +48,7 @@ app.get('/', (req, res) => {
   res.render('login', { mensajeError: '' });
 });
 
+
 // Ruta para cerrar sesión
 app.post('/logIn', (req, res) => {
   req.session.destroy((err) => {
@@ -55,4 +61,6 @@ app.post('/logIn', (req, res) => {
 });
 
 // Iniciar el servidor
-app.listen(port, () => {  });
+app.listen(port, () => {
+  console.log(`Servidor escuchando en el puerto ${port}`);
+});
