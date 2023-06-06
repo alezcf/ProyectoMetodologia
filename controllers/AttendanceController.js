@@ -22,6 +22,69 @@ exports.getAllAttendance = async (req, res) => {
 };
 //#endregion
 
+// attendanceController.js
+
+const moment = require('moment');
+
+exports.getDailyAttendance = async (req, res) => {
+    try {
+        const startOfDay = moment().startOf('day').toDate();
+        const endOfDay = moment().endOf('day').toDate();
+
+        const arrayAsistenciaDB = await Asistencia.find({ fecha: { $gte: startOfDay, $lte: endOfDay } });
+        const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
+            return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+        });
+
+        res.render("asistencias", {
+            arrayAsistencia: formattedArrayAsistencia
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al obtener la asistencia diaria');
+    }
+};
+
+exports.getWeeklyAttendance = async (req, res) => {
+    try {
+        const startOfWeek = moment().startOf('week').isoWeekday(1).startOf('day').toDate();
+        const endOfWeek = moment().endOf('week').isoWeekday(7).endOf('day').toDate();
+
+        const arrayAsistenciaDB = await Asistencia.find({ fecha: { $gte: startOfWeek, $lte: endOfWeek } });
+        const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
+            return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+        });
+
+        res.render("asistencias", {
+            arrayAsistencia: formattedArrayAsistencia
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al obtener la asistencia semanal');
+    }
+};
+
+exports.getMonthlyAttendance = async (req, res) => {
+    try {
+        const startOfMonth = moment().startOf('month').startOf('day').toDate();
+        const endOfMonth = moment().endOf('month').endOf('day').toDate();
+
+        const arrayAsistenciaDB = await Asistencia.find({ fecha: { $gte: startOfMonth, $lte: endOfMonth } });
+        const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
+            return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+        });
+
+        res.render("asistencias", {
+            arrayAsistencia: formattedArrayAsistencia
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al obtener la asistencia mensual');
+    }
+};
+
+
+
 //#region crearAsistencia
 exports.createAttendance = async (req, res) => {
     const urlOriginal = req.get('Referer');

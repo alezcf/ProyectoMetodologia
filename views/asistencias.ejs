@@ -6,6 +6,19 @@
 </head>
 <body>
     <h1>Listado de asistencias</h1>
+
+    <div class="options-button">
+        <button class="show-options-button" onclick="toggleOptions()">Mostrar asistencia</button>
+
+        <div id="options-container" class="options-container">
+            <ul>
+                <li><a href="/asistencia/readDaily">Diaria</a></li>
+                <li><a href="/asistencia/readWeekly">Semanal</a></li>
+                <li><a href="/asistencia/readMonthly">Mensual</a></li>
+            </ul>
+        </div>
+    </div>
+
     <ul>
         <% arrayAsistencia.forEach(function(asistencia) { %>
             <li><%= asistencia.idUser %> - <%= asistencia.fecha %></li>
@@ -14,5 +27,12 @@
 
     <!-- Botón de Volver Atrás -->
     <a href="javascript:history.back()" class="go-back-button">Volver Atrás</a>
+
+    <script>
+        function toggleOptions() {
+            var optionsContainer = document.getElementById("options-container");
+            optionsContainer.classList.toggle("show");
+        }
+    </script>
 </body>
 </html>
