@@ -11,7 +11,6 @@ require('dotenv').config();
 
 //#endregion
 //
-require('./controllers/UsuarioController');
 //#region Configuración y conexion de la base de datos
 const { URI } = require('./config/default');
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -31,9 +30,10 @@ app.use(session({
   secret: "SesionSecreta",
   resave: false,
   saveUninitialized: false
-}))
+}));
+
 // Configuración de Express
-app.use(express.json())
+app.use(express.json());
 app.use("/", require("./routes/index"));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -43,6 +43,16 @@ app.get('/', (req, res) => {
   res.render('login', { mensajeError: '' });
 });
 
+// Ruta para cerrar sesión
+app.post('/logIn', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect('/'); // Redirige a la página de inicio de sesión
+    }
+  });
+});
 
 // Iniciar el servidor
 app.listen(port, () => {  });

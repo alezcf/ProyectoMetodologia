@@ -1,6 +1,6 @@
 const Usuario = require('../models/Usuario');
 
-exports.getAllUsuarios = async (req, res) => {
+exports.getAllUsers = async (req, res) => {
     try {
         const usuarios = await Usuario.find();
         res.render('usuarios', { usuarios });
@@ -10,7 +10,7 @@ exports.getAllUsuarios = async (req, res) => {
     }
 };
 
-exports.iniciarSesion = async (req, res) => {
+exports.logIn = async (req, res) => {
     try {
         const { rut, contrasena } = req.body;
         console.log("Datos ingresados: rut = " + rut + ", contrasena = " + contrasena);

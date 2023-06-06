@@ -3,6 +3,7 @@
 <head>
     <title>Información del Usuario</title>
     <link rel="stylesheet" type="text/css" href="/css/principal.css">
+    <link rel="stylesheet" type="text/css" href="/css/visualizar-asistencia.css">
 </head>
 <body>
     <div class="header">
@@ -15,8 +16,14 @@
         <p><strong>Apellidos:</strong> <%= apellidoPaterno %> <%= apellidoMaterno %></p>
         <p><strong>Cargo:</strong> <%= cargo %></p>
         <p><strong>Rol:</strong> <%= rol %></p>
+    </div>
 
-        <!-- Aquí puedes agregar más contenido o opciones para ejecutar -->
+    <!-- Botones -->
+    <div class="buttons">
+        <a href="/asistencia/read" class="view-attendance-button">Visualizar Asistencia</a>
+        <form action="/logIn" method="post">
+            <input class="logout-button" type="submit" value="Cerrar Sesión">
+        </form>
     </div>
 </body>
 </html>

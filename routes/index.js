@@ -1,15 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const AsistenciaRouter = require('./AsistenciaRouter');
-const TrabajadorRouter = require('./TrabajadorRouter');
-const UsuarioRouter = require('./UsuarioRouter');
+const AttendanceRouter = require('./AttendanceRouter');
+const EmployeeRouter = require('./EmployeeRouter');
+const UserRouter = require('./UserRouter');
 
-router.use('/asistencia', AsistenciaRouter);
-router.use('/trabajador', TrabajadorRouter);
-router.use('/usuario', UsuarioRouter);
-
-
-
+router.use('/asistencia', AttendanceRouter);
+router.use('/trabajador', EmployeeRouter);
+router.use('/usuario', UserRouter);
 
 module.exports = router;

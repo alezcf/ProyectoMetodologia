@@ -33,3 +33,19 @@ body {
     background-color: #f9f9f9;
   }
   
+  .go-back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.go-back-button:hover {
+    background-color: #45a049;
+}
