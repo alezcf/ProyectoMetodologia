@@ -8,9 +8,13 @@ exports.getAllAttendance = async (req, res) => {
             return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
         });
 
-        res.render("asistencias", {
-            arrayAsistencia: formattedArrayAsistencia
-        });
+        if (isSesion(req)) {
+            res.render("asistencias", {
+                arrayAsistencia: formattedArrayAsistencia
+            });
+        } else {
+            res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });
+        };
     } catch (error) {
         console.log(error);
         res.status(500).send('Error al obtener las asistencias');
@@ -63,3 +67,6 @@ function getRut(urlOriginal, rutUser) {
     return urlOriginal; // Devuelve el string sin cambios si no se encuentra la subcadena
 }
 //#endregio
+function isSesion(req) {
+    return req.session.user !== undefined;
+  }
