@@ -1,6 +1,5 @@
 const Asistencia = require('../models/Asistencia');
 
-//#region obtenerAsistencia
 exports.getAllAttendance = async (req, res) => {
     try {
         const arrayAsistenciaDB = await Asistencia.find();
@@ -20,7 +19,30 @@ exports.getAllAttendance = async (req, res) => {
         res.status(500).send('Error al obtener las asistencias');
     }
 };
-//#endregion
+
+const moment = require('moment');
+
+exports.getDailyAttendance = async (req, res) => {
+    try {
+        const currentDate = moment().startOf('day');
+        const arrayAsistenciaDB = await Asistencia.find({ fecha: currentDate });
+        const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
+            return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+        });
+
+        if (isSesion(req)) {
+            res.render("asistencias", {
+                arrayAsistencia: formattedArrayAsistencia
+            });
+        } else {
+            res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });
+        };
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al obtener las asistencias');
+    }
+};
+
 
 // attendanceController.js
 
