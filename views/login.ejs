@@ -6,25 +6,27 @@
 </head>
 <body>
     <div class="container">
-        <h1>Página de Inicio de Sesión</h1>
-        <% if (mensajeError) { %>
-            <div class="error-message">
-                <%= mensajeError %>
-            </div>
-        <% } %>
-        <form action="/usuario/logIn" method="POST">
-            <label for="rut">RUT:</label>
-            <input type="text" id="rut" name="rut" required>
-            
-            <br><br>
-            
-            <label for="contrasena">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" required>
-            
-            <br><br>
-            
-            <input type="submit" value="Ingresar">
-        </form>
+        <div class="inner-container">
+            <h1>Página de Inicio de Sesión</h1>
+            <% if (mensajeError) { %>
+                <div class="error-message">
+                    <%= mensajeError %>
+                </div>
+            <% } %>
+            <form action="/usuario/logIn" method="POST">
+                <label for="rut">RUT:</label>
+                <input type="text" id="rut" name="rut" required>
+                
+                <br><br>
+                
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena" required>
+                
+                <br><br>
+                
+                <input type="submit" value="Ingresar">
+            </form>
+        </div>
     </div>
 </body>
 </html>
