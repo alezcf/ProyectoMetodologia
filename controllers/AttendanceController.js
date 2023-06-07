@@ -89,6 +89,56 @@ function getRut(urlOriginal, rutUser) {
     return urlOriginal; // Devuelve el string sin cambios si no se encuentra la subcadena
 }
 //#endregio
-function isSesion(req) {
+
+exports.getRandomAttendance = async (req, res) => {
+    try {
+      const currentDateAttendance = await getAttendanceForCurrentDate();
+  
+      if (isSesion(req)) {
+        // Obtener 5 personas aleatorias de la asistencia firmada en el día actual
+        const randomPeople = getRandomPeople(currentDateAttendance, 5);
+  
+        res.render("group", {
+          arrayAsistencia: randomPeople
+        });
+      } else {
+        res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send('Error al obtener las asistencias');
+    }
+  };
+  
+  async function getAttendanceForCurrentDate() {
+    const currentDate = moment().startOf('day');
+    const nextDate = moment(currentDate).endOf('day');
+    const arrayAsistenciaDB = await Asistencia.find({ fecha: { $gte: currentDate, $lt: nextDate } });
+    const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
+      return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+    });
+    return formattedArrayAsistencia;
+  }
+  
+  function getRandomPeople(array, count) {
+    // Verificar que el array tenga más elementos que la cantidad requerida
+    if (array.length <= count) {
+      return array;
+    }
+  
+    // Utilizar el algoritmo de Fisher-Yates para mezclar aleatoriamente el subconjunto del array
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+  
+    // Devolver los primeros 'count' elementos del subconjunto mezclado aleatoriamente
+    return shuffledArray.slice(0, count);
+  }
+  
+  function isSesion(req) {
     return req.session.user !== undefined;
   }
+  
+

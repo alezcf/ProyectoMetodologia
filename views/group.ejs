@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grupo de Asistencia Aleatorio</title>
+</head>
+<body>
+    <% if (arrayAsistencia.length > 0) { %>
+        <h1>Grupo de Asistencia Aleatorio</h1>
+        <ul>
+            <% arrayAsistencia.forEach(function(asistencia) { %>
+                <li><%= asistencia.idUser %> - <%= asistencia.fecha %></li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <h1>No hay asistencias disponibles</h1>
+    <% } %>
+
+</body>
+</html>
