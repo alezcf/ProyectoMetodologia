@@ -127,25 +127,20 @@ function getRut(urlOriginal, rutUser) {
 }
 //#endregio
 
-exports.getRandomAttendance = async (req, res) => {
-    try {
-      const currentDateAttendance = await getAttendanceForCurrentDate();
-  
-      if (isSesion(req)) {
-        // Obtener 5 personas aleatorias de la asistencia firmada en el día actual
+module.exports.getRandomAttendance = () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const currentDateAttendance = await getAttendanceForCurrentDate();
         const randomPeople = getRandomPeople(currentDateAttendance, 5);
-  
-        res.render("group", {
-          arrayAsistencia: randomPeople
-        });
-      } else {
-        res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });
+        console.log(randomPeople);
+        resolve(randomPeople);
+      } catch (error) {
+        reject(error);
       }
-    } catch (error) {
-      console.log(error);
-      res.status(500).send('Error al obtener las asistencias');
-    }
+    });
   };
+  ;
+  
   
   async function getAttendanceForCurrentDate() {
     const currentDate = moment().startOf('day');
