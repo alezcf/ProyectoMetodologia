@@ -15,6 +15,12 @@ exports.logIn = async (req, res) => {
         const { rut, contrasena } = req.body;
         console.log("Datos ingresados: rut = " + rut + ", contrasena = " + contrasena);
 
+        // Validar el formato del rut utilizando expresiones regulares
+        const rutRegex = /^[0-9]{7,8}[0-9Kk]$/; // Expresión regular para validar un rut en formato "123456789"
+        if (!rutRegex.test(rut)) {
+        return res.render('login', { mensajeError: 'Formato de rut inválido. Por favor, ingresa un rut válido.' });
+        }
+
         // Realizar la lógica de comprobación de los datos del usuario en la base de datos
         const usuarioEncontrado = await Usuario.findOne({ rut });
 
