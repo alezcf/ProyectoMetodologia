@@ -10,7 +10,7 @@ body {
 
 /*-------Container principal login--------------*/
 .container {
-    max-width: 400px;
+    max-width: 250px;
     margin: 15vh auto;
     padding: 20px;
     background-color: #fff;
@@ -41,7 +41,28 @@ h1 {
 
 form {
     text-align: center;
+    display: block;
+    flex-direction: column;
+    align-items: left;
 }
+
+#rut {
+    width: 33%;
+}
+
+span {
+    width: 5%;
+}
+
+#dv {
+    width: 11%;
+}
+
+#contrasena {
+    width: 72%;
+}
+
+
 
 label {
     display: block;
