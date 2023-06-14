@@ -17,7 +17,6 @@ exports.getAllEmployees = async (req, res) => {
 };
 
 exports.getEmployeesByRut = async (req, res) => {
-    console.log("llegamos a trabajadorcontroller");
     try {
       const { rut } = req.params; // Obtén el Rut desde los parámetros de la solicitud
   
@@ -39,8 +38,8 @@ exports.getEmployeesByRut = async (req, res) => {
       }else{
         res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });
       }
-  
-    } catch (error) {
+    } 
+    catch (error) {
       console.log(error);
       res.status(500).send('Error al obtener el trabajador');
     }
