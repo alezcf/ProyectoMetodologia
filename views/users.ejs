@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Lista de Usuarios</title>
-    <link rel="stylesheet" type="text/css" href="/css/lista-usuarios.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/css/lista-usuarios.css"> -->
 </head>
 <body>
     <h1>Lista de Usuarios</h1>
@@ -15,10 +15,10 @@
             </tr>
         </thead>
         <tbody>
-            <% usuarios.forEach(function(usuario) { %>
+            <% users.forEach(function(user) { %>
             <tr>
-                <td><%= usuario.rut %></td>
-                <td><%= usuario.contrasena %></td>
+                <td><%= user.rut %></td>
+                <td><%= user.password %></td>
             </tr>
             <% }); %>
         </tbody>

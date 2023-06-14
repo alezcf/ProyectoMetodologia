@@ -2,20 +2,20 @@
 <html>
 <head>
     <title>Información del Usuario</title>
-    <link rel="stylesheet" type="text/css" href="/css/principal.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="header">
-        <h1>Bienvenido(a) <%= nombres %> <%= apellidoPaterno %> <%= apellidoMaterno %></h1>
+        <h1>Bienvenido(a) <%= names %> <%= lastName %> <%= secondLastName %></h1>
     </div>
 
     <div class="container">
         <h2>Información del Usuario</h2>
-        <p><strong>Nombres:</strong> <%= nombres %></p>
-        <p><strong>Apellidos:</strong> <%= apellidoPaterno %> <%= apellidoMaterno %></p>
-        <p><strong>Cargo:</strong> <%= cargo %></p>
-        <p><strong>Rol:</strong> <%= rol %></p>
+        <p><strong>Nombres:</strong> <%= names %></p>
+        <p><strong>Apellidos:</strong> <%= lastName %> <%= secondLastName %></p>
+        <p><strong>Cargo:</strong> <%= jobTitle %></p>
+        <p><strong>Rol:</strong> <%= position %></p>
     </div>
 
     <div class="buttons">

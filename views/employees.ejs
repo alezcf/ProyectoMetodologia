@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trabajadores</title>
+    <link rel="stylesheet" type="text/css" href="/css/employees.css">
+</head>
+<body>
+    <h1>Listado de Trabajadores</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>RUT</th>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Cargo</th>
+                <th>Rol</th>
+                <th>Número</th>
+                <th>Correo Electrónico</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < arrayEmployee.length; i++) { %>
+                <tr>
+                    <td><%= arrayEmployee[i].rut %></td>
+                    <td><%= arrayEmployee[i].names %></td>
+                    <td><%= arrayEmployee[i].lastName %></td>
+                    <td><%= arrayEmployee[i].secondLastName %></td>
+                    <td><%= arrayEmployee[i].birthDate %></td>
+                    <td><%= arrayEmployee[i].jobTitle %></td>
+                    <td><%= arrayEmployee[i].position %></td>
+                    <td><%= arrayEmployee[i].phoneNumber %></td>
+                    <td><%= arrayEmployee[i].email %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

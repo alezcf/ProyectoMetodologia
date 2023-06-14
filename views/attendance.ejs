@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Asistencias</title>
-    <link rel="stylesheet" type="text/css" href="/css/asistencias.css">
+    <link rel="stylesheet" type="text/css" href="/css/attendance.css">
 </head>
 <body>
     <h1>Listado de asistencias</h1>
@@ -20,8 +20,8 @@
     </div>
 
     <ul>
-        <% arrayAsistencia.forEach(function(asistencia) { %>
-            <li><%= asistencia.idUser %> - <%= asistencia.fecha %></li>
+        <% arrayAttendance.forEach(function(attendance) { %>
+            <li><%= attendance.idUser %> - <%= attendance.date %></li>
         <% }); %>
     </ul>
 

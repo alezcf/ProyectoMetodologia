@@ -1,9 +1,9 @@
-const Usuario = require('../models/Usuario');
+const User = require('../models/user');
 
 exports.getAllUsers = async (req, res) => {
     try {
-        const usuarios = await Usuario.find();
-        res.render('usuarios', { usuarios });
+        const users = await User.find();
+        res.render('users', { users });
     } catch (error) {
         console.log(error);
         res.status(500).send('Error al obtener los usuarios');
@@ -12,8 +12,8 @@ exports.getAllUsers = async (req, res) => {
 
 exports.logIn = async (req, res) => {
     try {
-        const { rut, contrasena } = req.body;
-        console.log("Datos ingresados: rut = " + rut + ", contrasena = " + contrasena);
+        const { rut, password } = req.body;
+        console.log("Datos ingresados: rut = " + rut + ", contrasena = " + password);
 
         // Validar el formato del rut utilizando expresiones regulares
         const rutRegex = /^[0-9]{7,8}[0-9Kk]$/; // Expresión regular para validar un rut en formato "123456789"
@@ -22,14 +22,14 @@ exports.logIn = async (req, res) => {
         }
 
         // Realizar la lógica de comprobación de los datos del usuario en la base de datos
-        const usuarioEncontrado = await Usuario.findOne({ rut });
+        const UserFound = await User.findOne({ rut });
 
-        if (!usuarioEncontrado || usuarioEncontrado.contrasena !== contrasena) {
+        if (!UserFound || UserFound.password !== password) {
             return res.render('login', { mensajeError: 'Credenciales inválidas. Por favor, intenta nuevamente.' });
         }
 
         // Si los datos son válidos, puedes redirigir o enviar una respuesta de éxito
-        req.session.user = usuarioEncontrado;
+        req.session.user = UserFound;
         res.redirect(`/trabajador/${rut}`); // Reemplaza '/ruta-de-destino' con la ruta real de destino
 
     } catch (error) {

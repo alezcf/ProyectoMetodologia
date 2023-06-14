@@ -1,14 +1,14 @@
-const Trabajador = require('../models/Trabajador');
+const Employee = require('../models/employee');
 
 exports.getAllEmployees = async (req, res) => {
     try {
-        const arrayTrabajadorDB = await Trabajador.find();
-        const formattedArrayTrabajador = arrayTrabajadorDB.map(trabajador => {
-            return { ...trabajador.toObject(), fecha: trabajador.formatDate() };
+        const arrayEmployeeDB = await Employee.find();
+        const formattedArrayEmployee = arrayEmployeeDB.map(employee => {
+            return { ...employee.toObject(), birthDate: employee.formatDate() };
         });
 
-        res.render("trabajadores", {
-            arrayTrabajador: formattedArrayTrabajador
+        res.render("employees", {
+            arrayEmployee: formattedArrayEmployee
         });
     } catch (error) {
         console.log(error);
@@ -21,20 +21,20 @@ exports.getEmployeesByRut = async (req, res) => {
     try {
       const { rut } = req.params; // Obtén el Rut desde los parámetros de la solicitud
   
-      const trabajador = await Trabajador.findOne({ rut }); // Busca el trabajador por su Rut
+      const employee = await Employee.findOne({ rut }); // Busca el trabajador por su Rut
   
-      if (!trabajador) {
+      if (!employee) {
         return res.status(404).send('Trabajador no encontrado'); // Si no se encuentra el trabajador, devuelve un error 404
       }
   
       console.log("Usuario encontrado");
       if (isSesion(req)) {
-        res.render("principal", {
-          nombres: trabajador.nombres,
-          apellidoPaterno: trabajador.apellidoPaterno,
-          apellidoMaterno: trabajador.apellidoMaterno,
-          cargo: trabajador.cargo,
-          rol: trabajador.rol
+        res.render("main", {
+          names: employee.names,
+          lastName: employee.lastName,
+          secondLastName: employee.secondLastName,
+          jobTitle: employee.jobTitle,
+          position: employee.position
         });
       }else{
         res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });

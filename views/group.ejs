@@ -4,11 +4,11 @@
     <title>Grupo de Asistencia Aleatorio</title>
 </head>
 <body>
-    <% if (arrayAsistencia.length > 0) { %>
+    <% if (arrayAttendance.length > 0) { %>
         <h1>Grupo de Asistencia Aleatorio</h1>
         <ul>
-            <% arrayAsistencia.forEach(function(asistencia) { %>
-                <li><%= asistencia.idUser %> - <%= asistencia.fecha %></li>
+            <% arrayAttendance.forEach(function(attendance) { %>
+                <li><%= attendance.idUser %> - <%= attendance.date %></li>
             <% }); %>
         </ul>
     <% } else { %>

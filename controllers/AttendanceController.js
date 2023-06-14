@@ -1,15 +1,15 @@
-const Asistencia = require('../models/Asistencia');
+const Attendence = require('../models/Attendance');
 
 exports.getAllAttendance = async (req, res) => {
     try {
-        const arrayAsistenciaDB = await Asistencia.find();
-        const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
-            return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+        const arrayAsistenciaDB = await Attendence.find();
+        const formattedArrayAttendance = arrayAsistenciaDB.map(attendence => {
+            return { ...attendence.toObject(), date: attendence.formatDate() };
         });
 
         if (isSesion(req)) {
-            res.render("asistencias", {
-                arrayAsistencia: formattedArrayAsistencia
+            res.render("attendance", {
+                arrayAttendance: formattedArrayAttendance
             });
         } else {
             res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });
@@ -27,13 +27,13 @@ exports.getDailyAttendance = async (req, res) => {
         const startOfDay = moment().startOf('day').toDate();
         const endOfDay = moment().endOf('day').toDate();
 
-        const arrayAsistenciaDB = await Asistencia.find({ fecha: { $gte: startOfDay, $lte: endOfDay } });
-        const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
-            return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+        const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfDay, $lte: endOfDay } });
+        const formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
+            return { ...attendance.toObject(), date: attendance.formatDate() };
         });
 
-        res.render("asistencias", {
-            arrayAsistencia: formattedArrayAsistencia
+        res.render("attendance", {
+            arrayAttendance: formattedArrayAttendance
         });
     } catch (error) {
         console.log(error);
@@ -46,13 +46,13 @@ exports.getWeeklyAttendance = async (req, res) => {
         const startOfWeek = moment().startOf('week').isoWeekday(1).startOf('day').toDate();
         const endOfWeek = moment().endOf('week').isoWeekday(7).endOf('day').toDate();
 
-        const arrayAsistenciaDB = await Asistencia.find({ fecha: { $gte: startOfWeek, $lte: endOfWeek } });
-        const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
-            return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+        const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfWeek, $lte: endOfWeek } });
+        const formattedArrayAttendance = arrayAttendanceDB.map(asistencia => {
+            return { ...asistencia.toObject(), date: asistencia.formatDate() };
         });
 
-        res.render("asistencias", {
-            arrayAsistencia: formattedArrayAsistencia
+        res.render("attendance", {
+            arrayAttendance: formattedArrayAttendance
         });
     } catch (error) {
         console.log(error);
@@ -65,13 +65,13 @@ exports.getMonthlyAttendance = async (req, res) => {
         const startOfMonth = moment().startOf('month').startOf('day').toDate();
         const endOfMonth = moment().endOf('month').endOf('day').toDate();
 
-        const arrayAsistenciaDB = await Asistencia.find({ fecha: { $gte: startOfMonth, $lte: endOfMonth } });
-        const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
-            return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+        const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfMonth, $lte: endOfMonth } });
+        const formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
+            return { ...attendance.toObject(), date: attendance.formatDate() };
         });
 
-        res.render("asistencias", {
-            arrayAsistencia: formattedArrayAsistencia
+        res.render("attendance", {
+            arrayAttendance: formattedArrayAttendance
         });
     } catch (error) {
         console.log(error);
@@ -89,9 +89,9 @@ exports.createAttendance = async (req, res) => {
 
     try {
         // Verificar si ya existe una asistencia para el usuario en la fecha actual
-        const existingAttendance = await Asistencia.findOne({
+        const existingAttendance = await Attendence.findOne({
             idUser: idUser,
-            fecha: {
+            date: {
                 $gte: new Date().setHours(0, 0, 0, 0), // Fecha actual a las 00:00:00
                 $lte: new Date().setHours(23, 59, 59, 999) // Fecha actual a las 23:59:59
             }
@@ -103,13 +103,13 @@ exports.createAttendance = async (req, res) => {
         }
     
         // Crear una nueva instancia del modelo Asistencia con la ID proporcionada
-        const asistencia = new Asistencia({
+        const attendance = new Attendence({
             idUser: idUser,
-            fecha: Date.now() // También puedes establecer la fecha actual aquí o usar otro valor deseado
+            date: Date.now() // También puedes establecer la fecha actual aquí o usar otro valor deseado
         });
 
         // Guardar la nueva asistencia en la base de datos
-        await asistencia.save();
+        await attendance.save();
 
         res.status(201).send('Asistencia creada exitosamente');
     } catch (error) {
@@ -119,9 +119,9 @@ exports.createAttendance = async (req, res) => {
 };
 
 function getRut(urlOriginal, rutUser) {
-    const indice = urlOriginal.indexOf(rutUser);
-    if (indice !== -1) {
-        return urlOriginal.substring(indice + rutUser.length);
+    const index = urlOriginal.indexOf(rutUser);
+    if (index !== -1) {
+        return urlOriginal.substring(index + rutUser.length);
     }
     return urlOriginal; // Devuelve el string sin cambios si no se encuentra la subcadena
 }
@@ -145,11 +145,11 @@ module.exports.getRandomAttendance = () => {
   async function getAttendanceForCurrentDate() {
     const currentDate = moment().startOf('day');
     const nextDate = moment(currentDate).endOf('day');
-    const arrayAsistenciaDB = await Asistencia.find({ fecha: { $gte: currentDate, $lt: nextDate } });
-    const formattedArrayAsistencia = arrayAsistenciaDB.map(asistencia => {
-      return { ...asistencia.toObject(), fecha: asistencia.formatDate() };
+    const arrayAttendanceDB = await Attendence.find({ date: { $gte: currentDate, $lt: nextDate } });
+    const formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
+      return { ...attendance.toObject(), date: attendance.formatDate() };
     });
-    return formattedArrayAsistencia;
+    return formattedArrayAttendance;
   }
   
   function getRandomPeople(array, count) {
