@@ -13,13 +13,12 @@
                     <%= mensajeError %>
                 </div>
             <% } %>
-            <form action="/user/logIn" method="POST">
+            <form action="/usuario/logIn" method="POST">
                 <label for="rut">RUT:</label>
                 <input type="text" id="rut" name="rut" placeholder='123456789' maxlength="8" required>
                 <span>-</span>
                 <input type="text" id="dv" name="dv" placeholder='K' maxlength="1" required>
                 <br><br>
-                
                 <label for="password">Contraseña:</label>
                 <input type="password" id="password" name="password" maxlength="20" required>
                 

@@ -105,12 +105,11 @@ exports.createAttendance = async (req, res) => {
         // Crear una nueva instancia del modelo Asistencia con la ID proporcionada
         const attendance = new Attendence({
             idUser: idUser,
-            date: Date.now() // También puedes establecer la fecha actual aquí o usar otro valor deseado
+            date: Date.now()
         });
-
         // Guardar la nueva asistencia en la base de datos
         await attendance.save();
-
+    
         res.status(201).send('Asistencia creada exitosamente');
     } catch (error) {
         console.log(error);
