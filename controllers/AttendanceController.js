@@ -7,6 +7,8 @@ exports.getAllAttendance = async (req, res) => {
             return { ...attendence.toObject(), date: attendence.formatDate() };
         });
 
+        modifyAttendanceArray(formattedArrayAttendance)
+
         if (isSesion(req)) {
             res.render("attendance", {
                 arrayAttendance: formattedArrayAttendance
@@ -22,6 +24,8 @@ exports.getAllAttendance = async (req, res) => {
 
 const moment = require('moment');
 
+
+
 exports.getDailyAttendance = async (req, res) => {
     try {
         const startOfDay = moment().startOf('day').toDate();
@@ -31,6 +35,8 @@ exports.getDailyAttendance = async (req, res) => {
         const formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
             return { ...attendance.toObject(), date: attendance.formatDate() };
         });
+
+        modifyAttendanceArray(formattedArrayAttendance)
 
         res.render("attendance", {
             arrayAttendance: formattedArrayAttendance
@@ -51,6 +57,8 @@ exports.getWeeklyAttendance = async (req, res) => {
             return { ...asistencia.toObject(), date: asistencia.formatDate() };
         });
 
+        modifyAttendanceArray(formattedArrayAttendance);
+
         res.render("attendance", {
             arrayAttendance: formattedArrayAttendance
         });
@@ -70,6 +78,8 @@ exports.getMonthlyAttendance = async (req, res) => {
             return { ...attendance.toObject(), date: attendance.formatDate() };
         });
 
+        modifyAttendanceArray(formattedArrayAttendance);
+
         res.render("attendance", {
             arrayAttendance: formattedArrayAttendance
         });
@@ -78,6 +88,7 @@ exports.getMonthlyAttendance = async (req, res) => {
         res.status(500).send('Error al obtener la asistencia mensual');
     }
 };
+
 
 
 
@@ -172,4 +183,13 @@ function isSesion(req) {
     return req.session.user !== undefined;
 };
 
+function modifyAttendanceArray(arrayAttendance) {
+    arrayAttendance.forEach(attendance => {
+        const idUser = attendance.idUser;
+        const hyphenIndex = idUser.lastIndexOf('-');
+        let modifiedIdUser = idUser.slice(0, hyphenIndex).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + idUser.slice(hyphenIndex);
 
+        modifiedIdUser = modifiedIdUser.slice(0, -1) + '-' + modifiedIdUser.slice(-1);
+        attendance.idUser = modifiedIdUser;
+    });
+}

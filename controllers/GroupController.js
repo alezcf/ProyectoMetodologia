@@ -34,11 +34,10 @@ exports.setGroup = async (req, res) => {
       });
   
       // Guardar el documento en la base de datos
-   
         await group.save();
-  
       res.status(200).json({ message: 'Grupo guardado correctamente' });
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
       res.status(500).json({ message: 'Error al guardar el grupo' });
     }

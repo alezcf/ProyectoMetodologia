@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-
 const GroupSchema = new Schema(
   {
     idUser: { type: [String], required: true },
@@ -10,11 +9,12 @@ const GroupSchema = new Schema(
   },
   { collection: 'grupo' }
 );
+
 GroupSchema.statics.getRandomAttendance = async function() {
-    const getRandomAttendance = require('../controllers/attendanceController').getRandomAttendance;
+    const getRandomAttendance = require('../controllers/AttendanceController').getRandomAttendance;
     return getRandomAttendance();
-  };
-  
+};
+
 GroupSchema.methods.formatDate = function() {
   const day = this.fecha.getDate();
   const month = this.fecha.getMonth() + 1;

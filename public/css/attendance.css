@@ -106,3 +106,38 @@ li:hover {
 .options-container a:hover {
   background-color: #ddd;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+li span {
+  width: 100px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+}
+
+table th {
+  background-color: #337ab7;
+  color: white;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+}

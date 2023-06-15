@@ -19,11 +19,22 @@
         </div>
     </div>
 
-    <ul>
-        <% arrayAttendance.forEach(function(attendance) { %>
-            <li><%= attendance.idUser %> - <%= attendance.date %></li>
-        <% }); %>
-    </ul>
+    <table class="table" align="center">
+        <thead>
+            <tr>
+                <th>ID Usuario</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% arrayAttendance.forEach(function(attendance) { %>
+                <tr>
+                    <td><%= attendance.idUser %></td>
+                    <td><%= attendance.date %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
 
     <!-- Botón de Volver Atrás -->
     <a href="javascript:history.back()" class="go-back-button">Volver Atrás</a>
