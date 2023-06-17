@@ -49,8 +49,8 @@ exports.getDailyAttendance = async (req, res) => {
 
 exports.getWeeklyAttendance = async (req, res) => {
     try {
-        const startOfWeek = moment().startOf('week').isoWeekday(1).startOf('day').toDate();
-        const endOfWeek = moment().endOf('week').isoWeekday(7).endOf('day').toDate();
+        const startOfWeek = moment().startOf('isoWeek').toDate();
+        const endOfWeek = moment().endOf('isoWeek').toDate();
 
         const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfWeek, $lte: endOfWeek } });
         const formattedArrayAttendance = arrayAttendanceDB.map(asistencia => {
