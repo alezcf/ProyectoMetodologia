@@ -48,6 +48,15 @@ app.get('/', (req, res) => {
   res.render('login', { mensajeError: '' });
 });
 
+// Configuracion uso del MIME type para archivos .js
+/*app.use(express.static('js', {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
+*/
 
 // Ruta para cerrar sesión
 app.post('/logIn', (req, res) => {

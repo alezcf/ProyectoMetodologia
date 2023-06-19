@@ -3,6 +3,8 @@
 <head>
     <title>Página de Inicio de Sesión</title>
     <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <script src="/js/functions.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -13,7 +15,7 @@
                     <%= mensajeError %>
                 </div>
             <% } %>
-            <form action="/usuario/logIn" method="POST">
+            <form id="login-form" action="/usuario/logIn" method="POST">
                 <label for="rut">RUT:</label>
                 <input type="text" id="rut" name="rut" placeholder='123456789' maxlength="8" required>
                 <span>-</span>
