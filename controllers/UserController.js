@@ -27,17 +27,7 @@ exports.logIn = async (req, res) => {
             }
 
         
-        /*
-        // Expresión regular para validar la contraseña
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; //contraseña de 8 caracteres, al menos una mayúscula, una minúscula y un número
-
-        // Validar la contraseña utilizando la expresión regular
-        if (!passwordRegex.test(contrasena)) {
-            return res.render('login', { mensajeError: 'La contraseña no cumple con los requisitos mínimos.' });
-        }
-        */
-
-        
+  
         // Realizar la lógica de comprobación de los datos del usuario en la base de datos
         const UserFound = await User.findOne({ rut: rutDV });
 
@@ -45,7 +35,7 @@ exports.logIn = async (req, res) => {
             return res.render('login', { mensajeError: 'Credenciales inválidas. Por favor, intenta nuevamente.' });
         }
     
-        // Si los datos son válidos, puedes redirigir o enviar una respuesta de éxito
+        // Si los datos son válidos, redirigir o enviar una respuesta de éxito
         req.session.user = UserFound;
         res.redirect(`/trabajador/${rutDV}`); // Reemplaza '/ruta-de-destino' con la ruta real de destino
 
