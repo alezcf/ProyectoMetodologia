@@ -1,21 +1,16 @@
 const Attendence = require('../models/Attendance');
 
-exports.getAllAttendance = async (req, res) => {
+exports.getAllAttendance = async function(req, res) {
     try {
-        const arrayAsistenciaDB = await Attendence.find();
-        const formattedArrayAttendance = arrayAsistenciaDB.map(attendence => {
-            return { ...attendence.toObject(), date: attendence.formatDate() };
-        });
-
-        modifyAttendanceArray(formattedArrayAttendance)
-
+        const arrayAttendance = await getFormattedArrayAttendance();
+    
         if (isSesion(req)) {
             res.render("attendance", {
-                arrayAttendance: formattedArrayAttendance
+            arrayAttendance: arrayAttendance
             });
         } else {
             res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });
-        };
+        }
     } catch (error) {
         console.log(error);
         res.status(500).send('Error al obtener las asistencias');
@@ -26,18 +21,13 @@ const moment = require('moment');
 
 
 
-exports.getDailyAttendance = async (req, res) => {
+exports.getDailyAttendance = async function(req, res) {
     try {
         const startOfDay = moment().startOf('day').toDate();
         const endOfDay = moment().endOf('day').toDate();
-
-        const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfDay, $lte: endOfDay } });
-        const formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
-            return { ...attendance.toObject(), date: attendance.formatDate() };
-        });
-
-        modifyAttendanceArray(formattedArrayAttendance)
-
+    
+        const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfDay, $lte: endOfDay } });
+    
         res.render("attendance", {
             arrayAttendance: formattedArrayAttendance
         });
@@ -47,20 +37,15 @@ exports.getDailyAttendance = async (req, res) => {
     }
 };
 
-exports.getWeeklyAttendance = async (req, res) => {
+exports.getWeeklyAttendance = async function(req, res) {
     try {
         const startOfWeek = moment().startOf('isoWeek').toDate();
         const endOfWeek = moment().endOf('isoWeek').toDate();
-
-        const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfWeek, $lte: endOfWeek } });
-        const formattedArrayAttendance = arrayAttendanceDB.map(asistencia => {
-            return { ...asistencia.toObject(), date: asistencia.formatDate() };
-        });
-
-        modifyAttendanceArray(formattedArrayAttendance);
-
+    
+        const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfWeek, $lte: endOfWeek } });
+    
         res.render("attendance", {
-            arrayAttendance: formattedArrayAttendance
+        arrayAttendance: formattedArrayAttendance
         });
     } catch (error) {
         console.log(error);
@@ -68,20 +53,15 @@ exports.getWeeklyAttendance = async (req, res) => {
     }
 };
 
-exports.getMonthlyAttendance = async (req, res) => {
+exports.getMonthlyAttendance = async function(req, res) {
     try {
         const startOfMonth = moment().startOf('month').startOf('day').toDate();
         const endOfMonth = moment().endOf('month').endOf('day').toDate();
-
-        const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfMonth, $lte: endOfMonth } });
-        const formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
-            return { ...attendance.toObject(), date: attendance.formatDate() };
-        });
-
-        modifyAttendanceArray(formattedArrayAttendance);
-
+    
+        const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfMonth, $lte: endOfMonth } });
+    
         res.render("attendance", {
-            arrayAttendance: formattedArrayAttendance
+        arrayAttendance: formattedArrayAttendance
         });
     } catch (error) {
         console.log(error);
@@ -136,6 +116,38 @@ function getRut(urlOriginal, rutUser) {
     return urlOriginal; // Devuelve el string sin cambios si no se encuentra la subcadena
 };
 //#endregio
+
+const PDFDocument = require('pdfkit');
+
+exports.downloadAllAttendance = async function(req, res){
+    try {
+
+        const lista = await getFormattedArrayAttendance();
+
+        // Crear un nuevo documento PDF
+        const doc = new PDFDocument();
+
+        // Establecer el nombre del archivo y los encabezados para la descarga
+        res.setHeader('Content-Disposition', 'attachment; filename="Asistencia.pdf"');
+        res.setHeader('Content-Type', 'application/pdf');
+
+        // Stream el contenido del PDF directamente al cliente
+        doc.pipe(res);
+
+        // Agregar el contenido de la lista al PDF
+        lista.forEach((elemento) => {
+            doc.text(`ID Usuario: ${elemento.idUser}`);
+            doc.text(`Fecha: ${elemento.date}`);
+            doc.text('---------------------------'); // Opcional: Agregar separador entre cada asistencia
+        });
+
+        // Finalizar el documento PDF
+        doc.end();
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al generar el PDF');
+    }
+};
 
 module.exports.getRandomAttendance = () => {
     return new Promise(async (resolve, reject) => {
@@ -193,3 +205,34 @@ function modifyAttendanceArray(arrayAttendance) {
         attendance.idUser = modifiedIdUser;
     });
 }
+
+async function getFormattedArrayAttendance() {
+    const arrayAsistenciaDB = await Attendence.find();
+    const formattedArrayAttendance = arrayAsistenciaDB.map(attendence => {
+        return { ...attendence.toObject(), date: attendence.formatDate() };
+    });
+    modifyAttendanceArray(formattedArrayAttendance); // Asegúrate de que esta función esté definida y haga lo que necesitas
+    return formattedArrayAttendance;
+}
+
+async function getFormattedArrayAttendanceForDate(query) {
+    let formattedArrayAttendance;
+    
+    if (query) {
+      const { date } = query;
+      const startOfDay = moment(date.$gte).startOf('day').toDate();
+      const endOfDay = moment(date.$lte).endOf('day').toDate();
+      const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfDay, $lte: endOfDay } });
+      formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
+        return { ...attendance.toObject(), date: attendance.formatDate() };
+      });
+    } else {
+      const arrayAttendanceDB = await Attendence.find();
+      formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
+        return { ...attendance.toObject(), date: attendance.formatDate() };
+      });
+    }
+  
+    modifyAttendanceArray(formattedArrayAttendance); // Asegúrate de que esta función esté definida y haga lo que necesitas
+    return formattedArrayAttendance;
+  }
