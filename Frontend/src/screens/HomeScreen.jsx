@@ -50,41 +50,31 @@ const HomeScreen = () => {
     
 
     return (
-        <html>
-        <head>
-            <title>Página de Inicio de Sesión</title>
-            <link rel="stylesheet" type="text/css" href="/css/login.css" />
-            <script src="/js/functions.js" defer></script>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            </head>
-            <body>
-            <div className="container">
-                <div className="inner-container">
-                <h1>Página de Inicio de Sesión</h1>
-                {mensajeError && (
-                    <div className="error-message">
-                    {mensajeError}
-                    </div>
-                )}
-                {/* <form id="login-form" action="/usuario/logIn" method="POST">
-                    <label htmlFor="rut">RUT:</label>
-                    <input type="text" id="rut" name="rut" placeholder='123456789' maxLength="8" required />
-                    <span>-</span>
-                    <input type="text" id="dv" name="dv" placeholder='K' maxLength="1" required />
-                    <br/><br/>
-                    <label htmlFor="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" maxLength="20" required />
-                    <br/><br/>
-                    <input type="submit" style={styles.button} value="Ingresar" />
-                </form> */}
-                <input value = {rut} onChange = {rutChange}></input>
-                <input value = {dv} onChange = {dvChange}></input>
-                <input value = {password} onChange = {passwordChange}></input>
-                <button onClick={handleSubmit}>Ingresar</button> 
+        <div className="container">
+            <div className="inner-container">
+            <h1>Página de Inicio de Sesión</h1>
+            {mensajeError && (
+                <div className="error-message">
+                {mensajeError}
                 </div>
+            )}
+            {/* <form id="login-form" action="/usuario/logIn" method="POST">
+                <label htmlFor="rut">RUT:</label>
+                <input type="text" id="rut" name="rut" placeholder='123456789' maxLength="8" required />
+                <span>-</span>
+                <input type="text" id="dv" name="dv" placeholder='K' maxLength="1" required />
+                <br/><br/>
+                <label htmlFor="password">Contraseña:</label>
+                <input type="password" id="password" name="password" maxLength="20" required />
+                <br/><br/>
+                <input type="submit" style={styles.button} value="Ingresar" />
+            </form> */}
+            <input value = {rut} onChange = {rutChange} />
+            <input value = {dv} onChange = {dvChange} />
+            <input value = {password} onChange = {passwordChange} />
+            <button onClick={handleSubmit}>Ingresar</button> 
             </div>
-            </body>
-        </html>
+        </div>
     );
 };
 
