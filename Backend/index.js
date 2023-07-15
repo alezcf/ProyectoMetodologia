@@ -1,5 +1,6 @@
 //#region Complementos necesarios del main
 /* eslint-disable no-console */
+const cors = require('cors');
 const mongoose = require('mongoose');
 const express = require('express');
 const session = require('express-session');
@@ -14,7 +15,7 @@ require('dotenv').config();
 const { URI } = require('./config/default');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 //#endregion
 
@@ -26,6 +27,14 @@ mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
 //#endregion
 
 // Middleware
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.header("Access-Control-Allow-Headers", "x-access-token, Origin, X-Requested-With, Content-Type, Accept, XMLHttpRequest");
+  next();
+})
+
+app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

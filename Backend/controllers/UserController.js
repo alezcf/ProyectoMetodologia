@@ -12,6 +12,7 @@ exports.getAllUsers = async (req, res) => {
 
 exports.logIn = async (req, res) => {
     try {
+        console.log(req.body);
         const { rut, dv, password } = req.body;
         const rutDV = rut + dv
         // Validar el formato del rut utilizando expresiones regulares

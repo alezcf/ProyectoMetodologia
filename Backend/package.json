@@ -19,7 +19,8 @@
     "prettier": "^2.8.8"
   },
   "dependencies": {
-    "dotenv": "^16.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
@@ -27,7 +28,7 @@
     "fs": "^0.0.1-security",
     "moment": "^2.29.4",
     "mongodb": "^5.5.0",
-    "mongoose": "^7.1.1",
+    "mongoose": "^7.3.4",
     "morgan": "^1.10.0",
     "pdfkit": "^0.13.0"
   }
