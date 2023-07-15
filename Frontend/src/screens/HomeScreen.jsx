@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 
 const HomeScreen = () => {
-    const mensajeError = null; // Aquí puedes asignar un mensaje de error si lo deseas
+    const mensajeError = null; // Aquí puedes asignar un mensaje de error solo si hay algun error
 
     const styles = {
         background: {
