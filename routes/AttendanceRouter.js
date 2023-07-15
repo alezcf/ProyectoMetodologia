@@ -8,6 +8,7 @@ router.get('/read/random', attendanceController.getRandomAttendance);
 router.get('/readDaily', attendanceController.getDailyAttendance);
 router.get('/readWeekly', attendanceController.getWeeklyAttendance);
 router.get('/readMonthly', attendanceController.getMonthlyAttendance);
+router.get('/downloadAllAttendance', attendanceController.downloadAllAttendance);
 
 module.exports = router;
 

@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 
-
 //#endregion
 //
 //#region Configuración y conexion de la base de datos
@@ -18,6 +17,7 @@ const app = express();
 const port = 3000;
 
 //#endregion
+
 
 //#region Configuración y conexion de la base de datos
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
