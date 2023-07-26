@@ -47,6 +47,41 @@ exports.acceptAttendance = async function (req, res) {
     }
 };
 
+exports.deleteAttendance = async function (req, res) {
+    try {
+        console.log("rut recibido: " + req.body.rut);
+        console.log("fecha recibida:" + req.body.fecha);
+    
+        const arrayAsistencia = await Attendance.find();
+        const formattedArrayAttendance = arrayAsistencia.map(attendance => {
+            return { ...attendance.toObject(), date: attendance.formatDate() };
+        });
+        modifyAttendanceArray(formattedArrayAttendance);
+    
+        const filteredArrayAttendance = formattedArrayAttendance.filter(attendance => attendance.isAccepted === false);
+    
+        // Obtener rut y fecha del cuerpo de la solicitud
+        const { rut, fecha } = req.body;
+    
+        // Verificar si existe una asistencia con el rut y fecha proporcionados
+        const matchingAttendance = filteredArrayAttendance.find((attendance) => attendance.idUser === rut && attendance.date === fecha);
+    
+        if (matchingAttendance) {
+            // Si encontramos una coincidencia, eliminar la asistencia
+            await Attendance.findOneAndDelete({ _id: matchingAttendance._id });
+    
+            // Devolver un estado de 200 con un mensaje indicando que la asistencia fue encontrada y eliminada
+            console.log("La asistencia fue encontrada y eliminada");
+            return res.status(200).json({ status: 200, message: 'Asistencia encontrada y eliminada' });
+        } else {
+            // Si no encontramos una coincidencia, devolver un estado de 404
+            return res.status(404).json({ status: 404, message: 'Asistencia no encontrada' });
+        }
+        } catch (error) {
+        return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
+        }
+    };
+
 
 exports.getAttendanceNotAccepted = async function(req, res) {
 

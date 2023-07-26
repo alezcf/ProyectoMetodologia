@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import '../css/ReviewAttendanceScreen.css'; // Asegúrate de que el nombre del archivo sea correcto
 
 const ReviewAttendanceScreen = () => {
@@ -47,7 +48,7 @@ const ReviewAttendanceScreen = () => {
 
     const handleRejectAttendance = async (attendanceId) => {
         try {
-        const response = await axios.post(`http://localhost:3001/asistencia/acceptAttendance`, {
+        const response = await axios.post(`http://localhost:3001/asistencia/deleteAttendance`, {
             rut: attendanceNotAccepted.find((attendance) => attendance._id === attendanceId).idUser,
             fecha: attendanceNotAccepted.find((attendance) => attendance._id === attendanceId).date,
         });
@@ -68,36 +69,44 @@ const ReviewAttendanceScreen = () => {
         <div className="container">
         {errorMessage && <div className="error-message">{errorMessage}</div>}
         {attendanceNotAccepted.length > 0 ? (
+            <React.Fragment>
+            <Link to="/">Volver</Link>
             <table className="attendance-table">
-            <thead>
+                <thead>
                 <tr>
-                <th colSpan="3" className="table-title">Revisión Pendiente</th>
+                    <th colSpan="3" className="table-title">
+                    Revisión Pendiente
+                    </th>
                 </tr>
                 <tr>
-                <th>ID de Usuario</th>
-                <th>Fecha</th>
-                <th>Acción</th>
+                    <th>ID de Usuario</th>
+                    <th>Fecha</th>
+                    <th>Acción</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 {attendanceNotAccepted.map((attendance) => (
-                <tr key={attendance._id}>
+                    <tr key={attendance._id}>
                     <td>{attendance.idUser}</td>
                     <td>{attendance.date}</td>
                     <td>
-                    <button className="accept-button" onClick={() => handleAcceptAttendance(attendance._id)}>
+                        <button className="accept-button" onClick={() => handleAcceptAttendance(attendance._id)}>
                         Aceptar
-                    </button>
-                    <button className="reject-button" onClick={() => handleRejectAttendance(attendance._id)}>
+                        </button>
+                        <button className="reject-button" onClick={() => handleRejectAttendance(attendance._id)}>
                         Rechazar
-                    </button>
+                        </button>
                     </td>
-                </tr>
+                    </tr>
                 ))}
-            </tbody>
+                </tbody>
             </table>
+            </React.Fragment>
         ) : (
+            <React.Fragment>
+            <Link to="/">Volver</Link>
             <p>No hay asistencias pendientes de aprobación</p>
+            </React.Fragment>
         )}
         </div>
     );

@@ -14,6 +14,7 @@ router.get('/downloadMonthlyAttendance', attendanceController.downloadMonthlyAtt
 router.get('/downloadDailyAttendance', attendanceController.downloadDailyAttendance);
 router.get('/downloadWeeklyAttendance', attendanceController.downloadWeeklyAttendance);
 router.post('/acceptAttendance', attendanceController.acceptAttendance);
-// router.post('/deleteAttendance', attendanceController.deleteAttendance);
+router.post('/deleteAttendance', attendanceController.deleteAttendance);
+
 module.exports = router;
 
