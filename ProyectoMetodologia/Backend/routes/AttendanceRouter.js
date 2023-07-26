@@ -9,6 +9,9 @@ router.get('/readDaily', attendanceController.getDailyAttendance);
 router.get('/readWeekly', attendanceController.getWeeklyAttendance);
 router.get('/readMonthly', attendanceController.getMonthlyAttendance);
 router.get('/downloadAllAttendance', attendanceController.downloadAllAttendance);
+router.get('/downloadMonthlyAttendance', attendanceController.downloadMonthlyAttendance );
+router.get('/downloadDailyAttendance', attendanceController.downloadDailyAttendance);
+router.get('/downloadWeeklyAttendance', attendanceController.downloadWeeklyAttendance);
 
 module.exports = router;
 

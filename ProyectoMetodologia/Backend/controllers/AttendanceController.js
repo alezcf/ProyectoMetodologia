@@ -1,39 +1,28 @@
 const Attendence = require('../models/Attendance');
 
 exports.getAllAttendance = async function(req, res) {
+
     try {
         const arrayAttendance = await getFormattedArrayAttendance();
-    
-        if (isSesion(req)) {
-            res.render("attendance", {
-            arrayAttendance: arrayAttendance
-            });
-        } else {
-            res.render("login", { mensajeError: 'No has iniciado sesión. Por favor, inicia sesión.' });
-        }
+        
+        return res.status(200).json({ status: 200, arrayAttendance: arrayAttendance });
     } catch (error) {
-        console.log(error);
-        res.status(500).send('Error al obtener las asistencias');
+        return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
     }
 };
 
 const moment = require('moment');
 
-
-
 exports.getDailyAttendance = async function(req, res) {
     try {
         const startOfDay = moment().startOf('day').toDate();
         const endOfDay = moment().endOf('day').toDate();
-    
+
         const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfDay, $lte: endOfDay } });
-    
-        res.render("attendance", {
-            arrayAttendance: formattedArrayAttendance
-        });
+
+        return res.status(200).json({ status: 200, arrayAttendance: formattedArrayAttendance });
     } catch (error) {
-        console.log(error);
-        res.status(500).send('Error al obtener la asistencia diaria');
+        return res.status(500).json({ status: 500, message: 'Error al obtener la asistencia diaria' });
     }
 };
 
@@ -41,15 +30,12 @@ exports.getWeeklyAttendance = async function(req, res) {
     try {
         const startOfWeek = moment().startOf('isoWeek').toDate();
         const endOfWeek = moment().endOf('isoWeek').toDate();
-    
+
         const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfWeek, $lte: endOfWeek } });
-    
-        res.render("attendance", {
-        arrayAttendance: formattedArrayAttendance
-        });
+
+        return res.status(200).json({ status: 200, arrayAttendance: formattedArrayAttendance });
     } catch (error) {
-        console.log(error);
-        res.status(500).send('Error al obtener la asistencia semanal');
+        return res.status(500).json({ status: 500, message: 'Error al obtener la asistencia semanal' });
     }
 };
 
@@ -57,26 +43,18 @@ exports.getMonthlyAttendance = async function(req, res) {
     try {
         const startOfMonth = moment().startOf('month').startOf('day').toDate();
         const endOfMonth = moment().endOf('month').endOf('day').toDate();
-    
+
         const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfMonth, $lte: endOfMonth } });
-    
-        res.render("attendance", {
-        arrayAttendance: formattedArrayAttendance
-        });
+
+        return res.status(200).json({ status: 200, arrayAttendance: formattedArrayAttendance });
     } catch (error) {
-        console.log(error);
-        res.status(500).send('Error al obtener la asistencia mensual');
+        return res.status(500).json({ status: 500, message: 'Error al obtener la asistencia mensual' });
     }
 };
 
-
-
-
 //#region crearAsistencia
 exports.createAttendance = async (req, res) => {
-    const urlOriginal = req.get('Referer');
-    const subcadena = 'http://localhost:3000/trabajador/';
-    const idUser = getRut(urlOriginal, subcadena);
+    const idUser = req.body.idUser;
 
     try {
         // Verificar si ya existe una asistencia para el usuario en la fecha actual
@@ -87,10 +65,8 @@ exports.createAttendance = async (req, res) => {
                 $lte: new Date().setHours(23, 59, 59, 999) // Fecha actual a las 23:59:59
             }
         });
-
-        if (existingAttendance) {
-            res.status(400).send('Ya has registrado la asistencia hoy');
-            return;
+        if (existingAttendance !== null) {
+            return res.status(409).send('Ya has registrado la asistencia hoy');
         }
     
         // Crear una nueva instancia del modelo Asistencia con la ID proporcionada
@@ -101,21 +77,12 @@ exports.createAttendance = async (req, res) => {
         // Guardar la nueva asistencia en la base de datos
         await attendance.save();
     
-        res.status(201).send('Asistencia creada exitosamente');
+        return res.status(201).send('Asistencia creada exitosamente');
     } catch (error) {
         console.log(error);
-        res.status(500).send('Error al crear la asistencia');
+        return res.status(500).send('Error al crear la asistencia');
     }
 };
-
-function getRut(urlOriginal, rutUser) {
-    const index = urlOriginal.indexOf(rutUser);
-    if (index !== -1) {
-        return urlOriginal.substring(index + rutUser.length);
-    }
-    return urlOriginal; // Devuelve el string sin cambios si no se encuentra la subcadena
-};
-//#endregio
 
 const PDFDocument = require('pdfkit');
 
@@ -148,6 +115,103 @@ exports.downloadAllAttendance = async function(req, res){
         res.status(500).send('Error al generar el PDF');
     }
 };
+
+exports.downloadDailyAttendance = async function(req, res){
+    try {
+        const startOfDay = moment().startOf('day').toDate();
+        const endOfDay = moment().endOf('day').toDate();
+
+        const lista = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfDay, $lte: endOfDay } });
+
+        // Crear un nuevo documento PDF
+        const doc = new PDFDocument();
+
+        // Establecer el nombre del archivo y los encabezados para la descarga
+        res.setHeader('Content-Disposition', 'attachment; filename="AsistenciaDiaria.pdf"');
+        res.setHeader('Content-Type', 'application/pdf');
+
+        // Stream el contenido del PDF directamente al cliente
+        doc.pipe(res);
+
+        // Agregar el contenido de la lista al PDF
+        lista.forEach((elemento) => {
+            doc.text(`ID Usuario: ${elemento.idUser}`);
+            doc.text(`Fecha: ${elemento.date}`);
+            doc.text('---------------------------'); // Opcional: Agregar separador entre cada asistencia
+        });
+
+        // Finalizar el documento PDF
+        doc.end();
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al generar el PDF');
+    }
+};
+
+exports.downloadWeeklyAttendance = async function(req, res){
+    try {
+        const startOfWeek = moment().startOf('isoWeek').toDate();
+        const endOfWeek = moment().endOf('isoWeek').toDate();
+
+        const lista = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfWeek, $lte: endOfWeek } });
+
+        // Crear un nuevo documento PDF
+        const doc = new PDFDocument();
+
+        // Establecer el nombre del archivo y los encabezados para la descarga
+        res.setHeader('Content-Disposition', 'attachment; filename="AsistenciaSemanal.pdf"');
+        res.setHeader('Content-Type', 'application/pdf');
+
+        // Stream el contenido del PDF directamente al cliente
+        doc.pipe(res);
+
+        // Agregar el contenido de la lista al PDF
+        lista.forEach((elemento) => {
+            doc.text(`ID Usuario: ${elemento.idUser}`);
+            doc.text(`Fecha: ${elemento.date}`);
+            doc.text('---------------------------'); // Opcional: Agregar separador entre cada asistencia
+        });
+
+        // Finalizar el documento PDF
+        doc.end();
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al generar el PDF');
+    }
+};
+
+exports.downloadMonthlyAttendance = async function(req, res){
+    try {
+        const startOfMonth = moment().startOf('month').startOf('day').toDate();
+        const endOfMonth = moment().endOf('month').endOf('day').toDate();
+
+        const lista = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfMonth, $lte: endOfMonth } });
+
+        // Crear un nuevo documento PDF
+        const doc = new PDFDocument();
+
+        // Establecer el nombre del archivo y los encabezados para la descarga
+        res.setHeader('Content-Disposition', 'attachment; filename="AsistenciaMensual.pdf"');
+        res.setHeader('Content-Type', 'application/pdf');
+
+        // Stream el contenido del PDF directamente al cliente
+        doc.pipe(res);
+
+        // Agregar el contenido de la lista al PDF
+        lista.forEach((elemento) => {
+            doc.text(`ID Usuario: ${elemento.idUser}`);
+            doc.text(`Fecha: ${elemento.date}`);
+            doc.text('---------------------------'); // Opcional: Agregar separador entre cada asistencia
+        });
+
+        // Finalizar el documento PDF
+        doc.end();
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Error al generar el PDF');
+    }
+};
+
 
 module.exports.getRandomAttendance = () => {
     return new Promise(async (resolve, reject) => {
