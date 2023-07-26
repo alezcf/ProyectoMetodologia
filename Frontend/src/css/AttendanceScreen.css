@@ -1,0 +1,106 @@
+/* AttendanceScreen.css */
+
+.attendance-container {
+    margin: 20px;
+    text-align: center;
+    position: relative; /* Agregamos posición relativa para que el botón Descargar asistencia se posicione correctamente */
+  }
+  
+  .attendance-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+.attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.attendance-table th,
+.attendance-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.attendance-table th {
+    background-color: #f2f2f2;
+}
+
+.error-message {
+    color: red;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+.centered-cell {
+    text-align: center;
+}
+
+.go-back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.go-back-button:hover {
+    background-color: #0056b3;
+}
+
+.download-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.download-button:hover {
+    background-color: #218838;
+}
+
+.options-menu {
+    margin-bottom: 20px;
+}
+
+.options-menu button {
+    padding: 10px 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.options-menu button:hover {
+    background-color: #ddd;
+}
+
+.options-menu .selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.options-menu .selected:hover {
+    background-color: #0056b3;
+}
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+  }
