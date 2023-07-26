@@ -7,7 +7,7 @@ const LoginScreen = ({ match }) => {
     const [employee, setEmployee] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoggedOut, setIsLoggedOut] = useState(false); // Nuevo estado para controlar la redirección
-
+    const [redirectToPendingAttendance, setRedirectToPendingAttendance] = useState(false);
     const rut = match.params.rut;
 
     const getEmployeeByRut = async () => {
@@ -24,6 +24,10 @@ const LoginScreen = ({ match }) => {
             console.log(error);
             setErrorMessage('Error al obtener el trabajador');
         }
+    };
+
+    const handleViewPendingAttendance = () => {
+        setRedirectToPendingAttendance(true);
     };
 
     const handleRegisterAttendance = () => {
@@ -64,6 +68,11 @@ const LoginScreen = ({ match }) => {
         return <Redirect to="/" />;
     }
 
+    if (redirectToPendingAttendance) {
+        return <Redirect to="/asistencia/readNotAccepted" />;
+    }
+    
+
     return (
         <div className="container">
             <div className="inner-container">
@@ -90,10 +99,19 @@ const LoginScreen = ({ match }) => {
                     <button className="register-attendance-button" onClick={handleRegisterAttendance}>
                         Registrar Asistencia
                     </button>
+                        {employee && employee.jobTitle === "Jefe de Brigada" && (
+                        <button
+                            className="view-pending-attendance-button"
+                            onClick={handleViewPendingAttendance} // Llamar a la función al hacer clic
+                        >
+                            Visualizar Asistencias Pendientes
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
     );
+    
 };
 
 export default LoginScreen;

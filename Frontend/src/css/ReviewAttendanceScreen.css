@@ -1,0 +1,89 @@
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.attendance-table th, .attendance-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.attendance-table th {
+  background-color: #f2f2f2;
+}
+
+.attendance-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.attendance-table tbody tr:hover {
+  background-color: #ddd;
+}
+
+.error-message {
+  color: red;
+}
+
+.table-title {
+  text-align: center;
+}
+
+/* ReviewAttendanceScreen.css */
+
+/* Estilos generales */
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.attendance-table th,
+.attendance-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.table-title {
+  font-size: 1.5rem;
+}
+
+/* Estilos para los botones */
+.accept-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.reject-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  margin-right: 5px;
+}

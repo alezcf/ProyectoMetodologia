@@ -117,3 +117,19 @@
     justify-content: flex-end;
   }
   
+
+  /* Estilo para el botón "Visualizar Asistencias Pendientes" */
+.view-pending-attendance-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+}
+
+/* Estilo para el botón cuando el cursor está sobre él */
+.view-pending-attendance-button:hover {
+  background-color: #45a049;
+}
