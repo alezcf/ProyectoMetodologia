@@ -1,6 +1,16 @@
 const Attendence = require('../models/Attendance');
 
-exports.getAllAttendance = async function(req, res) {
+exports.getAllAttendance = async function (req, res) {
+    try {
+        const arrayAsistencia = await getFormattedArrayAttendance();
+        
+        return res.status(200).json({ status: 200, arrayAttendance: arrayAsistencia });
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
+    }
+};
+
+exports.getPendingAttendance = async function(req, res) {
 
     try {
         const arrayAttendance = await getFormattedArrayAttendance();
@@ -72,7 +82,8 @@ exports.createAttendance = async (req, res) => {
         // Crear una nueva instancia del modelo Asistencia con la ID proporcionada
         const attendance = new Attendence({
             idUser: idUser,
-            date: Date.now()
+            date: Date.now(),
+            isAccepted: false
         });
         // Guardar la nueva asistencia en la base de datos
         await attendance.save();
@@ -255,10 +266,6 @@ function getRandomPeople(array, count) {
     return shuffledArray.slice(0, count);
 };
 
-function isSesion(req) {
-    return req.session.user !== undefined;
-};
-
 function modifyAttendanceArray(arrayAttendance) {
     arrayAttendance.forEach(attendance => {
         const idUser = attendance.idUser;
@@ -275,28 +282,30 @@ async function getFormattedArrayAttendance() {
     const formattedArrayAttendance = arrayAsistenciaDB.map(attendence => {
         return { ...attendence.toObject(), date: attendence.formatDate() };
     });
-    modifyAttendanceArray(formattedArrayAttendance); // Asegúrate de que esta función esté definida y haga lo que necesitas
-    return formattedArrayAttendance;
+    modifyAttendanceArray(formattedArrayAttendance);
+
+    const filteredArrayAttendance = formattedArrayAttendance.filter(attendance => attendance.isAccepted === true);
+    return filteredArrayAttendance;
 }
 
 async function getFormattedArrayAttendanceForDate(query) {
     let formattedArrayAttendance;
     
     if (query) {
-      const { date } = query;
-      const startOfDay = moment(date.$gte).startOf('day').toDate();
-      const endOfDay = moment(date.$lte).endOf('day').toDate();
-      const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfDay, $lte: endOfDay } });
-      formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
-        return { ...attendance.toObject(), date: attendance.formatDate() };
-      });
+        const { date } = query;
+        const startOfDay = moment(date.$gte).startOf('day').toDate();
+        const endOfDay = moment(date.$lte).endOf('day').toDate();
+        const arrayAttendanceDB = await Attendence.find({ date: { $gte: startOfDay, $lte: endOfDay } });
+        formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
+            return { ...attendance.toObject(), date: attendance.formatDate() };
+        });
     } else {
-      const arrayAttendanceDB = await Attendence.find();
-      formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
+        const arrayAttendanceDB = await Attendence.find();
+        formattedArrayAttendance = arrayAttendanceDB.map(attendance => {
         return { ...attendance.toObject(), date: attendance.formatDate() };
-      });
+        });
     }
-  
+    const filteredArrayAttendance = formattedArrayAttendance.filter(attendance => attendance.isAccepted === true);
     modifyAttendanceArray(formattedArrayAttendance); // Asegúrate de que esta función esté definida y haga lo que necesitas
-    return formattedArrayAttendance;
-  }
+    return filteredArrayAttendance;
+}

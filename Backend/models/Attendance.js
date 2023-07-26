@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const attendanceSchema = new Schema(
   {
     idUser: { type: String, required: true },
-    date: { type: Date, default: Date.now }
+    date: { type: Date, default: Date.now },
+    isAccepted: { type: Boolean, required: true },
   },
   { collection: 'asistencia' }
 );
