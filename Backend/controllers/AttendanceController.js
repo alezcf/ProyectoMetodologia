@@ -57,14 +57,11 @@ exports.deleteAttendance = async function (req, res) {
             return { ...attendance.toObject(), date: attendance.formatDate() };
         });
         modifyAttendanceArray(formattedArrayAttendance);
-    
-        const filteredArrayAttendance = formattedArrayAttendance.filter(attendance => attendance.isAccepted === false);
-    
         // Obtener rut y fecha del cuerpo de la solicitud
         const { rut, fecha } = req.body;
     
         // Verificar si existe una asistencia con el rut y fecha proporcionados
-        const matchingAttendance = filteredArrayAttendance.find((attendance) => attendance.idUser === rut && attendance.date === fecha);
+        const matchingAttendance = formattedArrayAttendance.find((attendance) => attendance.idUser === rut && attendance.date === fecha);
     
         if (matchingAttendance) {
             // Si encontramos una coincidencia, eliminar la asistencia
