@@ -10,16 +10,14 @@ exports.getAllAttendance = async function (req, res) {
     }
 };
 
-const Attendance = require('../models/Attendance'); // Asegúrate de que el nombre del modelo sea correcto
-
 exports.acceptAttendance = async function (req, res) {
     try {
         console.log("rut recibido: " + req.body.rut);
         console.log("fecha recibida:" + req.body.fecha);
 
-        const arrayAsistencia = await Attendance.find();
+        const arrayAsistencia = await Attendence.find();
         const formattedArrayAttendance = arrayAsistencia.map(attendance => {
-        return { ...attendance.toObject(), date: attendance.formatDate() };
+            return { ...attendance.toObject(), date: attendance.formatDate() };
         });
         modifyAttendanceArray(formattedArrayAttendance);
 
@@ -32,53 +30,83 @@ exports.acceptAttendance = async function (req, res) {
         const matchingAttendance = filteredArrayAttendance.find((attendance) => attendance.idUser === rut && attendance.date === fecha);
 
         if (matchingAttendance) {
-        // Si encontramos una coincidencia, actualizar isAccepted a true
-        await Attendance.findOneAndUpdate({ _id: matchingAttendance._id }, { isAccepted: true });
+            // Si encontramos una coincidencia, actualizar isAccepted a true
+            await Attendence.findOneAndUpdate({ _id: matchingAttendance._id }, { isAccepted: true });
 
-        // Devolver un estado de 200 con un mensaje indicando que la asistencia fue encontrada y actualizada
-        console.log("La asistencia fue encontrada y actualizada");
-        return res.status(200).json({ status: 200, message: 'Asistencia encontrada y actualizada' });
+            // Devolver un estado de 200 con un mensaje indicando que la asistencia fue encontrada y actualizada
+            console.log("La asistencia fue encontrada y actualizada");
+            return res.status(200).json({ status: 200, message: 'Asistencia encontrada y actualizada' });
         } else {
-        // Si no encontramos una coincidencia, devolver un estado de 404
-        return res.status(404).json({ status: 404, message: 'Asistencia no encontrada' });
+            // Si no encontramos una coincidencia, devolver un estado de 404
+            return res.status(404).json({ status: 404, message: 'Asistencia no encontrada' });
         }
     } catch (error) {
+        console.error(error); // Imprime el error en la consola para diagnosticar problemas
         return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
     }
 };
 
 exports.deleteAttendance = async function (req, res) {
     try {
-        console.log("rut recibido: " + req.body.rut);
-        console.log("fecha recibida:" + req.body.fecha);
-    
-        const arrayAsistencia = await Attendance.find();
-        const formattedArrayAttendance = arrayAsistencia.map(attendance => {
-            return { ...attendance.toObject(), date: attendance.formatDate() };
-        });
-        modifyAttendanceArray(formattedArrayAttendance);
-        // Obtener rut y fecha del cuerpo de la solicitud
-        const { rut, fecha } = req.body;
-    
-        // Verificar si existe una asistencia con el rut y fecha proporcionados
-        const matchingAttendance = formattedArrayAttendance.find((attendance) => attendance.idUser === rut && attendance.date === fecha);
+
+        // Obtener _id del cuerpo de la solicitud
+        const { _id } = req.body;
+
+        // Verificar si existe una asistencia con el _id proporcionado
+        const matchingAttendance = await Attendence.findById(_id);
     
         if (matchingAttendance) {
             // Si encontramos una coincidencia, eliminar la asistencia
-            await Attendance.findOneAndDelete({ _id: matchingAttendance._id });
-    
-            // Devolver un estado de 200 con un mensaje indicando que la asistencia fue encontrada y eliminada
-            console.log("La asistencia fue encontrada y eliminada");
+            await matchingAttendance.deleteOne();
             return res.status(200).json({ status: 200, message: 'Asistencia encontrada y eliminada' });
         } else {
             // Si no encontramos una coincidencia, devolver un estado de 404
             return res.status(404).json({ status: 404, message: 'Asistencia no encontrada' });
         }
-        } catch (error) {
+    } catch (error) {
+        console.error(error); // Imprime el error en la consola para diagnosticar problemas
         return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
+    }
+};
+
+exports.updateAttendance = async function (req, res) {
+        try {
+            // Obtener _id y nuevaFecha del cuerpo de la solicitud
+            const { _id, nuevaFecha } = req.body;
+            console.log("_id recibido: " + _id);
+            console.log("nueva fecha recibida:" + nuevaFecha);
+
+            // Verificar si existe una asistencia con el _id proporcionado
+            const matchingAttendance = await Attendence.findById(_id);
+    
+            if (matchingAttendance) {
+                console.log("La asistencia fue encontrada");
+                // Validar que nuevaFecha sea una fecha válida
+                const parsedDate = moment(nuevaFecha, 'DD/MM/YYYY', true); // Utilizamos true para validar que la fecha sea válida
+                if (!parsedDate.isValid()) {
+                    return res.status(400).json({ status: 400, message: 'La nuevaFecha no es una fecha válida en formato DD/MM/YYYY' });
+                }
+    
+                // Formatear la nueva fecha en el formato deseado (dia/mes/año)
+                const formattedDate = parsedDate.format('DD/MM/YYYY');
+                console.log("formattedDate: " + formattedDate);
+    
+                // Actualizar la asistencia con la nueva fecha formateada
+                await matchingAttendance.updateOne({ date: parsedDate.toDate() });
+    
+                // Devolver un estado de 200 con un mensaje indicando que la asistencia fue encontrada y actualizada
+                console.log("La asistencia fue encontrada y actualizada");
+                return res.status(200).json({ status: 200, message: 'Asistencia encontrada y actualizada' });
+            } else {
+                // Si no encontramos una coincidencia, devolver un estado de 404
+                return res.status(404).json({ status: 404, message: 'Asistencia no encontrada' });
+            }
+    
+        } catch (error) {
+            return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
         }
     };
-
+    
 
 exports.getAttendanceNotAccepted = async function(req, res) {
 

@@ -48,20 +48,19 @@ const ReviewAttendanceScreen = () => {
 
     const handleRejectAttendance = async (attendanceId) => {
         try {
-        const response = await axios.post(`http://localhost:3001/asistencia/deleteAttendance`, {
-            rut: attendanceNotAccepted.find((attendance) => attendance._id === attendanceId).idUser,
-            fecha: attendanceNotAccepted.find((attendance) => attendance._id === attendanceId).date,
-        });
+            const response = await axios.post(`http://localhost:3001/asistencia/deleteAttendance`, {
+                _id: attendanceId,
+            });
 
-        if (response.status === 200) {
-            // Actualizar la lista de asistencias después de rechazar una
-            getAttendanceNotAccepted();
-        } else {
-            setErrorMessage('Error al rechazar la asistencia');
-        }
+            if (response.status === 200) {
+                // Actualizar la lista de asistencias después de rechazar una
+                getAttendanceNotAccepted();
+            } else {
+                setErrorMessage('Error al rechazar la asistencia');
+            }
         } catch (error) {
-        console.log(error);
-        setErrorMessage('Error al rechazar la asistencia');
+            console.log(error);
+            setErrorMessage('Error al rechazar la asistencia');
         }
     };
 

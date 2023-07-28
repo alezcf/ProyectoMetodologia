@@ -10,9 +10,9 @@ const attendanceSchema = new Schema(
   { collection: 'asistencia' }
 );
 
-  attendanceSchema.methods.formatDate = function() {
-  const day = this.date.getDate();
-  const month = this.date.getMonth() + 1;
+attendanceSchema.methods.formatDate = function() {
+  const day = String(this.date.getDate()).padStart(2, '0');
+  const month = String(this.date.getMonth() + 1).padStart(2, '0');
   const year = this.date.getFullYear();
   return `${day}/${month}/${year}`;
 };

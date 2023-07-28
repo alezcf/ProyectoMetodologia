@@ -4,6 +4,8 @@ const attendanceController = require('../controllers/AttendanceController');
 
 router.post('/create', attendanceController.createAttendance);
 router.get('/read', attendanceController.getAllAttendance);
+router.post('/updateAttendance', attendanceController.updateAttendance);
+router.post('/deleteAttendance', attendanceController.deleteAttendance);
 router.get('/read/random', attendanceController.getRandomAttendance);
 router.get('/readDaily', attendanceController.getDailyAttendance);
 router.get('/readWeekly', attendanceController.getWeeklyAttendance);
@@ -14,7 +16,7 @@ router.get('/downloadMonthlyAttendance', attendanceController.downloadMonthlyAtt
 router.get('/downloadDailyAttendance', attendanceController.downloadDailyAttendance);
 router.get('/downloadWeeklyAttendance', attendanceController.downloadWeeklyAttendance);
 router.post('/acceptAttendance', attendanceController.acceptAttendance);
-router.post('/deleteAttendance', attendanceController.deleteAttendance);
+
 
 module.exports = router;
 
