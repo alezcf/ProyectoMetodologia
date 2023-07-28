@@ -212,7 +212,7 @@ exports.downloadAllAttendance = async function(req, res){
         const doc = new PDFDocument();
 
         // Establecer el nombre del archivo y los encabezados para la descarga
-        res.setHeader('Content-Disposition', 'attachment; filename="Asistencia.pdf"');
+        res.setHeader('Content-Disposition', 'attachment; filename="Asistencia histórica.pdf"');
         res.setHeader('Content-Type', 'application/pdf');
 
         // Stream el contenido del PDF directamente al cliente
@@ -254,7 +254,7 @@ exports.downloadDailyAttendance = async function(req, res){
         lista.forEach((elemento) => {
             doc.text(`ID Usuario: ${elemento.idUser}`);
             doc.text(`Fecha: ${elemento.date}`);
-            doc.text('---------------------------'); // Opcional: Agregar separador entre cada asistencia
+            doc.text('---------------------------');
         });
 
         // Finalizar el documento PDF

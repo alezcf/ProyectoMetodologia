@@ -4,12 +4,12 @@
     margin: 20px;
     text-align: center;
     position: relative; /* Agregamos posición relativa para que el botón Descargar asistencia se posicione correctamente */
-  }
-  
-  .attendance-title {
+}
+
+.attendance-title {
     font-size: 24px;
     margin-bottom: 20px;
-  }
+}
 
 .attendance-table {
     width: 100%;
@@ -98,26 +98,60 @@
     background-color: #0056b3;
 }
 
-  body {
+body {
     font-family: Arial, sans-serif;
     background-color: #f8f8f8;
     margin: 0;
     padding: 0;
-  }
-  .button-edit {
+}
+
+.button-edit {
     background-color: #448AFF;
     color: #FFFFFF;
     border: 1px solid #448AFF;
     padding: 5px 10px;
     margin-right: 10px;
     cursor: pointer;
-  }
-  
-  .button-delete {
+}
+
+.button-delete {
     background-color: #FF0000;
     color: #FFFFFF;
     border: 1px solid #FF0000;
     padding: 5px 10px;
     cursor: pointer;
-  }
+}
 
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #f3f3f3;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.search-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
