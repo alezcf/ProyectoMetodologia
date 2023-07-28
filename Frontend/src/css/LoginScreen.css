@@ -1,135 +1,117 @@
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .inner-container {
-    background-color: #f5f5f5;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border-radius: 5px;
-    width: 400px;
-  }
-  
-  .title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #007bff;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 18px;
-    margin-top: 20px;
-  }
-  
-  .user-info {
-    margin-top: 20px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-  }
-  
-  .user-info h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .user-info p {
-    margin-bottom: 5px;
-  }
-  
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .view-attendance-button,
-  .register-attendance-button {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-  
-  .view-attendance-button:hover,
-  .register-attendance-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .register-attendance-button {
-    background-color: #28a745;
-  }
-  
-  .register-attendance-button:hover {
-    background-color: #218838;
-  }
-  
-
-  .close-button {
-    /* Estilos del botón "Cerrar sesión" */
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #ff0000;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    text-decoration: none;
-  }
-  
-  .close-button:hover {
-    background-color: #cc0000;
-  }
-
-  .logout-button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .logout-button:hover {
-    background-color: #cc0000
-  }
-
-  .logout-container {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-
-  /* Estilo para el botón "Visualizar Asistencias Pendientes" */
-.view-pending-attendance-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-/* Estilo para el botón cuando el cursor está sobre él */
+.inner-container {
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+}
+
+.logout-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.logout-button {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.logout-button:hover {
+  background-color: #c40000;
+}
+
+.logout-icon {
+  margin-right: 5px;
+}
+
+.error-message {
+  color: red;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.user-info {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.user-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.user-info p {
+  margin-bottom: 5px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.view-attendance-button {
+  background-color: #007bff;
+}
+
+.view-attendance-button:hover {
+  background-color: #0056b3;
+}
+
+.register-attendance-button {
+  background-color: #28a745;
+}
+
+.register-attendance-button:hover {
+  background-color: #218838;
+}
+
+.view-pending-attendance-button {
+  background-color: #ffc107;
+}
+
 .view-pending-attendance-button:hover {
-  background-color: #45a049;
+  background-color: #e0a800;
+}
+
+.view-groups-button {
+  background-color: #dc3545;
+}
+
+.view-groups-button:hover {
+  background-color: #c82333;
+}
+
+.view-attendance-button,
+.register-attendance-button,
+.view-pending-attendance-button,
+.view-groups-button {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
