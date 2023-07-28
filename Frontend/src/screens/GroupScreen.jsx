@@ -24,9 +24,7 @@ const GroupScreen = () => {
   // Cambia axios.post a axios.delete para eliminar el grupo
   const eliminarGrupo = async (numeroGrupo) => {
     try {
-      const response = await axios.delete(`http://localhost:3001/grupo/Delete/`, {
-        data: { number: numeroGrupo }, // Use 'data' option for axios.delete
-      });
+      const response = await axios.post(`http://localhost:3001/grupo/Delete`, { number: numeroGrupo });
       if (response.data.success) {
         fetchAllGroups(); // Actualiza la lista de grupos después de eliminar correctamente
       } else {
