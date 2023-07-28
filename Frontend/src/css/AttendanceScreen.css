@@ -1,9 +1,14 @@
-/* AttendanceScreen.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+}
 
 .attendance-container {
     margin: 20px;
     text-align: center;
-    position: relative; /* Agregamos posición relativa para que el botón Descargar asistencia se posicione correctamente */
+    position: relative;
 }
 
 .attendance-title {
@@ -76,33 +81,28 @@
 
 .options-menu button {
     padding: 10px 20px;
-    background-color: #f2f2f2;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
     cursor: pointer;
     margin: 0 5px;
     font-size: 16px;
     transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .options-menu button:hover {
-    background-color: #ddd;
+    background-color: #0056b3;
 }
 
 .options-menu .selected {
-    background-color: #007bff;
+    background-color: #0056b3;
     color: #fff;
 }
 
 .options-menu .selected:hover {
-    background-color: #0056b3;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    margin: 0;
-    padding: 0;
+    background-color: #004080;
 }
 
 .button-edit {
