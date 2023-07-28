@@ -23,7 +23,7 @@ exports.setGroup = async (req, res) => {
 
     console.log('Usuarios con grupo' + employeesWithGroup);
 
-    const employeesWithGroupIds = employeesWithGroup.map(employee => employee.idUser);
+    const employeesWithGroupIds = employeesWithGroup.map(employee => employee.rut);
 
     console.log('IDs de usuarios con grupo' + employeesWithGroupIds);
 
@@ -34,7 +34,7 @@ exports.setGroup = async (req, res) => {
     console.log('Usuarios disponibles' + availableUserIds);
 
     // Si no hay suficientes usuarios disponibles para formar un nuevo grupo, enviar una respuesta de error
-    if (availableUserIds.length < 4) {
+    if (availableUserIds.length < 6) {
       res.status(501).json({ message: 'No hay suficientes usuarios disponibles para formar un nuevo grupo' });
       return;
     }
