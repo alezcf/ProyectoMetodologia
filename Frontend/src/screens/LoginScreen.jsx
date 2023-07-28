@@ -14,7 +14,7 @@ const LoginScreen = ({ match }) => {
         try {
             const res = await axios.get(`http://localhost:3001/trabajador/${rut}`);
             const data = res.data;
-        
+
             if (data.error) {
                 setErrorMessage(data.message);
             } else {
@@ -46,8 +46,10 @@ const LoginScreen = ({ match }) => {
             }
         })
         .catch((error) => {
+            // Manejo de errores
+            console.error('Error al registrar la asistencia:', error);
             // Mostrar un mensaje de error o realizar otras acciones en caso de error
-            alert('La asistencia ya fue registrada el dia de hoy.');
+            alert('Hubo un error al registrar la asistencia. Intente nuevamente más tarde.');
         });
     };
 
@@ -69,7 +71,6 @@ const LoginScreen = ({ match }) => {
     if (redirectToPendingAttendance) {
         return <Redirect to="/asistencia/readNotAccepted" />;
     }
-    
 
     return (
         <div className="container">
@@ -97,19 +98,23 @@ const LoginScreen = ({ match }) => {
                     <button className="register-attendance-button" onClick={handleRegisterAttendance}>
                         Registrar Asistencia
                     </button>
-                        {employee && employee.jobTitle === "Jefe de Brigada" && (
+                    {employee && employee.jobTitle === "Jefe de Brigada" && (
                         <button
                             className="view-pending-attendance-button"
-                            onClick={handleViewPendingAttendance} // Llamar a la función al hacer clic
+                            onClick={handleViewPendingAttendance}
                         >
                             Visualizar Asistencias Pendientes
                         </button>
                     )}
+
+                    {/* Botón para visualizar grupos */}
+                    <Link to="/grupo" className="view-groups-button">
+                        Visualización de Grupos
+                    </Link>
                 </div>
             </div>
         </div>
     );
-    
 };
 
 export default LoginScreen;

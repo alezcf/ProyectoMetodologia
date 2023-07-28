@@ -54,7 +54,7 @@ exports.setGroup = async (req, res) => {
     }
 
     // Si se supera el número máximo de intentos, enviar una respuesta de error
-    res.status(500).json({ message: 'No se pudo encontrar un grupo válido después de varios intentos' });
+    res.status(501).json({ message: 'No se pudo encontrar un grupo válido después de varios intentos' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al guardar el grupo' });
@@ -78,23 +78,22 @@ exports.getAllGroups = async (req, res) => {
 // Función para eliminar un grupo por su número de grupo
 exports.deleteGroupByNumber = async (req, res) => {
   try {
-    // Obtén el número del grupo que deseas eliminar de los parámetros de la solicitud
-    const groupNumber = req.params.number;
-
-    // Verifica si el grupo existe antes de intentar eliminarlo
+    console.log('llego a delete');
+    const groupNumber = req.body.number;
+    console.log('Grupo: ' + groupNumber);
     const group = await Group.findOne({ group: groupNumber });
     if (!group) {
       return res.status(404).json({ message: 'El grupo no existe' });
     }
+    console.log(group);
+    await group.deleteOne();
 
-    // Elimina el grupo de la base de datos
-    await group.remove();
-
-    // Devuelve una respuesta con el mensaje de éxito
-    res.status(200).json({ message: 'Grupo eliminado correctamente' });
+    // Devuelve una respuesta con un objeto JSON indicando éxito
+    res.status(200).json({ success: true, message: 'Grupo eliminado correctamente' });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: 'Error al eliminar el grupo' });
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Error al eliminar el grupo' });
   }
 };
+
 

@@ -3,9 +3,9 @@ const router = express.Router();
 
 const groupController = require('../controllers/GroupController');
 
-router.get('/create', groupController.setGroup);
+router.post('/create', groupController.setGroup);
 router.get('/verGrupos', groupController.getAllGroups);
-router.get('/Delete', groupController.deleteGroupByNumber);
+router.post('/Delete', groupController.deleteGroupByNumber);
 
 
 module.exports = router;
