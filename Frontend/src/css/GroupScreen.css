@@ -1,0 +1,78 @@
+/* Styling for the table */
+.group-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .group-table th, .group-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .group-table th.small, .small-font {
+    font-size: 12px;
+  }
+  
+  .group-table th {
+    background-color: #007BFF;
+    color: #fff;
+  }
+  
+  /* Styling for the "Crear Nuevo Grupo" button */
+  button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Styling for the list of members and roles */
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+  
+  li {
+    list-style-type: none;
+    margin-bottom: 5px;
+  }
+  
+  /* Styling for the table cells */
+  td {
+    vertical-align: top;
+  }
+  
+  /* Styling for the "Roles" column */
+  td:nth-child(3) {
+    width: 30%;
+  }
+  
+  /* Styling for the "Acciones" column */
+  td:nth-child(4) {
+    width: 15%;
+    text-align: center;
+  }
+  
+  /* Styling for the buttons in "Acciones" column */
+  button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 6px 12px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import '../css/GroupScreen.css'; // Import the CSS file for styling
 
 const GroupScreen = () => {
   const [groups, setGroups] = useState([]);
@@ -20,24 +21,26 @@ const GroupScreen = () => {
     }
   };
 
-// Cambia axios.post a axios.delete para eliminar el grupo
-const eliminarGrupo = async (numeroGrupo) => {
+  // Cambia axios.post a axios.delete para eliminar el grupo
+  const eliminarGrupo = async (numeroGrupo) => {
     try {
-            const response = await axios.post(`http://localhost:3001/grupo/Delete/`, { number: numeroGrupo });
-        if (response.data.success) {
+      const response = await axios.delete(`http://localhost:3001/grupo/Delete/`, {
+        data: { number: numeroGrupo }, // Use 'data' option for axios.delete
+      });
+      if (response.data.success) {
         fetchAllGroups(); // Actualiza la lista de grupos después de eliminar correctamente
-            } else {
+      } else {
         console.error('Error al eliminar el grupo:', response.data.message);
-        }
+      }
     } catch (error) {
-        console.error('Error al eliminar el grupo:', error);
+      console.error('Error al eliminar el grupo:', error);
     }
-};
+  };
 
-    const crearNuevoGrupo = async () => {
+  const crearNuevoGrupo = async () => {
     try {
       // Llama a la API del backend para crear un nuevo grupo
-        await axios.post('http://localhost:3001/grupo/create');
+      await axios.post('http://localhost:3001/grupo/create');
 
       // Actualiza la lista de grupos después de crear uno nuevo
       fetchAllGroups();
@@ -51,15 +54,40 @@ const eliminarGrupo = async (numeroGrupo) => {
       <h1>Pantalla de Grupos</h1>
       <button onClick={crearNuevoGrupo}>Crear Nuevo Grupo</button>
       {/* Mostrar la lista de grupos */}
-      {groups.map((grupo) => (
-        <div key={grupo._id}>
-          <p>Número de Grupo: {grupo.group}</p>
-          <p>Nombres: {grupo.names.join(', ')}</p>
-          <p>Posiciones: {grupo.positions.join(', ')}</p>
-          <button onClick={() => eliminarGrupo(grupo.group)}>Eliminar Grupo</button>
-          <hr />
-        </div>
-      ))}
+      <table className="group-table">
+        <thead>
+          <tr>
+            <th className="small">Número</th>
+            <th>Miembros</th>
+            <th>Roles</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {groups.map((grupo) => (
+            <tr key={grupo._id}>
+              <td className="small-font">{grupo.group}</td>
+              <td>
+                <ul>
+                  {grupo.names.map((name, index) => (
+                    <li key={index}>{name}</li>
+                  ))}
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  {grupo.positions.map((position, index) => (
+                    <li key={index}>{position}</li>
+                  ))}
+                </ul>
+              </td>
+              <td>
+                <button onClick={() => eliminarGrupo(grupo.group)}>Eliminar Grupo</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
