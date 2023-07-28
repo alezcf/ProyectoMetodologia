@@ -14,7 +14,7 @@ const LoginScreen = ({ match }) => {
         try {
             const res = await axios.get(`http://localhost:3001/trabajador/${rut}`);
             const data = res.data;
-
+        
             if (data.error) {
                 setErrorMessage(data.message);
             } else {
@@ -46,10 +46,8 @@ const LoginScreen = ({ match }) => {
             }
         })
         .catch((error) => {
-            // Manejo de errores
-            console.error('Error al registrar la asistencia:', error);
             // Mostrar un mensaje de error o realizar otras acciones en caso de error
-            alert('Hubo un error al registrar la asistencia. Intente nuevamente más tarde.');
+            alert('La asistencia ya fue registrada el dia de hoy.');
         });
     };
 
