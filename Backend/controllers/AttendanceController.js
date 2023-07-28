@@ -1,4 +1,5 @@
 const Attendence = require('../models/Attendance');
+const Employee = require('../models/Employee');
 
 exports.getAllAttendance = async function (req, res) {
     try {
@@ -301,17 +302,22 @@ exports.downloadMonthlyAttendance = async function(req, res){
 };
 
 
-module.exports.getRandomAttendance = () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const currentDateAttendance = await getAttendanceForCurrentDate();
-            const randomPeople = getRandomPeople(currentDateAttendance, 5);
-            console.log(randomPeople);
-            resolve(randomPeople);
-        } catch (error) {
-            reject(error);
-        }
-    });
+exports.getRandomAttendance = async () => {
+    try {
+        const currentDateAttendance = await getAttendanceForCurrentDate();
+        const randomPeople = getRandomPeople(currentDateAttendance, 5);
+        const randomPositions = await getRandomPositionsEmployees([
+            'Conductor', 'Rescatista', 'Paramedico', 'Combatiente', 'Tecnico en Prevencion'
+        ]);
+        console.log(randomPeople);
+        console.log(randomPositions);
+        return {
+            randomPeople,
+            randomPositions,
+        };
+    } catch (error) {
+        throw error;
+    }
 };
 
 async function getAttendanceForCurrentDate() {
@@ -342,6 +348,22 @@ function getRandomPeople(array, count) {
     // Devolver los primeros 'count' elementos del subconjunto mezclado aleatoriamente
     return shuffledArray.slice(0, count);
 };
+
+async function getRandomPositionsEmployees(positions) {
+    try {
+        const randomEmployees = [];
+        for (const position of positions) {
+            const randomEmployee = await Employee.aggregate([
+                { $match: { position: position } },
+                { $sample: { size: 1 } }
+            ]);
+            randomEmployees.push(randomEmployee[0]);
+        }
+        return randomEmployees;
+    } catch (error) {
+        throw error;
+    }
+}
 
 function modifyAttendanceArray(arrayAttendance) {
     arrayAttendance.forEach(attendance => {

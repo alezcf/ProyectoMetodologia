@@ -4,15 +4,16 @@ const Schema = mongoose.Schema;
 const GroupSchema = new Schema(
   {
     idUser: { type: [String], required: true },
+    names: { type: [String], required: true },
+    positions: { type: [String], required: true },
     group: { type: String, required: true },
     date: { type: Date, default: Date.now }
   },
   { collection: 'grupo' }
 );
-
 GroupSchema.statics.getRandomAttendance = async function() {
-    const getRandomAttendance = require('../controllers/AttendanceController').getRandomAttendance;
-    return getRandomAttendance();
+  const getRandomAttendance = require('../controllers/AttendanceController').getRandomAttendance;
+  return getRandomAttendance();
 };
 
 GroupSchema.methods.formatDate = function() {
