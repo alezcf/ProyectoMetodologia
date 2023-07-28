@@ -11,9 +11,23 @@ const GroupSchema = new Schema(
   },
   { collection: 'grupo' }
 );
-GroupSchema.statics.getRandomAttendance = async function() {
-  const getRandomAttendance = require('../controllers/AttendanceController').getRandomAttendance;
-  return getRandomAttendance();
+// GroupSchema.statics.getRandomAttendance = async function() {
+//   const getRandomAttendance = require('../controllers/AttendanceController').getRandomAttendance;
+//   return getRandomAttendance();
+// };
+
+GroupSchema.statics.getAttendanceAndProcess = async function() {
+  // Importar el controlador AttendanceController dentro del método
+  const AttendanceController = require('../controllers/AttendanceController');
+
+  // Obtener la asistencia diaria del controlador
+  const dailyAttendance = await AttendanceController.getAttendanceForCurrentDate();
+
+  // Imprimir la asistencia
+  console.log('Asistencia' + dailyAttendance);
+
+  // Devolver la asistencia
+  return dailyAttendance;
 };
 
 GroupSchema.methods.formatDate = function() {

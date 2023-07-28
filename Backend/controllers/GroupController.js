@@ -9,57 +9,88 @@ async function generateNextGroupRandom() {
 
 exports.setGroup = async (req, res) => {
   try {
-    let randomUserIds = [];
-    let randomUserNames = [];
-    let randomUserPositions = [];
-    let groupRandom;
+    // Obtener la asistencia diaria desde el modelo Group
+    const dailyAttendance = await Group.getAttendanceAndProcess();
+    console.log('Asistencia' + dailyAttendance);
 
-    const maxAttempts = 10; // Establecer el número máximo de intentos
+    // Obtener los IDs de los usuarios que han firmado en el día
+    const signedUserIds = dailyAttendance.map(attendance => attendance.idUser);
 
-    let attempts = 0;
-    while (attempts < maxAttempts) {
-      // Obtener una nueva lista de usuarios aleatorios
-      const { randomPeople, randomPositions } = await Group.getRandomAttendance();
-      randomUserIds = randomPeople.map(attendance => attendance.idUser);
+    console.log('Usuarios que han firmado' + signedUserIds);
 
-      // Obtener los datos completos de los usuarios asociados a la asistencia desde el modelo Employee
-      const populatedRandomPeople = await Employee.find({ rut: { $in: randomUserIds } }).select('names position');
-      randomUserNames = populatedRandomPeople.map(employee => employee.names);
-      randomUserPositions = populatedRandomPeople.map(employee => employee.position);
+    // Obtener los IDs de los usuarios que ya tienen grupo asignado
+    const employeesWithGroup = await getEmployeesWithGroup();
 
-      // Verificar si alguno de los usuarios ya está en un grupo existente
-      const existingGroup = await Group.findOne({ idUser: { $in: randomUserIds } });
+    console.log('Usuarios con grupo' + employeesWithGroup);
 
-      // Si no hay ningún grupo existente que contenga a estos usuarios, salir del bucle
-      if (!existingGroup) {
-        // Generar el número de grupo aleatorio
-        groupRandom = await generateNextGroupRandom();
+    const employeesWithGroupIds = employeesWithGroup.map(employee => employee.idUser);
 
-        // Crear un nuevo documento Grupo con los datos obtenidos
-        const group = new Group({
-          idUser: randomUserIds,
-          names: randomUserNames, // Agregar los nombres al documento
-          positions: randomUserPositions, // Agregar las posiciones al documento
-          group: groupRandom
-        });
+    console.log('IDs de usuarios con grupo' + employeesWithGroupIds);
 
-        // Guardar el documento en la base de datos
-        await group.save();
-        res.status(200).json({ message: 'Grupo guardado correctamente', groupNumber: groupRandom });
-        return; // Salir de la función después de guardar el grupo exitosamente
-      }
+    // Obtener los IDs de los usuarios que no tienen grupo y no han firmado en el día
+    const availableUserIds = dailyAttendance.filter(attendance => !employeesWithGroupIds.includes(attendance.idUser))
+      .map(attendance => attendance.idUser);
 
-      // Incrementar el contador de intentos
-      attempts++;
+    console.log('Usuarios disponibles' + availableUserIds);
+
+    // Si no hay suficientes usuarios disponibles para formar un nuevo grupo, enviar una respuesta de error
+    if (availableUserIds.length < 4) {
+      res.status(501).json({ message: 'No hay suficientes usuarios disponibles para formar un nuevo grupo' });
+      return;
     }
 
-    // Si se supera el número máximo de intentos, enviar una respuesta de error
-    res.status(501).json({ message: 'No se pudo encontrar un grupo válido después de varios intentos' });
+    // Seleccionar aleatoriamente 6 usuarios para el nuevo grupo
+    const selectedUserIds = getRandomPeople(availableUserIds, 6);
+
+    // Obtener los datos completos de los usuarios asociados a los IDs seleccionados desde el modelo Employee
+    const selectedEmployees = await Employee.find({ rut: { $in: selectedUserIds } }).select('names position');
+    const selectedUserNames = selectedEmployees.map(employee => employee.names);
+    const selectedUserPositions = selectedEmployees.map(employee => employee.position);
+
+    // Generar el número de grupo aleatorio
+    const groupRandom = await generateNextGroupRandom();
+
+    // Crear un nuevo documento Grupo con los datos obtenidos
+    const group = new Group({
+      idUser: selectedUserIds,
+      names: selectedUserNames, // Agregar los nombres al documento
+      positions: selectedUserPositions, // Agregar las posiciones al documento
+      group: groupRandom
+    });
+    // Guardar el documento en la base de datos
+    await group.save();
+    res.status(200).json({ message: 'Grupo guardado correctamente', groupNumber: groupRandom });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al guardar el grupo' });
   }
 };
+
+function getRandomPeople(array, count) {
+  // Utilizar el algoritmo de Fisher-Yates para mezclar aleatoriamente el array
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+
+  // Devolver los primeros 'count' elementos del subconjunto mezclado aleatoriamente
+  return shuffledArray.slice(0, count);
+}
+
+async function getEmployeesWithGroup() {
+  try {
+    const groupsWithEmployees = await Group.find({ idUser: { $exists: true, $ne: [] } });
+
+    // Obtener los IDs de los usuarios que ya tienen grupo asignado
+    const employeesWithGroupIds = groupsWithEmployees.flatMap(group => group.idUser);
+
+    const employeesWithGroup = await Employee.find({ rut: { $in: employeesWithGroupIds } });
+    return employeesWithGroup;
+  } catch (error) {
+    throw error;
+  }
+}
 
 exports.getAllGroups = async (req, res) => {
   try {

@@ -348,7 +348,8 @@ exports.getRandomAttendance = async () => {
     }
 };
 
-async function getAttendanceForCurrentDate() {
+exports.getAttendanceForCurrentDate = async function() {
+    try {
     const currentDate = moment().startOf('day');
     const nextDate = moment(currentDate).endOf('day');
     const arrayAttendanceDB = await Attendence.find({ date: { $gte: currentDate, $lt: nextDate } });
@@ -357,7 +358,11 @@ async function getAttendanceForCurrentDate() {
         return { ...attendance.toObject(), date: attendance.formatDate() };
     });
 
-    return formattedArrayAttendance;
+        return formattedArrayAttendance;
+    } catch (error) {
+    console.error('Error al obtener la asistencia para la fecha actual:', error);
+    throw error;
+    }
 };
 
 function getRandomPeople(array, count) {
