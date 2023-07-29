@@ -73,9 +73,7 @@ const ReviewAttendanceScreen = () => {
     return (
         <div className="container">
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <button className="go-back-button" onClick={handleGoBack}>
-            <FaArrowLeft /> Volver
-            </button>
+          <button className="go-back-button" onClick={handleGoBack}> <FaArrowLeft /> Volver </button>
           {attendanceNotAccepted.length > 0 ? (
             <React.Fragment>
               <table className="attendance-table">

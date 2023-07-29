@@ -26,7 +26,7 @@
   text-align: center;
 }
 
-.go-back-button {
+/* .go-back-button {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -41,6 +41,11 @@
 
 .go-back-button:hover {
   background-color: #0056b3;
+} */
+
+.back-button{
+  margin: 20px;
+  padding: 6px 12px;
 }
 
 .button-create-group {
@@ -50,6 +55,9 @@
   border-radius: 4px;
   cursor: pointer;
   padding: 6px 12px;
+  float: right;
+  margin: 20px;
+
 }
 
 .button-create-group:hover {
@@ -68,8 +76,17 @@
     background-color: #d50000;
 }
 
+td{
+  text-align: center;
+}
+
+li {
+  padding: 6px;
+  border-bottom: 1px solid #ccc; /* Línea divisora horizontal */
+}
+
 /* Agregar el nuevo estilo para el botón de eliminar */
-.button-delete-red {
+/* .button-delete-red {
     background-color: #FF0000;
     color: #FFFFFF;
     border: none;
@@ -80,7 +97,7 @@
 
 .button-delete-red:hover {
     background-color: #d50000;
-}
+} */
 
 .button-edit {
   background-color: #448AFF;

@@ -103,7 +103,7 @@
 .view-pending-attendance-button,
 .view-groups-button {
   display: block;
-  width: 100%;
+  width: 400px;
   margin-top: 20px;
   padding: 10px 20px;
   color: #fff;
@@ -115,3 +115,8 @@
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
+
+.view-attendance-button{
+  width: 360px
+}
+

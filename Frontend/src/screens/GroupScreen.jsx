@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai'; // Importar los iconos de react-icons
 import axios from 'axios';
 import '../css/GroupScreen.css';
+import { FaArrowLeft,  } from 'react-icons/fa'; 
 
 const GroupScreen = () => {
   const [groups, setGroups] = useState([]);
@@ -56,7 +57,7 @@ const GroupScreen = () => {
     <div>
       <h1>Pantalla de Grupos</h1>
       {/* Botón "Volver" se coloca antes del botón "Crear Nuevo Grupo" */}
-      <button onClick={handleGoBack}>Volver</button>
+      <button className='back-button'onClick={handleGoBack}> <FaArrowLeft/> Volver</button>
       <button className="button-create-group" onClick={crearNuevoGrupo}>
         <AiOutlinePlus /> Crear Nuevo Grupo
       </button>
@@ -88,7 +89,7 @@ const GroupScreen = () => {
                   ))}
                 </ul>
               </td>
-              <td>
+              <td className='td-container'> 
               <button className="button-delete" onClick={() => eliminarGrupo(grupo.group)}>
                   <AiOutlineDelete /> Eliminar Grupo
                 </button>
