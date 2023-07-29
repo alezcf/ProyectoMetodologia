@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai'; // Importar los iconos de react-icons
 import axios from 'axios';
-import '../css/GroupScreen.css'; // Import the CSS file for styling
+import '../css/GroupScreen.css';
 
 const GroupScreen = () => {
   const [groups, setGroups] = useState([]);
@@ -35,6 +36,10 @@ const GroupScreen = () => {
     }
   };
 
+  const handleGoBack = () => {
+    history.goBack();
+  };
+
   const crearNuevoGrupo = async () => {
     try {
       // Llama a la API del backend para crear un nuevo grupo
@@ -50,12 +55,16 @@ const GroupScreen = () => {
   return (
     <div>
       <h1>Pantalla de Grupos</h1>
-      <button onClick={crearNuevoGrupo}>Crear Nuevo Grupo</button>
+      {/* Botón "Volver" se coloca antes del botón "Crear Nuevo Grupo" */}
+      <button onClick={handleGoBack}>Volver</button>
+      <button className="button-create-group" onClick={crearNuevoGrupo}>
+        <AiOutlinePlus /> Crear Nuevo Grupo
+      </button>
       {/* Mostrar la lista de grupos */}
       <table className="group-table">
         <thead>
           <tr>
-            <th className="small">Número</th>
+            <th className="small">Número del Grupo</th>
             <th>Miembros</th>
             <th>Roles</th>
             <th>Acciones</th>
@@ -80,7 +89,9 @@ const GroupScreen = () => {
                 </ul>
               </td>
               <td>
-                <button onClick={() => eliminarGrupo(grupo.group)}>Eliminar Grupo</button>
+              <button className="button-delete" onClick={() => eliminarGrupo(grupo.group)}>
+                  <AiOutlineDelete /> Eliminar Grupo
+                </button>
               </td>
             </tr>
           ))}
@@ -89,5 +100,6 @@ const GroupScreen = () => {
     </div>
   );
 };
+
 
 export default GroupScreen;

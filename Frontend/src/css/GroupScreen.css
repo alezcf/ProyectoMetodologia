@@ -1,78 +1,156 @@
-/* Styling for the table */
+/* GroupScreen.css */
+
 .group-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .group-table th, .group-table td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .group-table th.small, .small-font {
-    font-size: 12px;
-  }
-  
-  .group-table th {
-    background-color: #007BFF;
-    color: #fff;
-  }
-  
-  /* Styling for the "Crear Nuevo Grupo" button */
-  button {
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Styling for the list of members and roles */
-  ul {
-    padding: 0;
-    margin: 0;
-  }
-  
-  li {
-    list-style-type: none;
-    margin-bottom: 5px;
-  }
-  
-  /* Styling for the table cells */
-  td {
-    vertical-align: top;
-  }
-  
-  /* Styling for the "Roles" column */
-  td:nth-child(3) {
-    width: 30%;
-  }
-  
-  /* Styling for the "Acciones" column */
-  td:nth-child(4) {
-    width: 15%;
-    text-align: center;
-  }
-  
-  /* Styling for the buttons in "Acciones" column */
-  button {
-    background-color: #007BFF;
-    color: #fff;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.group-table th,
+.group-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.group-table th {
+  background-color: #f2f2f2;
+}
+
+.error-message {
+  color: red;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.centered-cell {
+  text-align: center;
+}
+
+.go-back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.go-back-button:hover {
+  background-color: #0056b3;
+}
+
+.button-create-group {
+  background-color: #28a745;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 12px;
+}
+
+.button-create-group:hover {
+  background-color: #218838;
+}
+.button-delete {
+    background-color: #FF0000;
+    color: #FFFFFF;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     padding: 6px 12px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+}
+
+.button-delete:hover {
+    background-color: #d50000;
+}
+
+/* Agregar el nuevo estilo para el botón de eliminar */
+.button-delete-red {
+    background-color: #FF0000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 6px 12px;
+}
+
+.button-delete-red:hover {
+    background-color: #d50000;
+}
+
+.button-edit {
+  background-color: #448AFF;
+  color: #FFFFFF;
+  border: 1px solid #448AFF;
+  padding: 5px 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.button-edit:hover {
+  background-color: #2979ff;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  background-color: #f3f3f3;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 3px;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  outline: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Modificaciones para el esquema de colores */
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 12px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
