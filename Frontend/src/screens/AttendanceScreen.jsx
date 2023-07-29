@@ -203,7 +203,7 @@ const AttendanceScreen = () => {
       {errorMessage && <div className="error-message">{errorMessage}</div>}
       <div className="options-menu">
         <button
-          className={selectedOption === 'Todos' ? 'selected' : ''}
+          className={`black-button ${selectedOption === 'Todos' ? 'selected' : ''}`}
           onClick={() => handleOptionChange('Todos')}
           title="Todos los registros"
         >
@@ -211,7 +211,7 @@ const AttendanceScreen = () => {
           Todos
         </button>
         <button
-          className={selectedOption === 'Diaria' ? 'selected' : ''}
+          className={`black-button ${selectedOption === 'Diaria' ? 'selected' : ''}`}
           onClick={() => handleOptionChange('Diaria')}
           title="Registros diarios"
         >
@@ -219,7 +219,7 @@ const AttendanceScreen = () => {
           Diaria
         </button>
         <button
-          className={selectedOption === 'Semanal' ? 'selected' : ''}
+          className={`black-button ${selectedOption === 'Semanal' ? 'selected' : ''}`}
           onClick={() => handleOptionChange('Semanal')}
           title="Registros semanales"
         >
@@ -227,7 +227,7 @@ const AttendanceScreen = () => {
           Semanal
         </button>
         <button
-          className={selectedOption === 'Mensual' ? 'selected' : ''}
+          className={`black-button ${selectedOption === 'Mensual' ? 'selected' : ''}`}
           onClick={() => handleOptionChange('Mensual')}
           title="Registros mensuales"
         >
@@ -266,6 +266,7 @@ const AttendanceScreen = () => {
       </button>
     </div>
   );
+  
 };
 
 export default AttendanceScreen;
