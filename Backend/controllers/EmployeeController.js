@@ -39,3 +39,20 @@ exports.getEmployeesByRut = async (req, res) => {
   }
 };
 
+exports.getAllEmployeesUI = async (req, res) => {
+  try {
+      const arrayEmployeeDB = await Employee.find();
+      const formattedArrayEmployee = arrayEmployeeDB.map(employee => {
+          return { ...employee.toObject(), birthDate: employee.formatDate() };
+      });
+
+      res.status(200).json({
+        arrayEmployee: formattedArrayEmployee
+      });
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Error al obtener los trabajadores' });
+  }
+};
+
+

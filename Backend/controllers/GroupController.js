@@ -127,4 +127,58 @@ exports.deleteGroupByNumber = async (req, res) => {
   }
 };
 
+exports.updateGroup = async (req, res) => {
+  try {
+    const { selectedNewMember, groupNumber, selectedMemberToReplace } = req.body;
+    console.log('Grupo: ' + groupNumber);
+    console.log('Nuevo miembro: ' + selectedNewMember);
+    console.log('Miembro a reemplazar: ' + selectedMemberToReplace);
 
+    // Verificar si hay al menos un usuario seleccionado para el grupo
+    if (!selectedNewMember || !groupNumber || !selectedMemberToReplace) {
+      return res.status(400).json({ message: 'Debe proporcionar todos los campos necesarios' });
+    }
+
+    // Buscar el grupo por su número de grupo
+    const existingGroup = await Group.findOne({ group: groupNumber });
+
+    if (!existingGroup) {
+      return res.status(404).json({ message: 'El grupo no existe' });
+    }
+
+    // Verificar si el usuario a reemplazar está presente en el grupo
+    const userToReplaceIndex = existingGroup.idUser.indexOf(String(selectedMemberToReplace));
+
+    if (userToReplaceIndex === -1) {
+      return res.status(404).json({ message: 'El usuario a reemplazar no está en el grupo' });
+    }
+    console.log('Indice del usuario a reemplazar: ' + userToReplaceIndex);
+    
+    // Obtener el índice correspondiente en selectedNewMember
+    const newMemberIndex = existingGroup.idUser.indexOf(String(selectedNewMember));
+
+
+
+    if (selectedMemberToReplace === selectedNewMember) {
+      return res.status(400).json({ message: 'El nuevo miembro ya pertenece a otro grupo' });
+    }
+
+    // Reemplazar al usuario en el grupo con el nuevo usuario
+    existingGroup.idUser[userToReplaceIndex] = selectedNewMember;
+
+    // Asignar el nombre y la posición del nuevo miembro al existingGroup
+    const selectedEmployees = await Employee.find({ rut: { $in: selectedNewMember } }).select('names position');
+    console.log(selectedEmployees);
+    const firstSelectedEmployee = selectedEmployees[0];
+  
+    existingGroup.names[userToReplaceIndex] = firstSelectedEmployee.names;
+    existingGroup.positions[userToReplaceIndex] = firstSelectedEmployee.position;
+
+    await existingGroup.save();
+
+    res.status(200).json({ message: 'Grupo actualizado correctamente', groupNumber: existingGroup.group });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Error al actualizar el grupo' });
+  }
+};

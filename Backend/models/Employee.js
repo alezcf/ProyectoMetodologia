@@ -17,11 +17,12 @@ const employeeSchema = new Schema(
 );
 
 employeeSchema.methods.formatDate = function() {
-    const day = this.nacimiento.getDate();
-    const month = this.nacimiento.getMonth() + 1;
-    const year = this.nacimiento.getFullYear();
+    const day = this.birthDate.getDate();
+    const month = this.birthDate.getMonth() + 1;
+    const year = this.birthDate.getFullYear();
     return `${day}/${month}/${year}`;
 };
+
 
 const Employee = mongoose.model('Trabajador', employeeSchema);
 module.exports = Employee;
