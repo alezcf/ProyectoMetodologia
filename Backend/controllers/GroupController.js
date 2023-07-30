@@ -154,9 +154,13 @@ exports.updateGroup = async (req, res) => {
     }
     console.log('Indice del usuario a reemplazar: ' + userToReplaceIndex);
     
-    // Obtener el índice correspondiente en selectedNewMember
-    const newMemberIndex = existingGroup.idUser.indexOf(String(selectedNewMember));
+    // Verificar si el nuevo usuario ya está presente en otro grupo
+    const existingGroups = await Group.find({ idUser: { $exists: true, $ne: [] } });
+    const existingUsers = existingGroups.flatMap(group => group.idUser);
 
+    if (existingUsers.includes(selectedNewMember)) {
+      return res.status(400).json({ message: 'El nuevo miembro ya pertenece a otro grupo' });
+    }
 
 
     if (selectedMemberToReplace === selectedNewMember) {

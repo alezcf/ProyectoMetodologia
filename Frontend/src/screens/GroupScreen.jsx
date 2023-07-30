@@ -19,40 +19,7 @@ const GroupScreen = () => {
     fetchAvailableEmployees();
   }, []);
 
-  const fetchAllGroups = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/grupo/verGrupos');
-      setGroups(response.data);
-    } catch (error) {
-      console.error('Error al obtener los grupos:', error);
-    }
-  };
 
-  const fetchAvailableEmployees = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/trabajador/Read');
-      if (Array.isArray(response.data.arrayEmployee)) {
-        setAvailableEmployees(response.data.arrayEmployee);
-      } else {
-        console.error('Los empleados disponibles no son un array:', response.data);
-      }
-    } catch (error) {
-      console.error('Error al obtener los empleados disponibles:', error);
-    }
-  };
-
-  const eliminarGrupo = async (numeroGrupo) => {
-    try {
-      const response = await axios.post('http://localhost:3001/grupo/Delete', { number: numeroGrupo });
-      if (response.data.success) {
-        fetchAllGroups();
-      } else {
-        console.error('Error al eliminar el grupo:', response.data.message);
-      }
-    } catch (error) {
-      console.error('Error al eliminar el grupo:', error);
-    }
-  };
 
   const handleOpenModifyForm = (grupo) => {
     setSelectedGroup(grupo);
@@ -72,6 +39,47 @@ const GroupScreen = () => {
     setSelectedReplaceMembers([]); // Limpia los miembros disponibles para reemplazar, ya que ahora solo se selecciona uno.
   };
 
+  
+  const handleGoBack = () => {
+    history.goBack();
+  };  
+  
+    const fetchAllGroups = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/grupo/verGrupos');
+      setGroups(response.data);
+    } catch (error) {
+      console.error('Error al obtener los grupos:', error);
+    }
+  };
+
+
+  const fetchAvailableEmployees = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/trabajador/Read');
+      if (Array.isArray(response.data.arrayEmployee)) {
+        setAvailableEmployees(response.data.arrayEmployee);
+      } else {
+        console.error('Los empleados disponibles no son un array:', response.data);
+      }
+    } catch (error) {
+      console.error('Error al obtener los empleados disponibles:', error);
+    }
+  };
+
+    const eliminarGrupo = async (numeroGrupo) => {
+    try {
+      const response = await axios.post('http://localhost:3001/grupo/Delete', { number: numeroGrupo });
+      if (response.data.success) {
+        fetchAllGroups();
+      } else {
+        console.error('Error al eliminar el grupo:', response.data.message);
+      }
+    } catch (error) {
+      console.error('Error al eliminar el grupo:', error);
+    }
+  };
+
   const handleModifyGroup = async () => {
     try {
       if (selectedReplaceMembers.length !== 1) {
@@ -89,10 +97,6 @@ const GroupScreen = () => {
     } catch (error) {
       console.error('Error al modificar el grupo:', error);
     }
-  };
-
-  const handleGoBack = () => {
-    history.goBack();
   };
 
   const crearNuevoGrupo = async () => {
