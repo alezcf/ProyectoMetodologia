@@ -5,6 +5,7 @@ import LoginScreen from './screens/LoginScreen';
 import AttendanceScreen from './screens/AttendanceScreen';
 import ReviewAttendanceScreen from './screens/ReviewAttendanceScreen';
 import GroupScreen from './screens/GroupScreen';
+import RolScreen from './screens/RolScreen';
 
 function App() {
   console.log("iniciado");
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/asistencia/read" component={AttendanceScreen} />
         <Route exact path="/asistencia/readNotAccepted" component={ReviewAttendanceScreen} />
         <Route exact path="/grupo" component={GroupScreen} />
+        <Route exact path="/roltrabajador" component={RolScreen} />
       </Switch>
     </Router>
   );

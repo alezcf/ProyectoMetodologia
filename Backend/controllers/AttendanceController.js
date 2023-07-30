@@ -4,12 +4,83 @@ const Employee = require('../models/Employee');
 exports.getAllAttendance = async function (req, res) {
     try {
         const arrayAsistencia = await getFormattedArrayAttendance();
-        
+    
         return res.status(200).json({ status: 200, arrayAttendance: arrayAsistencia });
     } catch (error) {
         return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
     }
 };
+
+exports.getAllAttendanceForRUT = async function (req, res) {
+
+    try {
+        const arrayAsistencia = await getFormattedArrayAttendance();
+        // Get the RUT of the current user from the request object
+        const userRUT = modifyAttendanceIdUser(req.query.rut.toString()); // Assuming the RUT is stored in "req.user.rut"
+
+        const userAttendance = arrayAsistencia.filter(attendance => attendance.idUser === userRUT);
+
+        return res.status(200).json({ status: 200, arrayAttendance: userAttendance });
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
+    }
+};
+
+exports.getDailyAttendanceForRUT = async function (req, res) {
+
+    try {
+
+        const startOfDay = moment().startOf('day').toDate();
+        const endOfDay = moment().endOf('day').toDate();
+        // Get the RUT of the current user from the request object
+        const userRUT = modifyAttendanceIdUser(req.query.rut.toString()); // Assuming the RUT is stored in "req.user.rut"
+
+
+        const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfDay, $lte: endOfDay } });
+        const userAttendance = formattedArrayAttendance.filter(attendance => attendance.idUser === userRUT);
+
+        return res.status(200).json({ status: 200, arrayAttendance: userAttendance });
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
+    }
+};
+
+exports.getWeeklyAttendanceForRUT = async function (req, res) {
+
+    try {
+
+        const startOfWeek = moment().startOf('isoWeek').toDate();
+        const endOfWeek = moment().endOf('isoWeek').toDate();
+
+        // Get the RUT of the current user from the request object
+        const userRUT = modifyAttendanceIdUser(req.query.rut.toString()); // Assuming the RUT is stored in "req.user.rut"
+
+
+        const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfWeek, $lte: endOfWeek } });
+        const userAttendance = formattedArrayAttendance.filter(attendance => attendance.idUser === userRUT);
+        
+        return res.status(200).json({ status: 200, arrayAttendance: userAttendance });
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
+    }
+};
+
+exports.getMonthlyAttendanceForRUT = async function (req, res) {
+
+    try {
+
+        const startOfMonth = moment().startOf('month').startOf('day').toDate();
+        const endOfMonth = moment().endOf('month').endOf('day').toDate();
+        const userRUT = modifyAttendanceIdUser(req.query.rut.toString());
+        const formattedArrayAttendance = await getFormattedArrayAttendanceForDate({ date: { $gte: startOfMonth, $lte: endOfMonth } });
+        const userAttendance = formattedArrayAttendance.filter(attendance => attendance.idUser === userRUT);
+        
+        return res.status(200).json({ status: 200, arrayAttendance: userAttendance });
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
+    }
+};
+
 
 exports.acceptAttendance = async function (req, res) {
     try {
@@ -408,6 +479,16 @@ function modifyAttendanceArray(arrayAttendance) {
         attendance.idUser = modifiedIdUser;
     });
 }
+
+function modifyAttendanceIdUser(idUser) {
+    const hyphenIndex = idUser.lastIndexOf('-');
+    let modifiedIdUser = idUser.slice(0, hyphenIndex).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + idUser.slice(hyphenIndex);
+    
+    modifiedIdUser = modifiedIdUser.slice(0, -1) + '-' + modifiedIdUser.slice(-1);
+    return modifiedIdUser;
+    
+}
+
 
 async function getFormattedArrayAttendance() {
     const arrayAsistenciaDB = await Attendence.find();

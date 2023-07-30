@@ -16,6 +16,10 @@ router.get('/downloadMonthlyAttendance', attendanceController.downloadMonthlyAtt
 router.get('/downloadDailyAttendance', attendanceController.downloadDailyAttendance);
 router.get('/downloadWeeklyAttendance', attendanceController.downloadWeeklyAttendance);
 router.post('/acceptAttendance', attendanceController.acceptAttendance);
+router.get('/readAttendanceForRUT', attendanceController.getAllAttendanceForRUT);
+router.get('/readDailyAttendanceForRUT', attendanceController.getDailyAttendanceForRUT);
+router.get('/readWeeklyAttendanceForRUT', attendanceController.getWeeklyAttendanceForRUT);
+router.get('/readMonthlyAttendanceForRUT', attendanceController.getMonthlyAttendanceForRUT);
 
 
 module.exports = router;
