@@ -8,7 +8,7 @@ const RolScreen = () => {
             1
        </div>
        <div>
-            2
+            
         </div>
     </>
   )

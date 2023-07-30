@@ -224,7 +224,12 @@ const AttendanceScreen = () => {
   };
 
   return (
+    <div>
+        <div className="user-bar">
+          <p className="user-name">Bienvenido {user?.names + " " + user?.lastName}</p>
+        </div>
     <div className="attendance-container">
+
       <h1 className="attendance-title">Listado de Asistencias</h1>
       {errorMessage && <div className="error-message">{errorMessage}</div>}
       <div className="options-menu">
@@ -292,6 +297,7 @@ const AttendanceScreen = () => {
           <FaDownload /> Descargar asistencia
         </button>
       )}
+    </div>
     </div>
   );
 };
