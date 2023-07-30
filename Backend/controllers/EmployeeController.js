@@ -27,6 +27,7 @@ exports.getEmployeesByRut = async (req, res) => {
     }
 
     return res.status(200).json({
+      rut: employee.rut,
       names: employee.names,
       lastName: employee.lastName,
       secondLastName: employee.secondLastName,

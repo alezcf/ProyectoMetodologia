@@ -1,40 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import '../css/AttendanceScreen.css';
 import moment from 'moment';
-import { FaEdit, FaTrash, FaArrowLeft, FaDownload } from 'react-icons/fa'; // Importamos los íconos necesarios
+import { FaEdit, FaTrash, FaArrowLeft, FaDownload } from 'react-icons/fa';
 
 const AttendanceScreen = () => {
+  
   const [arrayAttendance, setArrayAttendance] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [selectedOption, setSelectedOption] = useState('Todos');
   const [searchRut, setSearchRut] = useState('');
   const [filteredAttendance, setFilteredAttendance] = useState([]);
   const history = useHistory();
+  const location = useLocation();
+  const user = location?.state?.user;
 
   useEffect(() => {
     const getAttendance = async () => {
       try {
         let url;
-        switch (selectedOption) {
-          case 'Diaria':
-            url = 'http://localhost:3001/asistencia/readDaily';
-            break;
-          case 'Semanal':
-            url = 'http://localhost:3001/asistencia/readWeekly';
-            break;
-          case 'Mensual':
-            url = 'http://localhost:3001/asistencia/readMonthly';
-            break;
-          default:
-            url = 'http://localhost:3001/asistencia/read';
-            break;
+        // Verifica si el usuario tiene el jobTitle adecuado para ver todas las asistencias
+        if (user && user.jobTitle === 'Jefe de Brigada') {
+          console.log("El usuario es jefe de brigada");
+          switch (selectedOption) {
+            case 'Diaria':
+              url = 'http://localhost:3001/asistencia/readDaily';
+              break;
+            case 'Semanal':
+              url = 'http://localhost:3001/asistencia/readWeekly';
+              break;
+            case 'Mensual':
+              url = 'http://localhost:3001/asistencia/readMonthly';
+              break;
+            default:
+              url = 'http://localhost:3001/asistencia/read';
+              break;
+          }
+        } else {
+          console.log("El usuario NO ES jefe de brigada");
+          switch (selectedOption) {
+            case 'Diaria':
+              url = `http://localhost:3001/asistencia/readDailyAttendanceForRUT?rut=${user.rut}`;
+              break;
+            case 'Semanal':
+              url = `http://localhost:3001/asistencia/readWeeklyAttendanceForRUT?rut=${user.rut}`;
+              break;
+            case 'Mensual':
+              url = `http://localhost:3001/asistencia/readMonthlyAttendanceForRUT?rut=${user.rut}`;
+              break;
+            default:
+              url = `http://localhost:3001/asistencia/readAttendanceForRUT?rut=${user.rut}`;
+              break;
+          }
         }
-
+    
         const res = await axios.get(url);
         const data = res.data;
-
+    
         if (data.error) {
           setErrorMessage(data.message);
         } else {
@@ -47,7 +70,7 @@ const AttendanceScreen = () => {
     };
 
     getAttendance();
-  }, [selectedOption]);
+  }, [selectedOption, user]);
 
   const handleGoBack = () => {
     history.goBack();
@@ -55,6 +78,7 @@ const AttendanceScreen = () => {
 
   const handleDownloadAttendance = async () => {
     try {
+      
       let downloadUrl;
       switch (selectedOption) {
         case 'Diaria':
@@ -183,16 +207,18 @@ const AttendanceScreen = () => {
       <tr key={attendance._id}>
         <td className="centered-cell">{attendance.idUser}</td>
         <td className="centered-cell">{attendance.date}</td>
-        <td className="centered-cell">
-          <div className="actions-container">
-            <button className="button-edit" onClick={() => handleDateModification(attendance)}>
-              <FaEdit /> Modificar
-            </button>
-            <button className="button-delete" onClick={() => handleDeleteAttendance(attendance)}>
-              <FaTrash /> Eliminar
-            </button>
-          </div>
-        </td>
+        {user?.jobTitle === 'Jefe de Brigada' && (
+          <td className="centered-cell">
+            <div className="actions-container">
+              <button className="button-edit" onClick={() => handleDateModification(attendance)}>
+                <FaEdit /> Modificar
+              </button>
+              <button className="button-delete" onClick={() => handleDeleteAttendance(attendance)}>
+                <FaTrash /> Eliminar
+              </button>
+            </div>
+          </td>
+        )}
       </tr>
     ));
   };
@@ -251,7 +277,7 @@ const AttendanceScreen = () => {
           <tr>
             <th>RUT Usuario</th>
             <th>Fecha</th>
-            <th>Acciones</th>
+            {user?.jobTitle === 'Jefe de Brigada' && <th>Acciones</th>}
           </tr>
         </thead>
         <tbody>
@@ -261,12 +287,13 @@ const AttendanceScreen = () => {
       <button className="go-back-button" onClick={handleGoBack}>
         <FaArrowLeft /> Volver
       </button>
-      <button className="download-button" onClick={handleDownloadAttendance}>
-        <FaDownload /> Descargar asistencia
-      </button>
+      {user?.jobTitle === 'Jefe de Brigada' && (
+        <button className="download-button" onClick={handleDownloadAttendance}>
+          <FaDownload /> Descargar asistencia
+        </button>
+      )}
     </div>
   );
-  
 };
 
 export default AttendanceScreen;
