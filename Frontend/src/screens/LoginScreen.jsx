@@ -4,9 +4,7 @@ import { Link, Redirect} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import '../css/LoginScreen.css';
 import { FaSignInAlt, FaSignOutAlt, FaEye, FaBell } from 'react-icons/fa';
-
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
 import sweetalert from 'sweetalert'; // npm i librería 'sweetalert'
 
 const LoginScreen = ({ match }) => {
@@ -61,17 +59,17 @@ const LoginScreen = ({ match }) => {
 
                 if (response.status === 201) {
                     // Si el estatus es 201, mostramos un mensaje de éxito
-                    alert('La asistencia fue registrada correctamente');
+                    alert('Aceptado','La asistencia fue registrada correctamente','success');
                 } else if (response.status === 304) {
                     // Si el estatus es 409, mostramos un mensaje de asistencia ya registrada
-                    alert('La asistencia ya fue registrada el dia de hoy');
+                    sweetalert('Advertencia','La asistencia ya fue registrada el dia de hoy','warning');
                 }
             })
             .catch((error) => {
                 // Manejo de errores
                 console.error('Error al registrar la asistencia:', error);
                 // Mostrar un mensaje de error o realizar otras acciones en caso de error
-                alert('Hubo un error al registrar la asistencia. Intente nuevamente más tarde.');
+                sweetalert('Error','Hubo un error al registrar la asistencia','error');
             });
     };
 
