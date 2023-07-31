@@ -47,8 +47,12 @@ const LoginScreen = ({ match }) => {
     };
 
     const handleViewPendingAttendance = () => {
-        setRedirectToPendingAttendance(true);
-    };
+        // Redireccionar a la siguiente URL y pasar el objeto "employee" como query params
+        history.push({
+            pathname: '/asistencia/readNotAccepted',
+            search: `?rut=${employee.rut}`,
+          });
+      };
 
     const handleRegisterAttendance = () => {
         axios.post('http://localhost:3001/asistencia/create', {

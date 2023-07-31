@@ -1,16 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/ReviewAttendanceScreen.css'; // Asegúrate de que el nombre del archivo sea correcto
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FaArrowLeft,  } from 'react-icons/fa'; 
+import Button from '@mui/material/Button';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const ReviewAttendanceScreen = () => {
+const ReviewAttendanceScreen = (props) => {
     const [attendanceNotAccepted, setAttendanceNotAccepted] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const history = useHistory();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const rut = params.get('rut');
 
     const getAttendanceNotAccepted = async () => {
         try {
+        console.log("Rut recibido = " + rut)
         const res = await axios.get('http://localhost:3001/asistencia/readNotAccepted');
         const data = res.data;
 
@@ -67,13 +74,39 @@ const ReviewAttendanceScreen = () => {
     };
 
     const handleGoBack = () => {
-        history.goBack();
+      // Redireccionar a la siguiente URL con el valor de "rut"
+      history.push(`/trabajador/${rut}`);
+    };
+
+      const backButtonContainerStyle = {
+        position: 'relative',     // Set the container position to relative
+        top: '-10px',              // Set the top position to create a margin of 30px from the top
+        right: '700px',                // Set the left position to align the button to the left
       };
+      const buttonStyleGoBack = {
+        backgroundColor: '#3A789E',  // Set the background color to blue
+        color: 'white',           // Set the text color to white
+        padding: '10px 20px',       // Adjust the padding to make the button smaller
+        fontSize: '14px',         // Adjust the font size to make the text smaller
+        fontFamily: 'Arial',
+        top: "-300px",
+        right: "-10px"      // Set the font family
+      };
+
 
     return (
         <div className="container">
+          <div style={backButtonContainerStyle}>
+          <Button
+            variant="contained"
+            style={buttonStyleGoBack}
+            startIcon={<ArrowBackIcon />}
+            onClick={handleGoBack}
+          >
+            Volver
+          </Button>
+        </div>
           {errorMessage && <div className="error-message">{errorMessage}</div>}
-          <button className="go-back-button" onClick={handleGoBack}> <FaArrowLeft /> Volver </button>
           {attendanceNotAccepted.length > 0 ? (
             <React.Fragment>
               <table className="attendance-table">
