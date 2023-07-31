@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-
+import '../css/UpdateRolScreen.css'; 
 
   
 const UpdateRolScreen = () => {
@@ -18,7 +18,7 @@ const UpdateRolScreen = () => {
     history.goBack();
   };  
 
-  const handlePositionChange = (event) => {
+  const handleJobTitleChange = (event) => {
     setJobTitle(event.target.value);
   };
 
@@ -46,28 +46,43 @@ const UpdateRolScreen = () => {
   };
 
   return (
-    <div> <button className='back-button' onClick={handleGoBack}> Atrás </button> 
+   
+    <div> <button className='back-button' onClick={handleGoBack}>Atrás</button>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h2>Actualizar Posición</h2>
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div>
-            <label htmlFor="rut">Rut:</label>
-            <input type="text" id="rut" value={rut} onChange={handleRutChange} />
+            <div
+                style={{
+                border: '1px solid #ccc',
+                borderRadius: '5px',
+                padding: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '10px',
+                }}
+            >
+                <h2>Actualizar Posición</h2>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                
+                <div style={{ textAlign: 'center' }}>
+                    <label htmlFor="rut">Rut:</label>
+                    <input placeholder="Ingresar sin punto y guión" style={{  marginLeft: '62px' ,textAlign: 'center' }} type="text" id="rut" value={rut} onChange={handleRutChange} />
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                    <label htmlFor="jobTitle">Nuevo Cargo:</label>
+                    <input placeholder="Ingresar el nuevo cargo" style={{textAlign: 'center' }} type="text" id="jobTitle" value={jobTitle} onChange={handleJobTitleChange} />
+                </div>
+
+                <button type="submit">Actualizar posición</button>
+                </form>
+
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {success && <p style={{ color: 'green' }}>{success}</p>}
             </div>
-
-            <div>
-            <label htmlFor="position">Nueva posición:</label>
-            <input type="text" id="position" value={jobTitle} onChange={handlePositionChange} />
-            </div>
-
-            <button type="submit">Actualizar posición</button>
-        </form>
-
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
         </div>
     </div>
+ 
   );
 };
 
 export default UpdateRolScreen;
+ 

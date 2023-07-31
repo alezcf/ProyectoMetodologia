@@ -7,7 +7,7 @@ import ReviewAttendanceScreen from './screens/ReviewAttendanceScreen';
 import GroupScreen from './screens/GroupScreen';
 import RolScreen from './screens/RolScreen';
 import UpdateRolScreen from './screens/UpdateRolScreen';
-
+import RegisterScreen from './screens/RegisterScreen';
 function App() {
   console.log("iniciado");
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route exact path="/grupo" component={GroupScreen} />
         <Route exact path="/roltrabajador" component={RolScreen} />
         <Route exact path="/actualizando" component={UpdateRolScreen} />
+        <Route exact path="/registrando" component={RegisterScreen} />
       </Switch>
     </Router>
   );

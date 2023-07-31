@@ -1,5 +1,15 @@
 const Employee = require('../models/Employee');
 
+exports.addUser = async (req, res) => {
+  const user = new Employee(req.body);
+  try{
+    const employeeSaved = await user.save();
+    console.log(employeeSaved);
+  }catch (err){
+    console.error(err);
+  }
+
+};   
 exports.updatePosition = async (req, res) => {
   const { rut } = req.body;
   const employee = await Employee.findOne({ rut });

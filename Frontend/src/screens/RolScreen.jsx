@@ -7,6 +7,7 @@ const RolScreen = () => {
   const [employees, setEmployees] = useState([]); 
   const history = useHistory();
 
+  
   useEffect(() => {
     fetchEmployees();
   }, []);
@@ -22,16 +23,28 @@ const RolScreen = () => {
   const handleButtonClick = () => {
     history.push('/actualizando');
   };
+  const handleButtonClickAdd = () => {
+    history.push('/registrando');
+  };
   const handleGoBack = () => {
     history.goBack();
   };  
 
   return (
-    <div><button className='back-button' onClick={handleGoBack}> Atrás </button> 
+    <div className="button-container">
+    <button className='back-button' onClick={handleGoBack}>Atrás</button>
+    <button className='buttonUp' onClick={handleButtonClick}>Actualizar un cargo</button>
+    <button className='buttonUp2' onClick={handleButtonClickAdd}>Registrar Trabajador</button>
+  
+       <div  className="space">
+        <span>
+          <h1>Control de roles en la Brigada</h1>
+          <div style={{  marginLeft: '55px'}}><h4>Lista de Bomberos registrados</h4> </div>
+          
+           </span>
+       </div> 
+       
       <div className = 'container'>
-        <h1>Control de roles en la brigada</h1>
-        <button onClick={handleButtonClick}>Actualizar un cargo</button>
-        
           <div className="employee-table-container">
             
             <table className="employee-table">
