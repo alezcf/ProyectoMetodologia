@@ -49,8 +49,8 @@ body {
     position: absolute;
     top: 20px;
     left: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
+    padding: 12px 20px;
+    background-color: #3A789E;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -76,7 +76,7 @@ body {
 }
 
 .download-button:hover {
-    background-color: #218838;
+    background-color: #3A789E;
 }
 
 .options-menu {
@@ -85,7 +85,7 @@ body {
 
 .options-menu button {
     padding: 8px 16px; /* Reducir el margen */
-    background-color: #007bff;
+    background-color: #3A789E;
     color: #fff;
     border: none;
     cursor: pointer;
@@ -99,11 +99,11 @@ body {
 }
 
 .options-menu button:hover {
-    background-color: #0056b3;
+    background-color: #3A789E;
 }
 
 .options-menu .selected {
-    background-color: #0056b3;
+    background-color: #3A789E;
     color: #fff;
 }
 
@@ -176,7 +176,7 @@ body {
 }
 
 .search-button {
-    background-color: #007bff;
+    background-color: #44A0B8;
     color: #fff;
     border: none;
     outline: none;
@@ -192,7 +192,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #007bff;
+    background-color: #3A789E;
     padding: 0.5px;
 }
 
@@ -231,3 +231,4 @@ body {
     height: 100%;
     border-radius: 0;
 }
+

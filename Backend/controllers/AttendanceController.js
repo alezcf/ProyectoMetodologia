@@ -177,8 +177,8 @@ exports.updateAttendance = async function (req, res) {
         } catch (error) {
             return res.status(500).json({ status: 500, message: 'Error al obtener las asistencias' });
         }
-    };
-    
+};
+
 
 exports.getAttendanceNotAccepted = async function(req, res) {
 
