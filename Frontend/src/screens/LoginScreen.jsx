@@ -3,9 +3,11 @@ import axios from 'axios';
 import { Link, Redirect} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import '../css/LoginScreen.css';
-import { FaSignInAlt, FaSignOutAlt, FaEye } from 'react-icons/fa';
+import { FaSignInAlt, FaSignOutAlt, FaEye, FaBell } from 'react-icons/fa';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+import sweetalert from 'sweetalert'; // npm i librería 'sweetalert'
 
 const LoginScreen = ({ match }) => {
     const [employee, setEmployee] = useState(null);
@@ -73,6 +75,30 @@ const LoginScreen = ({ match }) => {
             });
     };
 
+    // function handleViewNotification() {
+    //     window.location.href = "/notificacion";
+    // }
+
+    const handleViewNotification = () => {
+        axios.get('http://localhost:3001/grupo', {
+            idUser: rut,
+        })
+
+        .then((response) => {
+
+            if (response.status === 201) {
+                
+                sweetalert('Notificación','Fuiste agregado al grupo x un grupo por','info');
+            }
+        })
+        .catch((error) => {
+            console.error('Error al registrar la asistencia:', error);
+            // Muestra un mensaje de advertencia por no poseer grupo asignado
+            sweetalert('Aviso','Usted actualmente no posee grupo asigando' ,'warning');
+        });
+    };
+
+
     function handleViewGroups() {
         window.location.href = "/grupo";
     }
@@ -108,6 +134,11 @@ const LoginScreen = ({ match }) => {
                  <h1 variant="h1">INICIO</h1>
             </ThemeProvider>
             <div className="inner-container">
+
+            <button className="notifications" onClick={handleViewNotification}>
+                        <FaBell />
+                    </button>
+                    
                 <div className="logout-container">
                     <button className="logout-button" onClick={handleLogout}>
                         <FaSignOutAlt /> Cerrar sesión
