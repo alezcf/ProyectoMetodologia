@@ -3,33 +3,31 @@ import axios from 'axios';
 import { Link, Redirect} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import '../css/LoginScreen.css';
-import { FaSignInAlt, FaSignOutAlt, FaEye, FaBell } from 'react-icons/fa';
+import { FaSignInAlt, FaSignOutAlt, FaEye } from 'react-icons/fa';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import sweetalert from 'sweetalert'; // npm i librería 'sweetalert'
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const LoginScreen = ({ match }) => {
     const [employee, setEmployee] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoggedOut, setIsLoggedOut] = useState(false);
-    const [redirectToPendingAttendance, setRedirectToPendingAttendance] = useState(false);
+    const [redirectToPendingAttendance ] = useState(false);
     const rut = match.params.rut;
     const history = useHistory();
 
- 
-      const theme = createTheme({
+
+    const theme = createTheme({
         typography: {
-          h1: {
+        h1: {
             color: 'blue',
             fontSize: '24px',
             fontWeight: 'bold',
             textAlign: 'center',
-          },
         },
-      });
+        },
+    });
 
-      
-
-     
     const getEmployeeByRut = async () => {
         try {
             const res = await axios.get(`http://localhost:3001/trabajador/${rut}`);
@@ -51,8 +49,8 @@ const LoginScreen = ({ match }) => {
         history.push({
             pathname: '/asistencia/readNotAccepted',
             search: `?rut=${employee.rut}`,
-          });
-      };
+        });
+    };
 
     const handleRegisterAttendance = () => {
         axios.post('http://localhost:3001/asistencia/create', {
@@ -77,10 +75,6 @@ const LoginScreen = ({ match }) => {
             });
     };
 
-    // function handleViewNotification() {
-    //     window.location.href = "/notificacion";
-    // }
-
     const handleViewNotification = () => {
         axios.get('http://localhost:3001/grupo', {
             idUser: rut,
@@ -101,14 +95,14 @@ const LoginScreen = ({ match }) => {
     };
 
 
-    function handleViewGroups() {
-        window.location.href = "/grupo";
-    }
+function handleViewGroups() {
+    window.location.href = "/grupo";
+}
 
-    const handleRolUser = () => {
+const handleRolUser = () => {
         // Se añade la opción de ver los usuarios trabajadores
     history.push('/roltrabajador');
-  }
+}
 
     const handleLogout = () => {
         // Realizar aquí cualquier otra acción de cierre de sesión necesaria
@@ -129,29 +123,37 @@ const LoginScreen = ({ match }) => {
         return <Redirect to="/asistencia/readNotAccepted" />;
     }
 
+    const iconStyle = {
+        color: 'yellow',      // Establece el color del icono en gris
+        backgroundColor: '#C90040', // Establece el fondo del icono en rojo
+        padding: '10px',
+        borderRadius: '50%', // Aplica una forma circular al fondo
+        position: 'relative', // Establece la posición del icono como relativa
+        right: '-330px',      // Desplaza el icono 20px hacia la derecha
+        top: "-210px"
+    };
+
+    const buttonContainerStyle = {
+        marginTop: '-80px', // Ajusta el margen superior para acercar los botones al contenido del usuario
+      };
+
+    const buttonStyle = {
+        backgroundColor: 'transparent', // Establece el fondo del botón como transparente
+        border: 'none', // Elimina el borde del botón
+        cursor: 'pointer', // Establece el cursor como un puntero al pasar sobre el botón
+        boxShadow: 'none', // Elimina la sombra del botón
+      };
+
     return (
         
         <div className="container">
             <ThemeProvider theme={theme}>
-                 <h1 variant="h1">INICIO</h1>
+                    <h1 variant="h1">INICIO</h1>
             </ThemeProvider>
             <div className="inner-container">
-
-            <button className="notifications" onClick={handleViewNotification}>
-                        <FaBell />
-                    </button>
-                    
-                <div className="logout-container">
-                    <button className="logout-button" onClick={handleLogout}>
-                        <FaSignOutAlt /> Cerrar sesión
-                    </button>
-                
-                   
-                </div>
-                
-                {errorMessage && <div className="error-message">{errorMessage}</div>}
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
                 {employee && (
-                    <div >
+                    <div>
                         <h3>Información del Usuario</h3>
                         <p>
                             <strong>Nombres:</strong> {employee.names}
@@ -167,19 +169,27 @@ const LoginScreen = ({ match }) => {
                         </p>
                     </div>
                 )}
-                <div className="button-container">
+                <button className="notifications" style={buttonStyle} onClick={handleViewNotification}>
+                    <NotificationsIcon style={iconStyle} />
+                </button>
+                <div className="logout-container">
+                    <button className="logout-button" onClick={handleLogout}>
+                        <FaSignOutAlt /> Cerrar sesión
+                    </button>
+                </div>
+                <div className="button-container" style={buttonContainerStyle}>
                 <Link to={{ pathname: '/asistencia/read', state: { user: employee } }} className="view-attendance-button">
-                <FaEye /> Visualizar Asistencia
+                <FaEye /> Visualizar asistencia
                 </Link>
                     <button className="register-attendance-button" onClick={handleRegisterAttendance}>
-                        <FaSignInAlt /> Registrar Asistencia
+                        <FaSignInAlt /> Registrar asistencia
                     </button>
                     {employee && employee.jobTitle === 'Jefe de Brigada' && (
                         <button
                             className="view-pending-attendance-button"
                             onClick={handleViewPendingAttendance}
                         >
-                            <FaEye /> Visualizar Asistencias Pendientes
+                            <FaEye /> Visualizar asistencias pendientes
                         </button>
                         
                     )}
@@ -188,7 +198,7 @@ const LoginScreen = ({ match }) => {
                             className="view-rol-user"
                             onClick={handleRolUser}
                         >
-                            <FaEye /> Visualizar Roles de los Trabajadores
+                            <FaEye /> Visualizar roles de los trabajadores
                         </button>
                         
                     )}

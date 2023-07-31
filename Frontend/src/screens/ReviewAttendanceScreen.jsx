@@ -3,11 +3,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/ReviewAttendanceScreen.css'; // Asegúrate de que el nombre del archivo sea correcto
 import { useHistory, useLocation } from 'react-router-dom';
-import { FaArrowLeft,  } from 'react-icons/fa'; 
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-const ReviewAttendanceScreen = (props) => {
+const ReviewAttendanceScreen = () => {
     const [attendanceNotAccepted, setAttendanceNotAccepted] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const history = useHistory();
