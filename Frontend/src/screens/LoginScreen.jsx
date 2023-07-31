@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import '../css/LoginScreen.css';
 import { FaSignInAlt, FaSignOutAlt, FaEye } from 'react-icons/fa';
 
@@ -10,6 +11,7 @@ const LoginScreen = ({ match }) => {
     const [isLoggedOut, setIsLoggedOut] = useState(false);
     const [redirectToPendingAttendance, setRedirectToPendingAttendance] = useState(false);
     const rut = match.params.rut;
+    const history = useHistory();
 
     const getEmployeeByRut = async () => {
         try {
@@ -57,6 +59,11 @@ const LoginScreen = ({ match }) => {
     function handleViewGroups() {
         window.location.href = "/grupo";
     }
+
+    const handleRolUser = () => {
+        // Se añade la opción de ver los usuarios trabajadores
+    history.push('/roltrabajador');
+  }
 
     const handleLogout = () => {
         // Realizar aquí cualquier otra acción de cierre de sesión necesaria
@@ -118,6 +125,16 @@ const LoginScreen = ({ match }) => {
                         >
                             <FaEye /> Visualizar Asistencias Pendientes
                         </button>
+                        
+                    )}
+                    {employee && employee.jobTitle === 'Jefe de Brigada' && (
+                        <button
+                            className="view-pending-attendance-button"
+                            onClick={handleRolUser}
+                        >
+                            <FaEye /> Visualizar Roles de los Trabajadores
+                        </button>
+                        
                     )}
 
                     <button className="view-groups-button" onClick={handleViewGroups}>
@@ -130,3 +147,4 @@ const LoginScreen = ({ match }) => {
 };
 
 export default LoginScreen;
+
