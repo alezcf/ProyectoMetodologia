@@ -51,7 +51,7 @@ exports.getWeeklyAttendanceForRUT = async function (req, res) {
 
         const startOfWeek = moment().startOf('isoWeek').toDate();
         const endOfWeek = moment().endOf('isoWeek').toDate();
-
+    
         // Get the RUT of the current user from the request object
         const userRUT = modifyAttendanceIdUser(req.query.rut.toString()); // Assuming the RUT is stored in "req.user.rut"
 

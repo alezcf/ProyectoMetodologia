@@ -58,12 +58,3 @@ const RolScreen = () => {
 };
 
 export default RolScreen;
-   
-    //    {/* <form> */}
-    //      {/* <div>
-       //     <label htmlFor="rut" className="uppercase text-gray-600 black text-xl font-bold">
-       //       Rut
-       //     </label>
-       //     <input type="email" id="rut" placeholder="Ingrese rut" className="border w-full p-3 m-3 bg-gray-50 rounded-xl" />
-        //  </div> */}
-      //  {/* </form> */}
