@@ -8,7 +8,7 @@ const employeeSchema = new Schema(
         lastName: { type: String },
         secondLastName: { type: String },
         birthDate: { type: Date },
-        jobTitle: { type: String },
+        jobTitle: { type: String, required: true },
         position: { type: String },
         phoneNumber: { type: Number, required: true },
         email: { type: String },
