@@ -5,6 +5,13 @@
   height: 100vh;
 }
 
+.centering-container {
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  height: 100vh;
+}
+
 .inner-container {
   background-color: #f5f5f5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -86,6 +93,10 @@
   background-color: #ffc107;
 }
 
+.view-rol-user {
+  background-color: #761fb9;
+}
+
 .view-pending-attendance-button:hover {
   background-color: #e0a800;
 }
@@ -101,6 +112,7 @@
 .view-attendance-button,
 .register-attendance-button,
 .view-pending-attendance-button,
+.view-rol-user,
 .view-groups-button {
   display: block;
   width: 400px;

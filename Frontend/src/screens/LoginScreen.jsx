@@ -4,6 +4,7 @@ import { Link, Redirect} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import '../css/LoginScreen.css';
 import { FaSignInAlt, FaSignOutAlt, FaEye } from 'react-icons/fa';
+import { makeStyles } from '@mui/styles';
 
 const LoginScreen = ({ match }) => {
     const [employee, setEmployee] = useState(null);
@@ -12,6 +13,27 @@ const LoginScreen = ({ match }) => {
     const [redirectToPendingAttendance, setRedirectToPendingAttendance] = useState(false);
     const rut = match.params.rut;
     const history = useHistory();
+
+    const useStyles = makeStyles({
+        userInfoContainer: {
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center', // Centrar el contenido verticalmente
+          textAlign: 'center', // Centrar el contenido horizontalmente
+          border: '1px solid #ccc',
+          padding: '20px',
+          borderRadius: '8px',
+          maxWidth: '400px', // Ajusta el ancho máximo según tus necesidades
+          margin: '0 auto', // Centrar el contenedor en la página
+        }, heading: {
+            textAlign: 'center', // Alinear el texto del h1 en el centro
+          },
+      });
+
+      
+
+      const UserInfoComponent = ({ employee }) => {
+        const classes = useStyles();}
 
     const getEmployeeByRut = async () => {
         try {
@@ -85,18 +107,24 @@ const LoginScreen = ({ match }) => {
     }
 
     return (
+        
         <div className="container">
+             <div className= ''> 
+                     <h1 >Página de Información del Usuario</h1>
+                    </div>
             <div className="inner-container">
                 <div className="logout-container">
                     <button className="logout-button" onClick={handleLogout}>
                         <FaSignOutAlt /> Cerrar sesión
                     </button>
+                
+                   
                 </div>
-                <h1>Página de Información del Usuario</h1>
+                
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
                 {employee && (
-                    <div className="user-info">
-                        <h2>Información del Usuario</h2>
+                    <div className={UserInfoComponent}>
+                        <h3>Información del Usuario</h3>
                         <p>
                             <strong>Nombres:</strong> {employee.names}
                         </p>
@@ -129,7 +157,7 @@ const LoginScreen = ({ match }) => {
                     )}
                     {employee && employee.jobTitle === 'Jefe de Brigada' && (
                         <button
-                            className="view-pending-attendance-button"
+                            className="view-rol-user"
                             onClick={handleRolUser}
                         >
                             <FaEye /> Visualizar Roles de los Trabajadores
