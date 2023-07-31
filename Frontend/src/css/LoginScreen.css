@@ -6,10 +6,10 @@
 }
 
 .centering-container {
-  display: flex;
-  justify-content: center; /* Centrar horizontalmente */
-  align-items: center; /* Centrar verticalmente */
-  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .inner-container {
@@ -74,39 +74,41 @@
 }
 
 .view-attendance-button {
-  background-color: #007bff;
+  background-color: #1a5ea1;
 }
 
 .view-attendance-button:hover {
-  background-color: #0056b3;
+  background-color: #0d6acd;
 }
 
 .register-attendance-button {
-  background-color: #28a745;
+  background-color: #267739;
 }
 
 .register-attendance-button:hover {
-  background-color: #218838;
+  background-color: #20973a;
 }
 
 .view-pending-attendance-button {
-  background-color: #ffc107;
+  background-color: #127c81;
 }
 
-.view-rol-user {
-  background-color: #761fb9;
-}
 
 .view-pending-attendance-button:hover {
-  background-color: #e0a800;
+  background-color: #138e97;
 }
-
+.view-rol-user {
+  background-color: #551b82;
+}
+.view-rol-user:hover {
+  background-color: #7724b6;
+}
 .view-groups-button {
-  background-color: #dc3545;
+  background-color: #a51725;
 }
 
 .view-groups-button:hover {
-  background-color: #c82333;
+  background-color: #c3192a;
 }
 
 .view-attendance-button,

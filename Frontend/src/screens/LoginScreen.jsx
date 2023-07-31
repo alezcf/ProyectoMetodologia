@@ -4,7 +4,8 @@ import { Link, Redirect} from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import '../css/LoginScreen.css';
 import { FaSignInAlt, FaSignOutAlt, FaEye } from 'react-icons/fa';
-import { makeStyles } from '@mui/styles';
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const LoginScreen = ({ match }) => {
     const [employee, setEmployee] = useState(null);
@@ -14,27 +15,21 @@ const LoginScreen = ({ match }) => {
     const rut = match.params.rut;
     const history = useHistory();
 
-    const useStyles = makeStyles({
-        userInfoContainer: {
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center', // Centrar el contenido verticalmente
-          textAlign: 'center', // Centrar el contenido horizontalmente
-          border: '1px solid #ccc',
-          padding: '20px',
-          borderRadius: '8px',
-          maxWidth: '400px', // Ajusta el ancho máximo según tus necesidades
-          margin: '0 auto', // Centrar el contenedor en la página
-        }, heading: {
-            textAlign: 'center', // Alinear el texto del h1 en el centro
+ 
+      const theme = createTheme({
+        typography: {
+          h1: {
+            color: 'blue',
+            fontSize: '24px',
+            fontWeight: 'bold',
+            textAlign: 'center',
           },
+        },
       });
 
       
 
-      const UserInfoComponent = ({ employee }) => {
-        const classes = useStyles();}
-
+     
     const getEmployeeByRut = async () => {
         try {
             const res = await axios.get(`http://localhost:3001/trabajador/${rut}`);
@@ -109,9 +104,9 @@ const LoginScreen = ({ match }) => {
     return (
         
         <div className="container">
-             <div className= ''> 
-                     <h1 >Página de Información del Usuario</h1>
-                    </div>
+            <ThemeProvider theme={theme}>
+                 <h1 variant="h1">INICIO</h1>
+            </ThemeProvider>
             <div className="inner-container">
                 <div className="logout-container">
                     <button className="logout-button" onClick={handleLogout}>
@@ -123,7 +118,7 @@ const LoginScreen = ({ match }) => {
                 
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
                 {employee && (
-                    <div className={UserInfoComponent}>
+                    <div >
                         <h3>Información del Usuario</h3>
                         <p>
                             <strong>Nombres:</strong> {employee.names}

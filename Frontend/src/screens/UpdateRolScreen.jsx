@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
+
+  
 const UpdateRolScreen = () => {
   const [rut, setRut] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-
+  const history = useHistory();
   const handleRutChange = (event) => {
     setRut(event.target.value);
   };
+  
+  const handleGoBack = () => {
+    history.goBack();
+  };  
 
   const handlePositionChange = (event) => {
     setJobTitle(event.target.value);
@@ -39,23 +46,26 @@ const UpdateRolScreen = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="rut">Rut:</label>
-          <input type="text" id="rut" value={rut} onChange={handleRutChange} />
+    <div> <button className='back-button' onClick={handleGoBack}> Atrás </button> 
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <h2>Actualizar Posición</h2>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div>
+            <label htmlFor="rut">Rut:</label>
+            <input type="text" id="rut" value={rut} onChange={handleRutChange} />
+            </div>
+
+            <div>
+            <label htmlFor="position">Nueva posición:</label>
+            <input type="text" id="position" value={jobTitle} onChange={handlePositionChange} />
+            </div>
+
+            <button type="submit">Actualizar posición</button>
+        </form>
+
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {success && <p style={{ color: 'green' }}>{success}</p>}
         </div>
-
-        <div>
-          <label htmlFor="position">Nueva posición:</label>
-          <input type="text" id="position" value={jobTitle} onChange={handlePositionChange} />
-        </div>
-
-        <button type="submit">Actualizar posición</button>
-      </form>
-
-      {error && <p>{error}</p>}
-      {success && <p className="success">{success}</p>}
     </div>
   );
 };

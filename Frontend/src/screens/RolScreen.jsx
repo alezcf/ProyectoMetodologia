@@ -20,38 +20,43 @@ const RolScreen = () => {
     }
   };
   const handleButtonClick = () => {
-    
     history.push('/actualizando');
   };
-
+  const handleGoBack = () => {
+    history.goBack();
+  };  
 
   return (
-    <div className = 'container'>
-      <h1>Control de roles en la brigada</h1>
-      <button onClick={handleButtonClick}>Actualizar un rol</button>
-        <div className="employee-table-container">
-          <table className="employee-table">
-              <thead>
-                <tr>
-                  <th>Rut</th>
-                  <th>Nombre</th>
-                  <th>Cargo</th>
-                  <th>Posición</th>
-                </tr>
-              </thead>
-              <tbody>
-                {employees.map((employee) => (
-                  <tr key={employee._id}>
-                    <td>{employee.rut}</td>
-                    <td>{`${employee.names} ${employee.lastName} ${employee.secondLastName}`}</td>
-                    <td>{employee.jobTitle}</td>
-                    <td>{employee.position}</td>
+    <div><button className='back-button' onClick={handleGoBack}> Atrás </button> 
+      <div className = 'container'>
+        <h1>Control de roles en la brigada</h1>
+        <button onClick={handleButtonClick}>Actualizar un cargo</button>
+        
+          <div className="employee-table-container">
+            
+            <table className="employee-table">
+                <thead>
+                  <tr>
+                    <th>Rut</th>
+                    <th>Nombre</th>
+                    <th>Cargo</th>
+                    <th>Posición</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {employees.map((employee) => (
+                    <tr key={employee._id}>
+                      <td>{employee.rut}</td>
+                      <td>{`${employee.names} ${employee.lastName} ${employee.secondLastName}`}</td>
+                      <td>{employee.jobTitle}</td>
+                      <td>{employee.position}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+          </div>
+        <div>
         </div>
-      <div>
       </div>
     </div>
   );
