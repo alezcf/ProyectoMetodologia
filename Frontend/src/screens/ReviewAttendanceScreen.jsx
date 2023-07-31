@@ -77,19 +77,19 @@ const ReviewAttendanceScreen = () => {
       history.push(`/trabajador/${rut}`);
     };
 
-      const backButtonContainerStyle = {
-        position: 'relative',     // Set the container position to relative
-        top: '-10px',              // Set the top position to create a margin of 30px from the top
-        right: '700px',                // Set the left position to align the button to the left
-      };
+    const backButtonContainerStyle = {
+      position: 'relative', // Set the container position to relative
+      marginBottom: '20px', // Ajusta el margen inferior para separar el botón de la tabla
+    };
+
       const buttonStyleGoBack = {
-        backgroundColor: '#3A789E',  // Set the background color to blue
-        color: 'white',           // Set the text color to white
-        padding: '10px 20px',       // Adjust the padding to make the button smaller
-        fontSize: '14px',         // Adjust the font size to make the text smaller
+        backgroundColor: '#3A789E', // Set the background color to blue
+        color: 'white', // Set the text color to white
+        padding: '10px 20px', // Adjust the padding to make the button smaller
+        fontSize: '14px', // Adjust the font size to make the text smaller
         fontFamily: 'Arial',
-        top: "-300px",
-        right: "-10px"      // Set the font family
+        top: "-150px",
+        right: "690px"
       };
 
 
