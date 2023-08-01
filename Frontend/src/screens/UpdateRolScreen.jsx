@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   formButton: {
     padding: theme.spacing(1, 2),
-    backgroundColor: '#405fe9',
+    backgroundColor: '#3A789E',
     color: 'white',
     border: 'none',
     borderRadius: '5px',
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
     transition: 'background-color 0.3s ease-in-out',
     '&:hover': {
-      backgroundColor: '#0d00ff',
+      backgroundColor: '#328ac1',
     },
   },
   customButtonContainer: {
