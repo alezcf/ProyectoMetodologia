@@ -4,7 +4,11 @@ import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
 import Select from 'react-select';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, IconButton, Typography } from '@mui/material';
+import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
+
 import '../css/GroupScreen.css';
+
 
 const GroupScreen = () => {
   const [groups, setGroups] = useState([]);
@@ -123,91 +127,101 @@ const GroupScreen = () => {
     }
   };
 
+  
+
   return (
     <div>
       <h1>Pantalla de Grupos</h1>
-      <button className='back-button' onClick={handleGoBack}>
-        <FaArrowLeft /> Volver
-      </button>
-      <button className="button-create-group" onClick={crearNuevoGrupo}>
-        <AiOutlinePlus /> Crear Nuevo Grupo
-      </button>
-      <table className="group-table">
-        <thead>
-          <tr>
-            <th className="small">Número del Grupo</th>
-            <th>Miembros</th>
-            <th>Roles</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {groups.map((grupo) => (
-            <tr key={grupo._id}>
-              <td className="small-font">{grupo.group}</td>
-              <td>
-                <ul>
+      <Button className='back-button' onClick={handleGoBack} startIcon={<FaArrowLeft />}>
+        Volver
+      </Button>
+      <Button className="button-create-group" onClick={crearNuevoGrupo} startIcon={<AiOutlinePlus />}>
+        Crear Nuevo Grupo
+      </Button>
+      <TableContainer component={Paper}>
+        <Table className="group-table">
+          <TableHead>
+            <TableRow>
+              <TableCell className="small">Número del Grupo</TableCell>
+              <TableCell>Miembros</TableCell>
+              <TableCell>Roles</TableCell>
+              <TableCell>Acciones</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {groups.map((grupo) => (
+              <TableRow key={grupo._id}>
+                <TableCell className="small-font">{grupo.group}</TableCell>
+                <TableCell>
                   {grupo.names.map((name, index) => (
-                    <li key={index} className={selectedMembers.currentMember === grupo.idUser[index] ? 'selected' : ''}>
+                    <React.Fragment key={index}>
                       {selectedGroup ? (
-                        <button onClick={() => handleMemberReplaceSelection(grupo.idUser[index], name)}>
+                        <Button onClick={() => handleMemberReplaceSelection(grupo.idUser[index], name)}>
                           {name}
-                        </button>
+                        </Button>
                       ) : (
                         <span>{name}</span>
                       )}
                       {selectedMembers.currentMember === grupo.idUser[index] && selectedGroup && (
                         <Select
                           options={availableEmployees.map((employee) => ({
-                            value: employee.rut, // Usar el rut como value
-                            label: employee.names, // Usar el nombre como label
+                            value: employee.rut,
+                            label: employee.names,
                           }))}
                           value={
                             selectedMembers.newMember
                               ? {
-                                value: selectedMembers.newMember,
-                                label: selectedMembers.newMemberName, // Mostrar el nombre en lugar del rut
-                              }
+                                  value: selectedMembers.newMember,
+                                  label: selectedMembers.newMemberName,
+                                }
                               : null
                           }
-                          onChange={(selectedOption) => setSelectedMembers({
-                            ...selectedMembers,
-                            newMember: selectedOption.value,
-                            newMemberName: selectedOption.label, // Guardar el nombre en selectedMembers.newMemberName
-                          })}
+                          onChange={(selectedOption) =>
+                            setSelectedMembers({
+                              ...selectedMembers,
+                              newMember: selectedOption.value,
+                              newMemberName: selectedOption.label,
+                            })
+                          }
                           placeholder="Seleccionar miembro a reemplazar"
                         />
                       )}
-                    </li>
+                      <br />
+                    </React.Fragment>
                   ))}
-                </ul>
-              </td>
-              <td>
-                <ul>
+                </TableCell>
+                <TableCell>
                   {grupo.positions.map((position, index) => (
-                    <li key={index}>{position}</li>
+                    <React.Fragment key={index}>
+                      {position}
+                      <br />
+                    </React.Fragment>
                   ))}
-                </ul>
-              </td>
-              <td className='td-container'>
-                {selectedGroup === grupo ? (
-                  <div>
-                    <button onClick={handleModifyGroup}>Guardar cambios</button>
-                    <button onClick={handleCloseModifyForm}>Cancelar</button>
-                  </div>
-                ) : (
-                  <button className="button-modify" onClick={() => handleOpenModifyForm(grupo)}>
-                    Modificar
-                  </button>
-                )}
-                <button className="button-delete" onClick={() => eliminarGrupo(grupo.group)}>
-                  <AiOutlineDelete /> Eliminar
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                </TableCell>
+                <TableCell className='td-container'>
+                  {selectedGroup === grupo ? (
+                    <div>
+                      <Button variant="contained" color="primary" onClick={handleModifyGroup}>
+                        Guardar cambios
+                      </Button>
+                      <Button variant="contained" color="secondary" onClick={handleCloseModifyForm}>
+                        Cancelar
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button variant="outlined" onClick={() => handleOpenModifyForm(grupo)} startIcon={<EditIcon />}>
+                      Modificar
+                    </Button>
+                  )}
+                  <IconButton color="error" onClick={() => eliminarGrupo(grupo.group)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };
