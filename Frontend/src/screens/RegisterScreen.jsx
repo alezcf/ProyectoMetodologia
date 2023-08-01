@@ -65,7 +65,7 @@ const RegisterScreen = () => {
     history.goBack();
   };
 
-  const handleInputChange = (event) => {
+   const handleInputChange = (event) => {
     const { name, value } = event.target;
     
       if (name === 'rut' && !/^\d*$/.test(value)) {
@@ -74,44 +74,47 @@ const RegisterScreen = () => {
       if (name === 'phoneNumber' && !/^\d*$/.test(value)) {
         return; 
       }
-      if (name === 'names' && !/^[A-Za-z]*$/.test(value)) {
-        return; 
+      if (name === 'names' && !/^[A-Za-z\s]*$/.test(value)) {
+        return;
       }
-      if (name === 'lastName' && !/^[A-Za-z]*$/.test(value)) {
-        return; 
+      if (name === 'lastName' && !/^[A-Za-z\s]*$/.test(value)) {
+        return;
       }
-      if (name === 'secondLastName' && !/^[A-Za-z]*$/.test(value)) {
-        return; 
+      if (name === 'secondLastName' && !/^[A-Za-z\s]*$/.test(value)) {
+        return;
       }
-      if (name === 'jobTitle' && !/^[A-Za-z]*$/.test(value)) {
-        return; 
+      if (name === 'jobTitle' && !/^[A-Za-z\s]*$/.test(value)) {
+        return;
       }
-      if (name === 'position' && !/^[A-Za-z]*$/.test(value)) {
-        return; 
+      if (name === 'position' && !/^[A-Za-z\s]*$/.test(value)) {
+        return;
       }
+
 
       setEmployee({ ...employee, [name]: value });
 
       if (name === 'birthDate') {
-      let formattedValue = value;
-
-      formattedValue = formattedValue.replace(/-/g, '');  
-
-      if (formattedValue.length > 4) {
-        formattedValue = formattedValue.replace(/^(\d{4})/, '$1-');
+        let formattedValue = value;
+      
+        // Remove any non-numeric characters from the value
+        formattedValue = formattedValue.replace(/\D/g, '');
+      
+        if (formattedValue.length > 4) {
+          formattedValue = formattedValue.replace(/^(\d{4})/, '$1-');
+        }
+      
+        if (formattedValue.length > 7) {
+          formattedValue = formattedValue.replace(/-(\d{2})/, '-$1-');
+        }
+      
+        formattedValue = formattedValue.slice(0, 10);
+      
+        setEmployee({ ...employee, [name]: formattedValue });
+      } else {
+        setEmployee({ ...employee, [name]: value });
       }
-  
-      if (formattedValue.length > 7) {
-        formattedValue = formattedValue.replace(/-(\d{2})/, '-$1-');
-      }
-  
-      formattedValue = formattedValue.slice(0, 10);
-  
-      setEmployee({ ...employee, [name]: formattedValue });
-    } else {
-      setEmployee({ ...employee, [name]: value });
-    }
-  };
+      
+    };
 
   const handleSubmit = async (event) => {
     event.preventDefault();

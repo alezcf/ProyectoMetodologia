@@ -124,8 +124,8 @@ const handleRolUser = () => {
     }
 
     const iconStyle = {
-        color: 'yellow',      // Establece el color del icono en gris
-        backgroundColor: '#d62121', // Establece el fondo del icono en rojo
+        color: '#F0E928',      // Establece el color del icono en gris
+        backgroundColor: '#da2133', // Establece el fondo del icono en rojo
         padding: '10px',
         borderRadius: '50%', // Aplica una forma circular al fondo
         position: 'relative', // Establece la posición del icono como relativa

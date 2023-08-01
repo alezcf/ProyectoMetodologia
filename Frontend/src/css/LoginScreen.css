@@ -39,7 +39,7 @@
 }
 
 .logout-button:hover {
-  background-color: rgb(236, 9, 9);
+  background-color: rgb(222, 10, 10);
 }
 
 .logout-icon {
@@ -104,11 +104,11 @@
   background-color: #2a90cf;
 }
 .view-groups-button {
-  background-color: #ce5fbb;
+  background-color: #925d89;
 }
 
 .view-groups-button:hover {
-  background-color: #df4fc7;
+  background-color: #b76ca9;
 }
 
 .view-attendance-button,
