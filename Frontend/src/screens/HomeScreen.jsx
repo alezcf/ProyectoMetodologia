@@ -2,13 +2,26 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../css/HomeScreen.css';
 import { FaSignInAlt } from 'react-icons/fa';
+import {Typography} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+
+    letter: {
+      fontWeight: 'bold',
+      marginBottom: theme.spacing(4),
+      color: '#3789bd',
+      textShadow: '3px 3px 3px rgba(0, 0, 0, 0.2)',
+    },
+  
+  }));
 
 const HomeScreen = ({ history }) => {
     const [mensajeError, setMensajeError] = useState('');
     const [rut, setRut] = useState('');
     const [dv, setDv] = useState('');
     const [password, setPassword] = useState('');
-
+    const classes = useStyles();
     const rutChange = (e) => {
         const value = e.target.value;
         // Validar que el RUT solo contenga números del 1 al 9
@@ -50,7 +63,9 @@ const HomeScreen = ({ history }) => {
     return (
         <div className="container">
         <div className="inner-container">
-            <h1>Inicio de Sesión</h1>
+        <Typography variant="h3" align="center" gutterBottom className={classes.letter} style={{ fontWeight: 'bold', color: '#3A789E', textShadow: '2px 2px 3px rgba(0, 0, 0, 0.2)', letterSpacing: '0.1em' }}>
+  Login
+</Typography>
             {mensajeError && <div className="error-message">{mensajeError}</div>}
             <div className="input-container">
             <label htmlFor="rut">RUT:</label>
@@ -81,7 +96,7 @@ const HomeScreen = ({ history }) => {
                 type="password"
             />
             </div>
-            <button className="login-button" onClick={handleSubmit}>
+            <button  className="login-button" onClick={handleSubmit}>
             <FaSignInAlt /> Ingresar
             </button>
         </div>

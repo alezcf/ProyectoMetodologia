@@ -85,11 +85,11 @@ const ReviewAttendanceScreen = () => {
       const buttonStyleGoBack = {
         backgroundColor: '#3A789E', // Set the background color to blue
         color: 'white', // Set the text color to white
-        padding: '10px 20px', // Adjust the padding to make the button smaller
+        padding: '10px 10px', // Adjust the padding to make the button smaller
         fontSize: '14px', // Adjust the font size to make the text smaller
         fontFamily: 'Arial',
-        top: "-150px",
-        right: "690px"
+        top: "-415px",
+        right: "870px"
       };
 
 

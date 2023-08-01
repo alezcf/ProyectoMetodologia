@@ -4,9 +4,13 @@ import '../css/RolScreen.css'; // Import the CSS styles
 import { useHistory } from 'react-router-dom';
 import { Button, Box, Grid, Table, TableHead, TableRow, TableCell, TableBody, Container, Typography } from '@mui/material'; // Import Material-UI components
 import { makeStyles } from '@mui/styles'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 
 const useStyles = makeStyles((theme) => ({
   title: {
+    
     fontWeight: 'bold',
     marginBottom: theme.spacing(3),
     color: '#dae0e2', // Blue-grey color code
@@ -61,16 +65,15 @@ const useStyles = makeStyles((theme) => ({
   },
   customButtonContainer2: {
     position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
-    top: '40px',
+    top: '120px',
     left: '280px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
   customButtonContainer3: {
     position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
-    top: '-6px',
+    top: '75px',
     left: '650px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
  
-
 }));
 
 const RolScreen = () => {
@@ -104,27 +107,29 @@ const RolScreen = () => {
   };
 
   return (
-    <Container>
-      <Grid container justify="center" alignItems="center" className={classes.customButtonContainer}>
-        <Button className={classes.formButton} onClick={handleGoBack}>Atrás</Button>
+    <Container >
+      
+      <Grid container justify="center" alignItems="center"className={classes.customButtonContainer}>
+        <Button startIcon={<ArrowBackIcon />} className={classes.formButton} onClick={handleGoBack}>Volver</Button>
       </Grid>
         <div className="button-container"></div>
 
-      <div>
+      <div >
       <Grid container justify="center" alignItems="center" className={classes.customButtonContainer2}>
-        <Button className={classes.formButton2} onClick={handleButtonClick}>Actualizar un cargo</Button>
+        <Button startIcon={<HowToRegIcon/>} className={classes.formButton2} onClick={handleButtonClick}>Actualizar un cargo</Button>
       </Grid>
 
       <Grid  container justify="center" alignItems="center" className={classes.customButtonContainer3}>
-        <Button className={classes.formButton3} onClick={handleButtonClickAdd}>Registrar Trabajador</Button>
+        <Button  startIcon={<AppRegistrationIcon />} className={classes.formButton3} onClick={handleButtonClickAdd}>Registrar Trabajador</Button>
       </Grid>
       </div>
+      
 
-      <Box mt={-15} ml={10}> {/* Apply margin-top and margin-left */}
-      <Typography ml={-10} variant="h3" align="center" gutterBottom className={classes.letter}>
-                Control de roles en la Brigada
-              </Typography>
-        <Box mt={10} ml={20}>
+      <Box  mt={-15} ml={10}> {/* Apply margin-top and margin-left */}
+      <Typography style={{ padding: '40px', backgroundColor: '#e1e1e1', textAlign: 'center' }} ml={-13} variant="h2" align="center" gutterBottom className={classes.letter}> 
+      Control de roles en la Brigada</Typography>
+      <Box mt={10} ml={20}>
+
           <Typography gutterBottom className={classes.title} ml={20} variant="h5">Lista de Bomberos registrados</Typography>
         </Box>
       </Box>

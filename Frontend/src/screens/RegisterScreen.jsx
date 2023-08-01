@@ -4,6 +4,8 @@ import axios from 'axios';
 import '../css/RegisterScreen.css';
 import { Button, Container, Grid, TextField, Typography} from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -45,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
     top: '10px',
     left: '20px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
+  
 
 }));
 const RegisterScreen = () => {
@@ -60,10 +63,18 @@ const RegisterScreen = () => {
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
   const history = useHistory();
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const handleGoBack = () => {
     history.goBack();
   };
+
+  const handleCloseSuccessAlert = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setShowSuccessAlert(false);
+    };
 
    const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -128,8 +139,9 @@ const RegisterScreen = () => {
         setError(response.data.message);
         setSuccess(null);
       } else {
-        setSuccess('Posición actualizada exitosamente');
+        setSuccess('Se ha agreado el usuario');
         setError(null);
+        setShowSuccessAlert(true); // Set the showSuccessAlert state to true when the form is successfully submitted
       }
     } catch (error) {
       console.error('Error en la solicitud:', error);
@@ -144,9 +156,10 @@ const RegisterScreen = () => {
     </Grid>
     <Container className={classes.formContainer}>
       <Grid container justify="center" item xs={10} sm={10} md={10} lg={4.5}>
-        <Grid  item xs={10} sm={10} md={10} lg={11.5}>
+        <Grid  item xs={10} sm={10} md={10} lg={11.5}> 
           <div className={classes.formContent}>
             <Typography variant="h5" align="center" gutterBottom className={classes.title}>Registro</Typography>
+           
             <form  onSubmit={handleSubmit}>
               <div >
                 <TextField 
@@ -265,13 +278,34 @@ const RegisterScreen = () => {
                 </Button>
               </div>
             </form>
-            {error && <Typography color="error" align="center">{error}</Typography>}
-            {success && <Typography color="success" align="center">{success}</Typography>}
+          
           </div>
         </Grid>
       </Grid>
+      
     </Container>
+    <Grid container direction="column" justifyContent="center" style={{ minHeight: '0vh', marginTop: '-1000px' }}>
+      <Grid item>
+        <div style={{ padding: '45px', backgroundColor: '#bcbcbc', textAlign: 'center' }}>
+        </div>
+        
+        <Snackbar style={{ minHeight: '0vh', marginTop: '-500px' }}
+          open={showSuccessAlert}
+          autoHideDuration={6000}
+          onClose={handleCloseSuccessAlert}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        >
+          <MuiAlert onClose={handleCloseSuccessAlert} severity="success" elevation={6} variant="filled">
+            {success}
+          </MuiAlert>
+        </Snackbar>
+      </Grid>
+    </Grid>
+    <div>
+
     </div>
+    </div>
+    
   );
 };
 

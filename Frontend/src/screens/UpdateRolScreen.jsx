@@ -92,9 +92,10 @@ const UpdateRolScreen = () => {
 
   return (
     <div > 
+      <Container> 
        <Grid container justify="center" alignItems="center" className={classes.customButtonContainer}>
-      <Button className={classes.formButton} onClick={handleGoBack}>Atrás</Button>
-    </Grid>
+         <Button className={classes.formButton} onClick={handleGoBack}>Atrás</Button>
+        </Grid>
     <Container className={classes.formContainer}>
       <Grid >
         <Grid container justify="center" item xs={5} sm={8} md={6} lg={4}>
@@ -129,7 +130,9 @@ const UpdateRolScreen = () => {
         </Grid>
       </Grid>
     </Container>
+    </Container>
     </div>
+    
   );
 };
 

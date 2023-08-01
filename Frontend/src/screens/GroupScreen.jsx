@@ -1,15 +1,63 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
 import Select from 'react-select';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, IconButton, Typography } from '@mui/material';
+import { Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, IconButton } from '@mui/material';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
+import { makeStyles } from '@mui/styles';
 
 import '../css/GroupScreen.css';
 
+const useStyles = makeStyles((theme) => ({
+  title: {
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
+    color: '#3A789E',
+    textShadow: '2px 2px 3px rgba(0, 0, 0, 0.2)',
+  },
+  formContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+  },
+  formContent: {
+    borderRadius: '2px',
+    padding: theme.spacing(3),
+    backgroundColor: 'white',
+    boxShadow: '0px 2px 3px #236b98',
+  },
+  formField: {
+    marginBottom: theme.spacing(2),
+  },
+  formButton: {
+    padding: theme.spacing(1, 2),
+    backgroundColor: '#3A789E',
+    color: 'white',
+    border: 'black', // Change this line to 'none' for no border
+    borderRadius: '5px',
+    cursor: 'pointer',
+    boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
+    transition: 'background-color 0.3s ease-in-out',
+    '&:hover': {
+      backgroundColor: '#328ac1',
+    },
+  },
+  customButtonContainer: {
+    position: 'fixed', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
+    top: '10px',
+    left: '20px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+  },
+  letter: {
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(0),
+    color: '#3789bd',
+    textShadow: '2px 2px 3px rgba(0, 0, 0, 0.2)',
+  },
 
+}));
 const GroupScreen = () => {
   const [groups, setGroups] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
@@ -20,7 +68,7 @@ const GroupScreen = () => {
     newMemberName: null, // Nueva propiedad para almacenar el nombre del miembro seleccionado
   });
   const history = useHistory();
-
+  const classes = useStyles();
   useEffect(() => {
     fetchAllGroups();
     fetchAvailableEmployees();
@@ -131,11 +179,13 @@ const GroupScreen = () => {
 
   return (
     <div>
-      <h1>Pantalla de Grupos</h1>
-      <Button className='back-button' onClick={handleGoBack} startIcon={<FaArrowLeft />}>
-        Volver
-      </Button>
-      <Button className="button-create-group" onClick={crearNuevoGrupo} startIcon={<AiOutlinePlus />}>
+       <Grid container justify="center" alignItems="center" className={classes.customButtonContainer}>
+         <Button className={classes.formButton}  startIcon={<FaArrowLeft />}onClick={handleGoBack}>Volver</Button>
+        </Grid>
+        <Typography variant="h3" align="center" gutterBottom className={classes.letter} style={{ fontWeight: 'bold', color: '#3A789E', textShadow: '2px 2px 3px rgba(0, 0, 0, 0.2)', letterSpacing: '0.1em' }}>
+  Pantalla de Grupos
+</Typography>
+      <Button style={{color: '#3A789E'}}className="button-create-group" onClick={crearNuevoGrupo} startIcon={<AiOutlinePlus />}>
         Crear Nuevo Grupo
       </Button>
       <TableContainer component={Paper}>
