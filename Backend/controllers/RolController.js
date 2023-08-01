@@ -5,8 +5,11 @@ exports.addUser = async (req, res) => {
   try{
     const employeeSaved = await user.save();
     console.log(employeeSaved);
+    return res.status(200,'Se ha creado el usuario');
+    
   }catch (err){
     console.error(err);
+    return res.status(400)
   }
 
 };   
@@ -22,6 +25,7 @@ exports.updatePosition = async (req, res) => {
   
   try {
     const updatedEmployee = await employee.save();
+    return res.status(200).json;
     res.json(updatedEmployee);
   } catch (e) { 
     console.error(e);
@@ -75,4 +79,24 @@ exports.expirationRol = async (req, res) => {
       console.error(e);
       res.status(500).json({ error: true, message: 'Error al actualizar el empleado' });
     }
+}
+
+exports.deleteUser = async (req, res) => {
+
+  const { rut } = req.body;
+  const employee = await Employee.findOne({ rut });
+
+  if(!employee){
+      return res.status(404).json({mensaje: "No existe el Usuario"
+      });
+  }
+
+  try{
+      await employee.deleteOne();
+      return res.status(200).json({mensaje: "se ha eliminado"})
+      }catch(error){
+      console.log(error);
+      return res.status(500).json({mensaje:"error"});
+  }
+  
 }

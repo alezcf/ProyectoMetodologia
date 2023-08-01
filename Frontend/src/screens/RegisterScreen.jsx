@@ -6,7 +6,8 @@ import { Button, Container, Grid, TextField, Typography} from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import Swal from 'sweetalert2';
+//
 const useStyles = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold',
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   
 
 }));
+
 const RegisterScreen = () => {
   const classes = useStyles();
   const [employee, setEmployee] = useState({
@@ -61,7 +63,7 @@ const RegisterScreen = () => {
     position: '',
   });
   const [success, setSuccess] = useState(null);
-  const [error, setError] = useState(null);
+  const [setError] = useState(null);
   const history = useHistory();
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
@@ -131,14 +133,32 @@ const RegisterScreen = () => {
     event.preventDefault();
 
     try {
-      // Send the POST request to the backend API
+   
       const response = await axios.post('http://localhost:3001/rol/registro', employee);
-      console.log(response.data); // Assuming the backend sends back a response with the saved employee data
+      console.log(response.data)
+      .then((response) => {
+        console.log('Usuario registrado con éxito:', response.data);
 
+        if (response.status === 200) {
+          Swal.fire('¡Registro exitoso!', 'El usuario ha sido registrado correctamente.', 'success');
+        } else if (response.status === 400) {
+          Swal.fire('No se ha registrado el usuario', 'Error', '!');
+        }
+    })
+      // .then((response) => {
+      //   if (response.status === 200) {
+      //     Swal.fire('¡Registro exitoso!', 'El usuario ha sido registrado correctamente.', 'success');
+      // })
+
+      if (response.status === 200 ){
+        Swal.fire('¡Registro exitoso!', 'El usuario ha sido registrado correctamente.', 'success');
+      }
       if (response.data.error) {
         setError(response.data.message);
         setSuccess(null);
+        console.log('prueba1')
       } else {
+        console.log('pruebasucces')
         setSuccess('Se ha agreado el usuario');
         setError(null);
         setShowSuccessAlert(true); // Set the showSuccessAlert state to true when the form is successfully submitted
@@ -149,8 +169,10 @@ const RegisterScreen = () => {
       setSuccess(null);
     }
   };
+  //  Swal.fire('¡Registro exitoso!', 'El usuario ha sido registrado correctamente.', 'success');
   return (
     <div > 
+      
        <Grid container justify="center" alignItems="center" className={classes.customButtonContainer}>
       <Button className={classes.formButton} onClick={handleGoBack}>Atrás</Button>
     </Grid>
@@ -286,8 +308,7 @@ const RegisterScreen = () => {
     </Container>
     <Grid container direction="column" justifyContent="center" style={{ minHeight: '0vh', marginTop: '-1000px' }}>
       <Grid item>
-        <div style={{ padding: '45px', backgroundColor: '#bcbcbc', textAlign: 'center' }}>
-        </div>
+        
         
         <Snackbar style={{ minHeight: '0vh', marginTop: '-500px' }}
           open={showSuccessAlert}

@@ -58,22 +58,32 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#328ac1',
     },
   },
+  
   customButtonContainer: {
     position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
-    top: '10px',
-    left: '-335px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+    top: '24px',
+    left: '-310px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
   customButtonContainer2: {
     position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
-    top: '120px',
-    left: '280px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+    top: '200px',
+    left: '125px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
   customButtonContainer3: {
     position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
-    top: '75px',
-    left: '650px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+    top: '80px',
+    left: '790px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
- 
+  customButtonContainer4: {
+    position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
+    top: '160px',
+    left: '350px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+  },
+  customButtonContainer5: {
+    position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
+    top: '120px',
+    left: '570px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+  },
 }));
 
 const RolScreen = () => {
@@ -101,6 +111,13 @@ const RolScreen = () => {
   const handleButtonClickAdd = () => {
     history.push('/registrando');
   };
+  
+  const handleButtonRefresh = () => {
+    history.push('/refresh');
+  };
+  const handleButtonDelete = () => {
+    history.push('/eliminando');
+  };
 
   const handleGoBack = () => {
     history.goBack();
@@ -113,14 +130,18 @@ const RolScreen = () => {
         <Button startIcon={<ArrowBackIcon />} className={classes.formButton} onClick={handleGoBack}>Volver</Button>
       </Grid>
         <div className="button-container"></div>
-
       <div >
       <Grid container justify="center" alignItems="center" className={classes.customButtonContainer2}>
-        <Button startIcon={<HowToRegIcon/>} className={classes.formButton2} onClick={handleButtonClick}>Actualizar un cargo</Button>
+        <Button startIcon={<HowToRegIcon/>} className={classes.formButton} onClick={handleButtonClick}>Actualizar un Rol</Button>
       </Grid>
-
+      <Grid container justify="center" alignItems="center" className={classes.customButtonContainer4}>
+        <Button startIcon={<HowToRegIcon/>} className={classes.formButton} onClick={handleButtonRefresh}>Nueva Temporada</Button>
+      </Grid>
+      <Grid container justify="center" alignItems="center" className={classes.customButtonContainer5}>
+        <Button startIcon={<HowToRegIcon/>} className={classes.formButton} onClick={handleButtonDelete}>Eliminar Bombero</Button>
+      </Grid>
       <Grid  container justify="center" alignItems="center" className={classes.customButtonContainer3}>
-        <Button  startIcon={<AppRegistrationIcon />} className={classes.formButton3} onClick={handleButtonClickAdd}>Registrar Trabajador</Button>
+        <Button  startIcon={<AppRegistrationIcon />} className={classes.formButton} onClick={handleButtonClickAdd}>Registrar Trabajador</Button>
       </Grid>
       </div>
       
@@ -141,7 +162,7 @@ const RolScreen = () => {
               <TableRow>
                 <TableCell>Rut</TableCell>
                 <TableCell>Nombre</TableCell>
-                <TableCell>Cargo</TableCell>
+                <TableCell>Rol</TableCell>
                 <TableCell>Posición</TableCell>
               </TableRow>
             </TableHead>
