@@ -43,10 +43,6 @@
   background-color: #0056b3;
 } */
 
-.back-button{
-  margin: 20px;
-  padding: 6px 12px;
-}
 
 .button-create-group {
   background-color: #28a745;
@@ -57,23 +53,23 @@
   padding: 6px 12px;
   float: right;
   margin: 20px;
-
+  
 }
 
 .button-create-group:hover {
   background-color: #218838;
 }
 .button-delete {
-    background-color: #FF0000;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 6px 12px;
+  background-color: #FF0000;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 12px;
 }
 
 .button-delete:hover {
-    background-color: #d50000;
+  background-color: #d50000;
 }
 
 td{
@@ -87,16 +83,16 @@ li {
 
 /* Agregar el nuevo estilo para el botón de eliminar */
 /* .button-delete-red {
-    background-color: #FF0000;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 6px 12px;
+  background-color: #FF0000;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 6px 12px;
 }
 
 .button-delete-red:hover {
-    background-color: #d50000;
+  background-color: #d50000;
 } */
 
 .button-edit {
@@ -168,6 +164,11 @@ button {
   padding: 6px 12px;
 }
 
+.back-button{
+  background-color: #a708cb;
+  margin: 20px;
+  padding: 6px 12px;
+}
 button:hover {
   background-color: #0056b3;
 }
