@@ -15,4 +15,6 @@ router.use('/usuario', UserRouter);
 router.use('/grupo', GroupRouter);
 router.use('/rol', RolRouter);
 router.use('/notification', NotificationRouter);
+
+
 module.exports = router;
