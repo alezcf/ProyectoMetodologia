@@ -1,0 +1,91 @@
+
+
+.back-button
+{
+  margin-right: auto;
+  background-color: #3d27e4;
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: fixed;
+}
+.buttonUp
+{
+  
+  margin-right: auto;
+  background-color: #1d53c8;
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: fixed;
+  top: 20px;
+  left:150px;
+}
+.buttonUp2 {
+  
+  margin-right: auto;
+  background-color: #1d53c8;
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: fixed;
+  top: 20px;
+  left:350px;
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Título a la derecha */
+}
+.employee-table-container {
+  width: 150%; /* Ajustar al 100% del ancho del contenedor */
+  max-width: 750px; /* Tamaño mediano */
+  margin: 0; /* Eliminamos el margen para que la tabla quede a la izquierda */
+  background-color: #00000010;
+  box-shadow: 0 5px 80px rgba(0, 0, 0, 0.2);
+  overflow: auto; /* Agregamos recuadro de desplazamiento */
+}
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employee-table th,
+.employee-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.employee-table th {
+  background-color: #f2f2f2;
+}
+
+
+
+.employee-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+    text-align: left; /* Alinea el título a la izquierda en pantallas pequeñas */
+  }
+}

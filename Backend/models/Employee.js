@@ -3,14 +3,14 @@ const Schema = mongoose.Schema;
 
 const employeeSchema = new Schema(
     {
-        rut: { type: String },
+        rut: { type: String, required: true },
         names: { type: String },
         lastName: { type: String },
         secondLastName: { type: String },
         birthDate: { type: Date },
-        jobTitle: { type: String },
+        jobTitle: { type: String},
         position: { type: String },
-        phoneNumber: { type: Number, required: true },
+        phoneNumber: { type: Number},
         email: { type: String },
     },
     { collection: 'trabajador' }

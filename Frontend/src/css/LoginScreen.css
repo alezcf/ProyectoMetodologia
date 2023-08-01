@@ -5,6 +5,13 @@
   height: 100vh;
 }
 
+.centering-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .inner-container {
   background-color: #f5f5f5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -20,7 +27,7 @@
 }
 
 .logout-button {
-  background-color: #ff0000;
+  background-color: #cb4545;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -32,7 +39,7 @@
 }
 
 .logout-button:hover {
-  background-color: #c40000;
+  background-color: rgb(236, 9, 9);
 }
 
 .logout-icon {
@@ -67,40 +74,47 @@
 }
 
 .view-attendance-button {
-  background-color: #007bff;
+  background-color: #276a93;
 }
 
 .view-attendance-button:hover {
-  background-color: #0056b3;
+  background-color: #1f7eb8;
 }
 
 .register-attendance-button {
-  background-color: #28a745;
+  background-color: #267739;
 }
 
 .register-attendance-button:hover {
-  background-color: #218838;
+  background-color: #20973a;
 }
 
 .view-pending-attendance-button {
-  background-color: #ffc107;
+  background-color: #127c81;
 }
+
 
 .view-pending-attendance-button:hover {
-  background-color: #e0a800;
+  background-color: #138e97;
 }
-
+.view-rol-user {
+  background-color: #328ac1;
+}
+.view-rol-user:hover {
+  background-color: #2a90cf;
+}
 .view-groups-button {
-  background-color: #dc3545;
+  background-color: #ce5fbb;
 }
 
 .view-groups-button:hover {
-  background-color: #c82333;
+  background-color: #df4fc7;
 }
 
 .view-attendance-button,
 .register-attendance-button,
 .view-pending-attendance-button,
+.view-rol-user,
 .view-groups-button {
   display: block;
   width: 400px;

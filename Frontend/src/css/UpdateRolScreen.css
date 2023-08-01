@@ -1,0 +1,113 @@
+/* Estilos para el contenedor principal */
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 14px; /* Ajusta el tamaño de la letra según tus preferencias */
+  /* También puedes usar otras unidades de medida, como em o %, si lo prefieres */
+  text-align: center;
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form-content {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.form-field {
+  text-align: center;
+}
+
+.form-label {
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-button {
+  padding: 10px 20px;
+  background-color: #3d27e4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.form-button2 {
+  padding: 10px 20px;
+  background-color: #3d27e4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Estilos para los grupos de campos */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+/* Estilos para las etiquetas de los campos */
+label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* Estilos para los inputs */
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* Estilos para el botón */
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para los mensajes de error y éxito */
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.success-message {
+  color: #00cc00;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Resto de estilos... (el código anterior sigue igual) */
