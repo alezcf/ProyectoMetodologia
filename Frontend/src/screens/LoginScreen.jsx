@@ -62,16 +62,15 @@ const LoginScreen = ({ match }) => {
                 if (response.status === 201) {
                     // Si el estatus es 201, mostramos un mensaje de éxito
                     alert('Aceptado','La asistencia fue registrada correctamente','success');
-                } else if (response.status === 304) {
-                    // Si el estatus es 409, mostramos un mensaje de asistencia ya registrada
-                    sweetalert('Advertencia','La asistencia ya fue registrada el dia de hoy','warning');
+                } else if (response.status === 409) {
+                    sweetalert('Warning','La asistencia ya estaba registrada','warning');
                 }
             })
             .catch((error) => {
                 // Manejo de errores
                 console.error('Error al registrar la asistencia:', error);
                 // Mostrar un mensaje de error o realizar otras acciones en caso de error
-                sweetalert('Error','Hubo un error al registrar la asistencia','error');
+                sweetalert('Advertencia','La asistencia ya fue registrada el dia de hoy','error');
             });
     };
 
