@@ -1,26 +1,60 @@
 /* Estilos para el contenedor principal */
-.container {
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 14px; /* Ajusta el tamaño de la letra según tus preferencias */
+  /* También puedes usar otras unidades de medida, como em o %, si lo prefieres */
+  text-align: center;
+}
+.form-container {
   display: flex;
   justify-content: center;
+}
+
+.form-content {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
-}
-
-
-/* Estilos para el cuadro del formulario */
-.form-container {
-  background-color: #f8f8f8;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  padding: 30px;
+  gap: 10px;
   max-width: 400px;
+  width: 100%;
 }
 
-/* Estilos para el título del formulario */
-h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+.form-field {
+  text-align: center;
+}
+
+.form-label {
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-button {
+  padding: 10px 20px;
+  background-color: #3d27e4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.form-button2 {
+  padding: 10px 20px;
+  background-color: #3d27e4;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* Estilos para los grupos de campos */

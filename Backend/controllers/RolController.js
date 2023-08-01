@@ -18,7 +18,7 @@ exports.updatePosition = async (req, res) => {
     return res.status(404).json({ error: true, message: 'Trabajador no encontrado' });
   }
   
-  employee.jobTitle = req.body.jobTitle || employee.jobTitle;
+  employee.position = req.body.position || employee.position;
   
   try {
     const updatedEmployee = await employee.save();

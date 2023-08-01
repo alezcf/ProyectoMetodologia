@@ -31,8 +31,9 @@ const RolScreen = () => {
   };  
 
   return (
+
+    <div> <button className='back-button' onClick={handleGoBack}>Atrás</button> 
     <div className="button-container">
-    <button className='back-button' onClick={handleGoBack}>Atrás</button>
     <button className='buttonUp' onClick={handleButtonClick}>Actualizar un cargo</button>
     <button className='buttonUp2' onClick={handleButtonClickAdd}>Registrar Trabajador</button>
   
@@ -71,6 +72,7 @@ const RolScreen = () => {
         <div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
