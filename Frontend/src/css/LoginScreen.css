@@ -27,7 +27,7 @@
 }
 
 .logout-button {
-  background-color: #C90040;
+  background-color: #cb4545;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -39,7 +39,7 @@
 }
 
 .logout-button:hover {
-  background-color: #c40000;
+  background-color: rgb(236, 9, 9);
 }
 
 .logout-icon {
@@ -74,11 +74,11 @@
 }
 
 .view-attendance-button {
-  background-color: #1a5ea1;
+  background-color: #276a93;
 }
 
 .view-attendance-button:hover {
-  background-color: #0d6acd;
+  background-color: #1f7eb8;
 }
 
 .register-attendance-button {
@@ -98,17 +98,17 @@
   background-color: #138e97;
 }
 .view-rol-user {
-  background-color: #551b82;
+  background-color: #328ac1;
 }
 .view-rol-user:hover {
-  background-color: #7724b6;
+  background-color: #2a90cf;
 }
 .view-groups-button {
-  background-color: #a51725;
+  background-color: #ce5fbb;
 }
 
 .view-groups-button:hover {
-  background-color: #c3192a;
+  background-color: #df4fc7;
 }
 
 .view-attendance-button,

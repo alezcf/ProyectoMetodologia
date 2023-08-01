@@ -7,58 +7,50 @@ import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
   formButton: {
-    padding: theme.spacing(1, 2),
-    backgroundColor: '#405fe9',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
-    transition: 'background-color 0.3s ease-in-out',
+    backgroundColor: '#3A789E',  // Set the background color to blue
+    color: 'white',           // Set the text color to white
+    padding: '10px 20px',       // Adjust the padding to make the button smaller
+    fontSize: '14px',         // Adjust the font size to make the text smaller
+    fontFamily: 'Arial', 
     '&:hover': {
-      backgroundColor: '#264bf2',
+      backgroundColor: '#328ac1',
     },
   },
   formButton2: {
-    padding: theme.spacing(1, 2),
-    backgroundColor: '#405fe9',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
-    transition: 'background-color 0.3s ease-in-out',
+   
+    backgroundColor: '#3A789E',
+    color: 'white',           // Set the text color to white
+    padding: '10px 20px',       // Adjust the padding to make the button smaller
+    fontSize: '14px',         // Adjust the font size to make the text smaller
+    fontFamily: 'Arial',
     '&:hover': {
-      backgroundColor: '#264bf2',
+      backgroundColor: '#328ac1',
     },
   },
   formButton3: {
-    padding: theme.spacing(1, 2),
-    backgroundColor: '#405fe9',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
-    transition: 'background-color 0.3s ease-in-out',
+    backgroundColor: '#3A789E',  // Set the background color to blue
+    color: 'white',           // Set the text color to white
+    padding: '10px 20px',       // Adjust the padding to make the button smaller
+    fontSize: '14px',         // Adjust the font size to make the text smaller
+    fontFamily: 'Arial', 
     '&:hover': {
-      backgroundColor: '#264bf2',
+      backgroundColor: '#328ac1',
     },
   },
   customButtonContainer: {
-    position: 'fixed', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
+    position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
     top: '10px',
-    left: '20px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+    left: '-340px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
   customButtonContainer2: {
-    position: 'fixed', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
-    top: '10px',
-    left: '150px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+    position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
+    top: '40px',
+    left: '280px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
   customButtonContainer3: {
-    position: 'fixed', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
-    top: '10px',
-    left: '360px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+    position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
+    top: '-6px',
+    left: '650px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
  
 
@@ -111,9 +103,9 @@ const RolScreen = () => {
       </Grid>
       </div>
 
-      <Box mt={10} ml={32}> {/* Apply margin-top and margin-left */}
+      <Box mt={-15} ml={32}> {/* Apply margin-top and margin-left */}
         <Typography variant="h3">Control de roles en la Brigada</Typography>
-        <Box mt={5} ml={20}>
+        <Box mt={10} ml={20}>
           <Typography variant="h5">Lista de Bomberos registrados</Typography>
         </Box>
       </Box>

@@ -125,12 +125,13 @@ const handleRolUser = () => {
 
     const iconStyle = {
         color: 'yellow',      // Establece el color del icono en gris
-        backgroundColor: '#C90040', // Establece el fondo del icono en rojo
+        backgroundColor: '#d62121', // Establece el fondo del icono en rojo
         padding: '10px',
         borderRadius: '50%', // Aplica una forma circular al fondo
         position: 'relative', // Establece la posición del icono como relativa
         right: '-330px',      // Desplaza el icono 20px hacia la derecha
-        top: "-210px"
+        top: "-210px",
+        
     };
 
     const buttonContainerStyle = {
@@ -198,7 +199,7 @@ const handleRolUser = () => {
                             className="view-rol-user"
                             onClick={handleRolUser}
                         >
-                            <FaEye /> Visualizar roles de los trabajadores
+                            <FaEye /> Visualizar rol de los trabajadores
                         </button>
                         
                     )}

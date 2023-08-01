@@ -64,21 +64,19 @@
 .employee-table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #000000; /* Agregamos bordes a la tabla */
 }
 
 .employee-table th,
 .employee-table td {
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #000000;
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
 .employee-table th {
-  font-size: 20px;
-  font-weight: lighter; 
-  background-color: #b2abab;
+  background-color: #f2f2f2;
 }
+
+
 
 .employee-table tbody tr:hover {
   background-color: #f0f0f0;
