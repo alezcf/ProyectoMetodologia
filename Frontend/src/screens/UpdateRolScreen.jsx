@@ -5,6 +5,12 @@ import { Button, Container, Grid, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
+  title: {
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
+    color: '#3A789E',
+    textShadow: '2px 2px 3px rgba(0, 0, 0, 0.2)',
+  },
   formContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -12,10 +18,10 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   formContent: {
-    borderRadius: '5px',
-    padding: theme.spacing(4),
+    borderRadius: '2px',
+    padding: theme.spacing(3),
     backgroundColor: 'white',
-    boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
+    boxShadow: '0px 2px 3px #236b98',
   },
   formField: {
     marginBottom: theme.spacing(2),
@@ -91,9 +97,9 @@ const UpdateRolScreen = () => {
     </Grid>
     <Container className={classes.formContainer}>
       <Grid >
-        <Grid container justify="center" item xs={12} sm={8} md={6} lg={4}>
+        <Grid container justify="center" item xs={5} sm={8} md={6} lg={4}>
           <div className={classes.formContent}>
-            <Typography variant="h4" align="center" gutterBottom>Actualizar Posición</Typography>
+            <Typography variant="h5" align="center" gutterBottom className={classes.title}>Actualizar Posición</Typography>
             <form onSubmit={handleSubmit}>
               <div className={classes.formField}>
                 <TextField 

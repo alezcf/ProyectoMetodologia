@@ -13,7 +13,7 @@
     gap: 10px;
     width: 300px; /* Ajusta el ancho del formulario según tus necesidades */
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #3A789E;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
@@ -26,14 +26,14 @@
   /* Campos de entrada */
   input {
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #3A789E;
     border-radius: 3px;
   }
   
   /* Botón */
   button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #3A789E;
     color: #fff;
     border: none;
     border-radius: 5px;

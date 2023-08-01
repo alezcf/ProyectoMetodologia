@@ -6,11 +6,28 @@ import { Button, Box, Grid, Table, TableHead, TableRow, TableCell, TableBody, Co
 import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme) => ({
+  title: {
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(3),
+    color: '#dae0e2', // Blue-grey color code
+    textShadow: '1px 1px 2px rgba(232, 179, 179, 0.1)',
+    background: `linear-gradient(45deg, #363639, ${theme.palette.secondary.main})`,
+    '-webkit-background-clip': 'text',
+    '-webkit-text-fill-color': 'transparent',
+  },
+  letter: {
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(1),
+    color: '#3789bd',
+    textShadow: '2px 2px 3px rgba(0, 0, 0, 0.2)',
+  },
   formButton: {
+    
     backgroundColor: '#3A789E',  // Set the background color to blue
     color: 'white',           // Set the text color to white
-    padding: '10px 20px',       // Adjust the padding to make the button smaller
-    fontSize: '14px',         // Adjust the font size to make the text smaller
+    padding: theme.spacing(1, 2),      // Adjust the padding to make the button smaller
+    fontSize: '14px',    
+    boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',     // Adjust the font size to make the text smaller
     fontFamily: 'Arial', 
     '&:hover': {
       backgroundColor: '#328ac1',
@@ -40,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   customButtonContainer: {
     position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
     top: '10px',
-    left: '-340px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
+    left: '-335px', // Cambia el valor según la posición que desees (puedes usar top, bottom, left, right)
   },
   customButtonContainer2: {
     position: 'relative', // Asegura que el contenedor tenga una posición para posicionar el botón dentro de él
@@ -103,10 +120,12 @@ const RolScreen = () => {
       </Grid>
       </div>
 
-      <Box mt={-15} ml={32}> {/* Apply margin-top and margin-left */}
-        <Typography variant="h3">Control de roles en la Brigada</Typography>
+      <Box mt={-15} ml={10}> {/* Apply margin-top and margin-left */}
+      <Typography ml={-10} variant="h3" align="center" gutterBottom className={classes.letter}>
+                Control de roles en la Brigada
+              </Typography>
         <Box mt={10} ml={20}>
-          <Typography variant="h5">Lista de Bomberos registrados</Typography>
+          <Typography gutterBottom className={classes.title} ml={20} variant="h5">Lista de Bomberos registrados</Typography>
         </Box>
       </Box>
 
