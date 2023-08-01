@@ -42,8 +42,14 @@ exports.setGroup = async (req, res) => {
     // Seleccionar aleatoriamente 6 usuarios para el nuevo grupo
     const selectedUserIds = getRandomPeople(availableUserIds, 6);
 
+    console.log('Usuarios seleccionados' + selectedUserIds);
+
     // Obtener los datos completos de los usuarios asociados a los IDs seleccionados desde el modelo Employee
-    const selectedEmployees = await Employee.find({ rut: { $in: selectedUserIds } }).select('names position');
+    const selectedEmployees = await Employee.find({ rut: { $in: selectedUserIds } }).select('names position rut');
+
+    console.log('Empleados seleccionados' + selectedEmployees);
+
+    const selectedUserrut = selectedEmployees.map(employee => employee.rut);
     const selectedUserNames = selectedEmployees.map(employee => employee.names);
     const selectedUserPositions = selectedEmployees.map(employee => employee.position);
 
@@ -52,7 +58,7 @@ exports.setGroup = async (req, res) => {
 
     // Crear un nuevo documento Grupo con los datos obtenidos
     const group = new Group({
-      idUser: selectedUserIds,
+      idUser: selectedUserrut,
       names: selectedUserNames, // Agregar los nombres al documento
       positions: selectedUserPositions, // Agregar las posiciones al documento
       group: groupRandom
@@ -157,6 +163,8 @@ exports.updateGroup = async (req, res) => {
     // Verificar si el nuevo usuario ya está presente en otro grupo
     const existingGroups = await Group.find({ idUser: { $exists: true, $ne: [] } });
     const existingUsers = existingGroups.flatMap(group => group.idUser);
+
+    console.log('Usuarios existentes: ' + existingUsers);
 
     if (existingUsers.includes(selectedNewMember)) {
       return res.status(400).json({ message: 'El nuevo miembro ya pertenece a otro grupo' });

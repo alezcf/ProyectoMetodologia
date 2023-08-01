@@ -3,15 +3,18 @@ import { useHistory } from 'react-router-dom';
 import { AiOutlineDelete, AiOutlinePlus } from 'react-icons/ai';
 import { FaArrowLeft } from 'react-icons/fa';
 import axios from 'axios';
+import Select from 'react-select';
 import '../css/GroupScreen.css';
 
 const GroupScreen = () => {
   const [groups, setGroups] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
-  const [selectedReplaceMembers, setSelectedReplaceMembers] = useState([]);
   const [availableEmployees, setAvailableEmployees] = useState([]);
-  const [selectedMemberToReplace, setSelectedMemberToReplace] = useState('');
-  const [showReplaceMembers, setShowReplaceMembers] = useState(false); // Agregamos el estado para controlar la visibilidad del recuadro
+  const [selectedMembers, setSelectedMembers] = useState({
+    currentMember: null,
+    newMember: null,
+    newMemberName: null, // Nueva propiedad para almacenar el nombre del miembro seleccionado
+  });
   const history = useHistory();
 
   useEffect(() => {
@@ -19,32 +22,38 @@ const GroupScreen = () => {
     fetchAvailableEmployees();
   }, []);
 
-
-
   const handleOpenModifyForm = (grupo) => {
     setSelectedGroup(grupo);
-    setSelectedMemberToReplace(null);
-    setSelectedReplaceMembers([]);
-    setShowReplaceMembers(true); // Mostramos el recuadro al hacer clic en "Modificar"
+    setSelectedMembers({
+      currentMember: null,
+      newMember: null,
+      newMemberName: null, // Restablecer el nuevo miembro y su nombre cuando se abre el formulario de modificación
+    });
   };
 
   const handleCloseModifyForm = () => {
     setSelectedGroup(null);
-    setShowReplaceMembers(false); // Ocultamos el recuadro al cerrar el formulario
+    setSelectedMembers({
+      currentMember: null,
+      newMember: null,
+      newMemberName: null,
+    });
   };
 
-  const handleMemberReplaceSelection = (event) => {
-    const memberId = event.target.value;
-    setSelectedMemberToReplace(memberId);
-    setSelectedReplaceMembers([]); // Limpia los miembros disponibles para reemplazar, ya que ahora solo se selecciona uno.
+  const handleMemberReplaceSelection = (memberId, memberName) => {
+    if (selectedGroup) {
+      setSelectedMembers({
+        ...selectedMembers,
+        currentMember: memberId,
+      });
+    }
   };
 
-  
   const handleGoBack = () => {
     history.goBack();
-  };  
-  
-    const fetchAllGroups = async () => {
+  };
+
+  const fetchAllGroups = async () => {
     try {
       const response = await axios.get('http://localhost:3001/grupo/verGrupos');
       setGroups(response.data);
@@ -52,7 +61,6 @@ const GroupScreen = () => {
       console.error('Error al obtener los grupos:', error);
     }
   };
-
 
   const fetchAvailableEmployees = async () => {
     try {
@@ -67,7 +75,7 @@ const GroupScreen = () => {
     }
   };
 
-    const eliminarGrupo = async (numeroGrupo) => {
+  const eliminarGrupo = async (numeroGrupo) => {
     try {
       const response = await axios.post('http://localhost:3001/grupo/Delete', { number: numeroGrupo });
       if (response.data.success) {
@@ -82,18 +90,25 @@ const GroupScreen = () => {
 
   const handleModifyGroup = async () => {
     try {
-      if (selectedReplaceMembers.length !== 1) {
-        return alert('Debe seleccionar un único miembro para reemplazar');
+      if (!selectedMembers.newMember || !selectedMembers.currentMember) {
+        return alert('Debe seleccionar una persona para reemplazar y la persona actual');
       }
 
+      console.log('selectedMembers:', selectedMembers);
+
       await axios.post('http://localhost:3001/grupo/update', {
-        selectedNewMember: selectedReplaceMembers[0], // Solo enviamos el ID del nuevo miembro seleccionado, no todo el arreglo.
+        selectedNewMember: selectedMembers.newMember,
         groupNumber: selectedGroup.group,
-        selectedMemberToReplace: selectedMemberToReplace, // Solo enviamos el ID del miembro que se va a reemplazar, no todo el arreglo.
+        selectedMemberToReplace: selectedMembers.currentMember,
       });
 
       fetchAllGroups();
       handleCloseModifyForm();
+      setSelectedMembers({
+        currentMember: null,
+        newMember: null,
+        newMemberName: null, // Restablecer el estado después de guardar los cambios
+      });
     } catch (error) {
       console.error('Error al modificar el grupo:', error);
     }
@@ -133,17 +148,36 @@ const GroupScreen = () => {
               <td>
                 <ul>
                   {grupo.names.map((name, index) => (
-                    <li key={index}>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={selectedMemberToReplace === grupo.idUser[index]}
-                          onChange={handleMemberReplaceSelection}
-                          value={grupo.idUser[index]}
-                          disabled={!selectedGroup}
+                    <li key={index} className={selectedMembers.currentMember === grupo.idUser[index] ? 'selected' : ''}>
+                      {selectedGroup ? (
+                        <button onClick={() => handleMemberReplaceSelection(grupo.idUser[index], name)}>
+                          {name}
+                        </button>
+                      ) : (
+                        <span>{name}</span>
+                      )}
+                      {selectedMembers.currentMember === grupo.idUser[index] && selectedGroup && (
+                        <Select
+                          options={availableEmployees.map((employee) => ({
+                            value: employee.rut, // Usar el rut como value
+                            label: employee.names, // Usar el nombre como label
+                          }))}
+                          value={
+                            selectedMembers.newMember
+                              ? {
+                                value: selectedMembers.newMember,
+                                label: selectedMembers.newMemberName, // Mostrar el nombre en lugar del rut
+                              }
+                              : null
+                          }
+                          onChange={(selectedOption) => setSelectedMembers({
+                            ...selectedMembers,
+                            newMember: selectedOption.value,
+                            newMemberName: selectedOption.label, // Guardar el nombre en selectedMembers.newMemberName
+                          })}
+                          placeholder="Seleccionar miembro a reemplazar"
                         />
-                        {name}
-                      </label>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -156,9 +190,16 @@ const GroupScreen = () => {
                 </ul>
               </td>
               <td className='td-container'>
-                <button className="button-modify" onClick={() => handleOpenModifyForm(grupo)}>
-                  Modificar
-                </button>
+                {selectedGroup === grupo ? (
+                  <div>
+                    <button onClick={handleModifyGroup}>Guardar cambios</button>
+                    <button onClick={handleCloseModifyForm}>Cancelar</button>
+                  </div>
+                ) : (
+                  <button className="button-modify" onClick={() => handleOpenModifyForm(grupo)}>
+                    Modificar
+                  </button>
+                )}
                 <button className="button-delete" onClick={() => eliminarGrupo(grupo.group)}>
                   <AiOutlineDelete /> Eliminar
                 </button>
@@ -167,46 +208,8 @@ const GroupScreen = () => {
           ))}
         </tbody>
       </table>
-
-      {selectedGroup && (
-        <div className="modify-form">
-          <h2>Modificar Grupo</h2>
-          {showReplaceMembers && ( // Agregamos una condición para mostrar el recuadro solo cuando showReplaceMembers sea true
-            <div>
-              <h3>Seleccionar miembro para reemplazar:</h3>
-              <ul>
-                {availableEmployees.map((employee) => (
-                  <li key={employee._id}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={selectedReplaceMembers.includes(employee.rut)}
-                        onChange={(event) =>
-                          setSelectedReplaceMembers((prev) => {
-                            if (event.target.checked) {
-                              return [...prev, employee.rut];
-                            } else {
-                              return prev.filter((id) => id !== employee.rut);
-                            }
-                          })
-                        }
-                        value={employee.rut}
-                        disabled={!selectedGroup}
-                      />
-                      {employee.names}
-                    </label>
-                  </li>
-                ))}
-              </ul>
-              <button onClick={handleModifyGroup}>Guardar cambios</button>
-              <button onClick={handleCloseModifyForm}>Cancelar</button>
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 };
-
 
 export default GroupScreen;
